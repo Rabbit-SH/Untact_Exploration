@@ -1,29 +1,32 @@
-Brotli @ file:///tmp/abs_ecyw11_7ze/croots/recipe/brotli-split_1659616059936/work
-certifi @ file:///croot/certifi_1690232220950/work/certifi
-cffi @ file:///tmp/abs_98z5h56wf8/croots/recipe/cffi_1659598650955/work
-charset-normalizer @ file:///tmp/build/80754af9/charset-normalizer_1630003229654/work
-cryptography @ file:///croot/cryptography_1694444244250/work
+Brotli==1.0.9
+certifi==2023.7.22
+cffi==1.15.1
+charset-normalizer==2.0.4
+cryptography==41.0.3
 decorator==4.4.2
-filelock @ file:///croot/filelock_1672387128942/work
-gmpy2 @ file:///tmp/build/80754af9/gmpy2_1645438755360/work
-idna @ file:///croot/idna_1666125576474/work
+filelock==3.9.0
+gmpy2==2.1.2
+idna==3.4
 imageio==2.31.6
 imageio-ffmpeg==0.4.9
-Jinja2 @ file:///croot/jinja2_1666908132255/work
-MarkupSafe @ file:///opt/conda/conda-bld/markupsafe_1654597864307/work
+Jinja2==3.1.2
+MarkupSafe==2.1.1
 moviepy==1.0.3
-mpmath @ file:///croot/mpmath_1690848262763/work
-networkx @ file:///croot/networkx_1690561992265/work
-numpy @ file:///croot/numpy_and_numpy_base_1695830428084/work/dist/numpy-1.26.0-cp39-cp39-linux_x86_64.whl#sha256=ca199c61433d8eb86b2d0e487e002b718a4185d09c3226497a236a36f3aa0924
-Pillow @ file:///croot/pillow_1696580024257/work
+mpmath==1.3.0
+networkx==3.1
+numpy==1.26.0
+Pillow==10.0.1
+pip==23.3
 proglog==0.1.10
-pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
-pyOpenSSL @ file:///croot/pyopenssl_1690223430423/work
-PySocks @ file:///tmp/build/80754af9/pysocks_1605305812635/work
-requests @ file:///croot/requests_1690400202158/work
-sympy @ file:///croot/sympy_1668202399572/work
-torch @ file:///croot/pytorch_1686931851744/work
-torchvision @ file:///croot/torchvision_1689078161692/work
+pycparser==2.21
+pyOpenSSL==23.2.0
+PySocks==1.7.1
+requests==2.31.0
+setuptools==68.0.0
+sympy==1.11.1
+torch==2.0.1
+torchvision==0.15.2a0
 tqdm==4.66.1
-typing_extensions @ file:///croot/typing_extensions_1690297465030/work
-urllib3 @ file:///croot/urllib3_1698257533958/work
+typing_extensions==4.7.1
+urllib3==1.26.18
+wheel==0.41.2
