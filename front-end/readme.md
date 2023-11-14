@@ -24,6 +24,6 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Install Vuetify
-'''
+```
 npm add vuetify
-'''
+```
