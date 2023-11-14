@@ -6,52 +6,99 @@
       :zoom="zoom"
       :zoomAnimation=true
       :options="mapOptions"
+      :maxBounds="maxBounds"
       class="map"
       ref="map"
       @update:zoom="zoomUpdated"
       @update:center="centerUpdated"
       @update:bounds="boundsUpdated"
     >
-      <pop1 :show="popVal1" @close="closeP" class="popup" :class="{'show':popVal1}" />
-      <pop2 :show="popVal2" @close="closeP" class="popup" :class="{'show':popVal2}" />
-      <pop3 :show="popVal3" @close="closeP" class="popup" :class="{'show':popVal3}" />
-      <pop4 :show="popVal4" @close="closeP" class="popup" :class="{'show':popVal4}" />
-      <pop5 :show="popVal5" @close="closeP" class="popup" :class="{'show':popVal5}" />
+
+      <pop1 :show="popVal1" @close="closeP" @answerCorrect="updateResult(1)" class="popup" :class="{'show':popVal1}" />
+      <pop2 :show="popVal2" @close="closeP" @answerCorrect="updateResult(2)" class="popup" :class="{'show':popVal2}" />
+      <pop3 :show="popVal3" @close="closeP" @answerCorrect="updateResult(3)" class="popup" :class="{'show':popVal3}" />
+      <pop4 :show="popVal4" @close="closeP" @answerCorrect="updateResult(4)" class="popup" :class="{'show':popVal4}" />
+      <pop5 :show="popVal5" @close="closeP" @answerCorrect="updateResult(5)" class="popup" :class="{'show':popVal5}" />
+      <pop6 :show="popVal6" @close="closeP" @answerCorrect="updateResult(6)" class="popup" :class="{'show':popVal6}" />
+
+      <infoChiakView :show="showInfoChiak" class="infoChiak" :class="{'show': showInfoChiak}" @closeTutorial="closed"/>
+      <GiftView :show="allRes" :class="{'show': allRes}" @closeGift="closeLast"/>
 
       <LMarker
         :key="markers[0].id"
         :lat-lng="markers[0].coordinates"
-        @click="openP"
-        :icon="customIcon" />
+        @click="openP(0)"
+        :icon="result1 ? customIcon: defaultIcon" />
 
       <LMarker
         :key="markers[1].id"
         :lat-lng="markers[1].coordinates"
-        @click="openP"
-        :icon="customIcon" />
+        @click="openP(1)"
+        :icon="result2 ? customIcon: defaultIcon" />
 
       <LMarker
         :key="markers[2].id"
         :lat-lng="markers[2].coordinates"
-        @click="openP"
-        :icon="customIcon" />
+        @click="openP(2)"
+        :icon="result3 ? customIcon: defaultIcon" />
 
       <LMarker
         :key="markers[3].id"
         :lat-lng="markers[3].coordinates"
-        @click="openP"
-        :icon="customIcon" />
+        @click="openP(3)"
+        :icon="result4 ? customIcon: defaultIcon"></LMarker>
 
       <LMarker
         :key="markers[4].id"
         :lat-lng="markers[4].coordinates"
-        @click="openP"
-        :icon="customIcon" />
+        @click="openP(4)"
+        :icon="result5 ? customIcon: defaultIcon" />
+      
+      <LMarker
+        :key="markers[5].id"
+        :lat-lng="markers[5].coordinates"
+        @click="openP(5)"
+        :icon="result6 ? customIcon: defaultIcon" />
+
+      <LMarker
+        :key="markers[6].id"
+        :lat-lng="markers[6].coordinates"
+        :icon="defaultIcon" />
+
+      <LMarker
+        :key="markers[7].id"
+        :lat-lng="markers[7].coordinates"
+        :icon="defaultIcon" />
+
+      <LMarker
+        :key="markers[8].id"
+        :lat-lng="markers[8].coordinates"
+        :icon="defaultIcon" />
+
+      <LMarker
+        :key="markers[9].id"
+        :lat-lng="markers[9].coordinates"
+        :icon="defaultIcon" />
+
+      <LMarker
+        :key="markers[10].id"
+        :lat-lng="markers[10].coordinates"
+        :icon="defaultIcon" />
+
+      <l-circle :lat-lng="currentPos" :radius=circle.radius :color=circle.color />
 
       <l-tile-layer :url="url" :attribution="attribution"/>
 
-      <input type="button" value="내 위치" @click="ZoomInToCurrentPosition" :class="{'location-button' : !isZoom, 'location-button-red' : isZoom }" class="my-location-button">
-      <input type="button" value="탐방로" @click="goToCenter" class="center-button">
+      <button @click="ZoomInToCurrentPosition" :class="{'location-button' : !isZoom, 'location-button-red' : isZoom }" class="my-location-button">
+        <img :src="require('@/assets/location.png')">
+      </button>
+      <div @click="InfoChiak" class="chiakInfo">
+        <img :src="require('@/assets/reward_a.png')">
+      </div>
+
+      <div  class="animated-marker" v-show="isGift">
+        <img :src="require('@/assets/present.png')">
+      </div>
 
       <l-control-zoom position="bottomleft"></l-control-zoom>
 
@@ -60,14 +107,21 @@
 </template>
    
 <script>
-import { LMap, LTileLayer, LControlZoom, LMarker } from 'vue2-leaflet';
-import { L, ICon } from 'leaflet';
+import { LMap, LTileLayer, LControlZoom, LMarker, LCircle } from 'vue2-leaflet';
+import L from 'leaflet';
+import { Icon } from 'leaflet';
 
-import pop1 from '../components/popView1.vue';
-import pop2 from '../components/popView2.vue';
-import pop3 from '../components/popView3.vue';
-import pop4 from '../components/popView4.vue';
-import pop5 from '../components/popView5.vue';
+import EventBus from '@/EventBus.js';
+
+import pop1 from '../components/popView/popView1.vue';
+import pop2 from '../components/popView/popView2.vue';
+import pop3 from '../components/popView/popView3.vue';
+import pop4 from '../components/popView/popView4.vue';
+import pop5 from '../components/popView/popView5.vue';
+import pop6 from '../components/popView/popView6.vue';
+
+import infoChiakView from '../components/NaviView/InfoChiakView.vue';
+import GiftView from '../components/GiftView.vue';
 
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-gpx';
@@ -77,38 +131,85 @@ import markerShadowImg from 'leaflet/dist/images/marker-shadow.png';
 import markerRetinaImg from 'leaflet/dist/images/marker-icon-2x.png';
 
 export default {
+
   data () {
     return {
-      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      // url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      // attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      url: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+      attribution: '&copy; <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> ' +
+                   '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
       // center: [ 37.40436362096728, 128.0495492913938], // 처음 지도의 중심이 되는 좌표 / 각 포인트들의 중점
-      center: [37.4148911042466, 128.05010676384],
-      zoom: 14, // 초기 확대 레벨
+      // center: [37.4148911042466, 128.05010676384],
+      // center:[37.405103579156, 128.04869055748],
+      center: [37.4014687, 128.049426499],
+      zoom: 15, // 초기 확대 레벨
       previousZoom : null, //현재의 확대 레벨
       bounds: null, //지도 경계가 변경될 때 발생하는 이벤트(드래그되거나 확대/축소 시 발생)
+      maxBounds:[
+        [37.3721675168233, 128.0170751794774], //남서쪽 경계
+        [37.46310508072958, 128.0814481958348] //북동쪽 경계
+      ],
 
       popVal1 : false, //pop1이 열려있나 닫혀있나 여부 저장(default=false)
       popVal2 : false,
       popVal3 : false,
       popVal4 : false,
       popVal5 : false,
+      popVal6 : false,
+
+      result1: false,
+      result2: false,
+      result3: false,
+      result4: false,
+      result5: false,
+      result6: false,
 
       isZoomIn: false, //줌인이 된 상태인지 아닌지 확인(팝업창 띄우기 위한 변수)
       isZoom : false, //내 위치 버튼을 위한 줌인 상태 확인 변수
+      isGift: false, //마지막 모든 미션 수행 후 선물 버튼(한국화 변환 + 세그멘테이션)을 나타낼 변수
       current : [0,0], // ZoomInToCurrentPosition 메서드에서 버튼 누른 시점의 위치 저장을 위한 변수
+      currentPos: [0,0], // 실시간 내 위치 변화 저장 변수
+      showInfoChiak: false,
 
       isPositionReady : false,
       positionObj: {
         latitude: 0,
         longitude: 0
       },
-      marker: null,
 
       mapOptions: {
         minZoom: 13, //최소 줌 레벨 설정
         maxZoom: 18,  //최대 줌 레벨 설정
         zoomControl: false, // 줌 컨트롤러 위치를 바꿔줄 예정(왼쪽 상단 -> 왼쪽 하단)
       },
+
+      markers: [
+        {id:1, coordinates: [37.4045112586344, 128.047172427177], name:'시작 지점'},
+        {id:2, coordinates: [37.4047243241094, 128.04743796587], name:'황장금표'},
+        {id:3, coordinates: [37.40485112, 128.04897584], name:'황장숲목길 시작'},
+        {id:4, coordinates: [37.40344835, 128.04888571], name:'가족사진 미션(후보)'},
+        {id:5, coordinates: [37.3994891299528, 128.049967288971], name:'구룡사 사진미션 장소'},
+        // {id:6, coordinates: [37.39832721, 128.05118929], name:'출렁다리 이후 잎 비교 미션'},
+        {id:7, coordinates: [37.3972602794003, 128.051370084286], name:'꿩 전설(범람로 시작)'},
+        {id:8, coordinates: [37.39634559, 128.05203636], name:'나무 잎 비교 미션'},
+        {id:9, coordinates: [37.3962438504021, 128.051914572716], name:'솔방울 줍기 미션'},
+        {id:10, coordinates: [37.395769, 128.052579], name:'갈림길 합쳐지는 곳'},
+        {id:11, coordinates: [37.3943047128225, 128.053515851498], name:'종료 지점'},
+        {id:12, coordinates: [37.394792698322, 128.053207397461], name:'히든미션(금강초롱꽃을 찾아라)'},        
+
+      ],
+      defaultIcon: new Icon({  // 지도의 마커 사용자 지정 아이콘(기본 디폴트 아이콘)
+        iconUrl: require('@/assets/꺼비위치아이콘.png'),
+        iconSize: [50, 50],
+        iconAnchor: [16,32]
+      }),
+      customIcon: new Icon({  // 정답 시 바뀔 아이콘
+        iconUrl: require('@/assets/따봉꺼비.png'),
+        iconSize: [60, 60],
+        iconAnchor: [16,32]
+      }),
+      circle: { radius: 5, color: 'blue'}
     };
   },
   components: {
@@ -116,12 +217,15 @@ export default {
     LTileLayer,
     LControlZoom,
     LMarker,
-    ICon,
+    LCircle,
     pop1,
     pop2,
     pop3,
     pop4,
     pop5,
+    pop6,
+    infoChiakView,
+    GiftView,
   },
   mounted(){
 
@@ -142,7 +246,6 @@ export default {
       iconSize: [16,16],
       iconAnchor: [16,32]
     });
-
   },
   methods: {
     zoomUpdated (zoom) {
@@ -155,9 +258,15 @@ export default {
       this.bounds = bounds;
     },
     openP(index){
-      setTimeout(()=>{ // 0.7초 뒤 팝업 열림
-        this['popVal' + (index+1)] = true;
-      }, 700); 
+      if(! this.isZoomIn){
+        this.previousZoom = this.zoom;
+        // 먼저 줌인 액션 실행
+        const marker = this.markers[index];
+        this.$refs.map.mapObject.setZoomAround(marker.coordinates, 36);
+        this.isZoomIn = true;
+      }
+      // 0.8초 뒤 팝업 열기
+      setTimeout(()=>{this['popVal' + (index+1)] = true;}, 800); 
     },
     closeP(){
       this.popVal1 = false;
@@ -165,6 +274,7 @@ export default {
       this.popVal3 = false;
       this.popVal4 = false;
       this.popVal5 = false;
+      this.popVal6 = false;
 
       if (this.isZoomIn) {
         // 팝업이 닫힌 후 줌 아웃(원래 줌 레벨로 돌아가기)
@@ -184,8 +294,6 @@ export default {
         if(this.marker){
           this.$refs.map.mapObject.removeLayer(this.marker)
         }
-        // 새 마커 추가
-        this.marker = L.marker(this.currentPos, {icon: this.currentPosIcon}).addTo(this.$refs.map.mapObject);
       }
     },
     getCurrentPosition(){
@@ -196,21 +304,16 @@ export default {
         ()=>alert('위치 정보를 찾을 수 없습니다.2')) //위치 업데이트 시 호출되는 함수 getPositionValue, 오류 발생 시 경고메세지 표시
       }
     },
-    FixedCurrentPosition() {
-      this.$refs.map.mapObject.setView(this.currentPos, this.zoom);
-        this.isZoom = false;
-    }, // 토글로 바꿔야겠다
 
     ZoomInToCurrentPosition(){
-      if(this.isZoom) {
-        // 버튼을 한번 더 누르면 실시간 현재 내 위치가 지도의 중심으로 고정
-        this.$refs.map.mapObject.setView(this.currentPos, this.zoom);
+      this.current = this.currentPos;
+      if (this.isZoom) {
+        this.$refs.map.mapObject.setView(this.current, this.Zoom);
         this.isZoom = false;
       } else {
-        this.current = this.currentPos; //currentPos는 실시간으로 변하는 위치를 감지하기 때문에 변하지 않도록 다른 변수에 현재 위치 저장
-        this.$refs.map.mapObject.setView(this.current, 16);
+        this.$refs.map.mapObject.setView(this.currentPos, 16);
         this.isZoom = true;
-      } 
+      }
     },
 
     goToCenter(){
@@ -218,83 +321,78 @@ export default {
     },
     loadGPX(){
       //.gpx 파일 로드 및 지도에 표시
-      const gpxUrl = process.env.BASE_URL + '치악산 탐방서비스 등산로.gpx'
-      new L.GPX(gpxUrl, {
-        async: true,
-        marker_options: {
-          startIconUrl: '',
-          endIconUrl: '',
-          shadowUrl: '',
-          wptIconUrls: {       // 중간 waypoint 마커 이미지
-            '': require('@/assets/ggomi.png'),  // 여기에 사용자 정의 이미지 경로 입력
-          },
+      // const gpxUrl = process.env.BASE_URL + '치악산 탐방서비스 등산로.gpx'
+      const gpxUrl = process.env.BASE_URL + '1108 치악산 GPS탐방로.gpx'
+      fetch(gpxUrl)
+      .then(response => response.text())
+      .then(data => {
+        // GPX 트랙 파싱
+        const gpx = new DOMParser().parseFromString(data, 'text/xml');
+        const trackCoords = [];
+        
+        // 트랙 세그먼트 추출
+        const trkseg = gpx.getElementsByTagName('trkpt');
+        for (let i = 0; i < trkseg.length; i++) {
+          const lat = parseFloat(trkseg[i].getAttribute('lat'));
+          const lon = parseFloat(trkseg[i].getAttribute('lon'));
+          trackCoords.push([lat, lon]);
         }
-      }).on('addpoint', (e) => {
-        // waypoint에 이벤트 리스너 추가
-        let waypointName = e.point._popup._content;
-        waypointName = waypointName.replace(/<[^>]*>?/gm, '');
-        e.point.on('click', ()=>{
-          switch(waypointName) {
-            case '치악산국립공원사무소':
-              if(! this.isZoomIn){
-                this.previousZoom = this.zoom;
-                // 먼저 줌인 액션 실행
-                this.$refs.map.mapObject.setZoomAround([e.point._latlng.lat, e.point._latlng.lng], 18);
-                this.isZoomIn = true;
-              }
-              this.openP(0);
-              break;
-            case '구룡자동차야영장':
-            if(! this.isZoomIn){
-                this.previousZoom = this.zoom;
-                // 먼저 줌인 액션 실행
-                this.$refs.map.mapObject.setZoomAround([e.point._latlng.lat, e.point._latlng.lng], 36);
-                this.isZoomIn = true;
-              }
-              this.openP(1);
-              break;
-            case '황장목숲길':
-              if(! this.isZoomIn){
-                this.previousZoom = this.zoom;
-                // 먼저 줌인 액션 실행
-                this.$refs.map.mapObject.setZoomAround([e.point._latlng.lat, e.point._latlng.lng], 36);
-                this.isZoomIn = true;
-              }
-              this.openP(2);
-              break;
-            case '구룡사':
-              if(! this.isZoomIn){
-                this.previousZoom = this.zoom;
-                // 먼저 줌인 액션 실행
-                this.$refs.map.mapObject.setZoomAround([e.point._latlng.lat, e.point._latlng.lng], 36);
-                this.isZoomIn = true;
-              }
-              this.openP(3);
-              break;
-            case '자생식물관찰원':
-              if(! this.isZoomIn){
-                this.previousZoom = this.zoom;
-                // 먼저 줌인 액션 실행
-                this.$refs.map.mapObject.setZoomAround([e.point._latlng.lat, e.point._latlng.lng], 36);
-                this.isZoomIn = true;
-              }
-              this.openP(4);
-              break;
-          }
-        });
-      })      
-      .on("loaded", (e) => {
-        console.log(e.target.getBounds());
-        this.$nextTick(() => {
-          this.$refs.map.mapObject.setView(this.center, this.zoom);
-        });
-      }).addTo(this.$refs.map.mapObject);
+        
+        // 새로운 폴리선(선) 생성
+        const polyline = L.polyline(trackCoords, { color: '#C4DEFF', weight: 15, opacity: 0.8 });
+
+        // 맵에 폴리선 추가
+        polyline.addTo(this.$refs.map.mapObject);
+
+        // 지도 중심과 확대 설정 (트랙에 맞게 조절)
+        // this.$refs.map.mapObject.fitBounds(polyline.getBounds());
+        this.$refs.map.mapObject.setView(this.center, this.zoom);
+      })
+      .catch(error => {
+        console.error('Error loading GPX:', error);
+      });
     },
+
+    updateResult(id){
+      this['result' + (id)]=true;
+      const results = {
+        r1: this.result1,
+        r2: this.result2,
+        r3: this.result3,
+        r4: this.result4,
+        r5: this.result5,
+        r6: this.result6,
+      };
+      EventBus.$emit('send-results-to-durumari', results);
+    },
+    InfoChiak(){
+      this.showInfoChiak = true;
+    },
+    
+    closed(){
+      this.showInfoChiak = false;
+      this.uploadIMG = false;
+    },
+    closeLast(){
+      this.result1 = false;
+      this.result2 = false;
+      this.result3 = false;
+      this.result4 = false;
+      this.result5 = false;
+      this.result6 = false;
+
+      this.isGift = true;
+    }
+  },
+  computed:{
+    allRes(){
+      return [this.result1, this.result2, this.result3, this.result4, this.result5, this.result6].every(Boolean);
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
   .map {
     position: absolute;
     width: 100%;
@@ -320,7 +418,11 @@ export default {
   .my-location-button {
     z-index: 1001;
     position: absolute;
-    bottom: 150px;
+    bottom: 90px;
+    left: 10px;
+    padding: 0px;
+    border-radius: 3px;
+    text-align: center;
   }
   .center-button {
     z-index: 1001;
@@ -328,7 +430,52 @@ export default {
     bottom: 100px;
   }
   .location-button-red {
-    background-color: red;
-    color: white;
+    filter: grayscale(100%);
+    z-index: 1001;
+    position: absolute;
+    bottom: 90px;
+    left: 10px;
+    padding: 0px;
+    border-radius: 3px;
+  }
+  .chiakInfo{
+    right: 1.5%;
+    bottom: 40px;
+    z-index: 500;
+    position: absolute;
+  }
+  .chiakInfo img{
+    height: 70px;
+    width: auto;
+  }
+  .showUImg{
+    right: 2%;
+    bottom: 150px;
+    z-index: 1001;
+    position: absolute;
+  }
+  .showUImg img{
+    height: auto;
+    width: 70px;
+  }
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-30px);
+    }
+    60% {
+      transform: translateY(-15px);
+    }
+  }
+
+  .animated-marker {
+    animation: bounce 1s infinite;
+    z-index: 1001;
+    position: absolute;
+    bottom: 35%; 
+    right: 25%;
+    /* transform: translate(-50%, -50%); */
   }
 </style>

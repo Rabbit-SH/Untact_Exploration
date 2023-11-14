@@ -1,23 +1,18 @@
 <template>
-  <div id="app">
-    <Navi />
-    <Map />
-  </div>
+  <v-app>
+    <v-main>
+      <router-view/>
+    </v-main>
+  </v-app>
+</template>
 
- </template>
- 
- <script>
- import Map from './components/MapView2.vue';
- import Navi from './components/NaviView.vue';
- export default {
+<script>
+
+export default {
   name: 'App',
-  components: {
-    Map,
-    Navi,
-  },
- }
- </script>
- 
- <style>
 
- </style>
+  data: () => ({
+    //
+  }),
+};
+</script>
