@@ -64,7 +64,7 @@ class ConditionalInstanceNorm2d(torch.nn.Module):
             for j in range(len(style_control[i % len(style_control)])): #모든 이미지에 대해 서로 다른 스타일을 적용하거나, 스타일 컨트롤 리스트의 길이가 이미지 수보다 많은 경우 중복된 스타일을 적용할 수 있음
                 total_weight += style_control[i % len(style_control)][j] #현재 스타일의 가중치를 전체 가중치에 더함.
                 # 해당 채널의 InstanceNorm2d를 스타일 가중치와 함께 적용
-                out_xi += style_control[i % len(style_control)][j] * self.condInstanceNorm[j](x[i].unsqueeze(0)).squeeze_(0)   #unsqueeze와 squeeze를 왜 둘다 했는지는 잘 모르겠음 
+                out_xi += style_control[i % len(style_control)][j] * self.condInstanceNorm[j](x[i].unsqueeze(0)).squeeze_(0)   #unsqueeze와 squeeze : 모델의 일관성을 유지하고 예상치 못한 차원 불일치로 인한 오류를 방지(차원 추가 후 제거) 
             # 채널별 가중 평균을 통해 이미지 완성 # 현재 스타일의 채널별 가중치를 해당 이미지의 채널에 적용합니다. condInstanceNorm[j]는 j번째 스타일의 조건부 인스턴스 정규화 레이어를 나타냅니다. 이 레이어는 현재 이미지의 해당 채널에 대해 스타일을 조절합니다.
             out.append(out_xi / total_weight)  # 각 이미지의 각 채널에 대해 서로 다른 스타일을 가중합하여 적용했기 때문에 total_weight으로 나눠줌
         out = torch.stack(out)
