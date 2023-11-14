@@ -41,38 +41,48 @@ def check_paths(args):
 def train(args):
     device = torch.device("cuda" if args.cuda else "cpu")
 
+    # 시드 설정
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
 
+    # 이미지 변환 파이프라인 설정
     transform = transforms.Compose([
-        transforms.Grayscale(num_output_channels=3),
-        transforms.Resize(args.image_size), # the shorter side is resize to match image_size
-        transforms.CenterCrop(args.image_size),
-        transforms.ToTensor(),
-        transforms.Lambda(lambda x: x.mul(255))
+        transforms.Grayscale(num_output_channels=3),  # 그레이스케일로 변환 후 3채널로 재변환
+        transforms.Resize(args.image_size),  # 이미지 크기 조정
+        transforms.CenterCrop(args.image_size),  # 이미지 중앙 자르기
+        transforms.ToTensor(),  # 텐서로 변환
+        transforms.Lambda(lambda x: x.mul(255))  # 값 범위 변경
     ])
 
+    # 트레이닝 데이터셋 로딩
     train_dataset = datasets.ImageFolder(args.dataset, transform)
     train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)
 
+    # 스타일 이미지 리스트 로드
     style_image = [f for f in os.listdir(args.style_image)]
     style_num = len(style_image)
     print("Total number of styles: ", style_num)
     for style_id, style_img in enumerate(style_image):
         print(f"id: %3s image: %30s" % (style_id, style_img))
 
+    # TransformerNet 모델 초기화
     transformer = TransformerNet(style_num=style_num)
 
+    # 이어서 트레이닝 진행할 경우 모델 상태 불러오기
     if args.resume and os.path.isfile(args.resume):
         state_dict = torch.load(args.resume)
         transformer.load_state_dict(state_dict)
 
     transformer = transformer.to(device)
 
+    # 옵티마이저 설정
     optimizer = Adam(transformer.parameters(), args.lr)
     mse_loss = torch.nn.MSELoss()
 
+    # Vgg16 로드 (스타일 및 콘텐츠 손실 계산에 사용)
     vgg = Vgg16(requires_grad=False).to(device)
+
+    # 스타일 이미지 처리
     style_transform = transforms.Compose([
         transforms.Resize(args.style_size),
         transforms.CenterCrop(args.style_size),
@@ -82,7 +92,8 @@ def train(args):
 
     style_batch = []
 
-    for i in tqdm(range(style_num), desc="Processing style images"):  
+    # 스타일 이미지를 전처리하고 스타일 특징을 추출하여 그람 행렬 계산
+    for i in tqdm(range(style_num), desc="Processing style images"):
         style = utils.load_image(args.style_image + "/" + style_image[i], size=args.style_size)
         style = style_transform(style)
         style_batch.append(style)
@@ -92,12 +103,13 @@ def train(args):
     features_style = vgg(utils.normalize_batch(style))
     gram_style = [utils.gram_matrix(y) for y in features_style]
 
+    # Epoch 반복
     for e in range(args.epochs):
         transformer.train()
         agg_content_loss = 0.
         agg_style_loss = 0.
         count = 0
-        for batch_id, (x, _) in enumerate(tqdm(train_loader)):  
+        for batch_id, (x, _) in enumerate(tqdm(train_loader)):
             n_batch = len(x)
             
             if n_batch < args.batch_size:
@@ -106,6 +118,7 @@ def train(args):
             count += n_batch
             optimizer.zero_grad()
 
+            # 배치별 스타일 제어 생성
             batch_style_control = [utils.single_style_control_list_maker(style_num, i % style_num) for i in range(count-n_batch, count)]
             batch_style_id = [i % style_num for i in range(count-n_batch, count)]
             y = transformer(x.to(device), style_control=batch_style_control)
@@ -113,32 +126,39 @@ def train(args):
             y = utils.normalize_batch(y)
             x = utils.normalize_batch(x)
 
+            # VGG 특징 추출
             features_y = vgg(y.to(device))
             features_x = vgg(x.to(device))
+
+            # 콘텐츠 손실 계산
             content_loss = args.content_weight * mse_loss(features_y.relu2_2, features_x.relu2_2)
 
+            # 스타일 손실 계산
             style_loss = 0.
             for ft_y, gm_s in zip(features_y, gram_style):
                 gm_y = utils.gram_matrix(ft_y)
                 style_loss += mse_loss(gm_y, gm_s[batch_style_id, :, :])
             style_loss *= args.style_weight
 
+            # 총 손실 계산 및 역전파
             total_loss = content_loss + style_loss
             total_loss.backward()
             optimizer.step()
 
+            # 손실값 누적 및 출력
             agg_content_loss += content_loss.item()
             agg_style_loss += style_loss.item()
 
             if (batch_id + 1) % args.log_interval == 0:
                 mesg = "{}\tEpoch {}:\t[{}/{}]\tcontent: {:.6f}\tstyle: {:.6f}\ttotal: {:.6f}".format(
                     time.ctime(), e + 1, count, len(train_dataset),
-                                  agg_content_loss / (batch_id + 1),
-                                  agg_style_loss / (batch_id + 1),
-                                  (agg_content_loss + agg_style_loss) / (batch_id + 1)
+                                      agg_content_loss / (batch_id + 1),
+                                      agg_style_loss / (batch_id + 1),
+                                      (agg_content_loss + agg_style_loss) / (batch_id + 1)
                 )
                 print(mesg)
 
+            # 중간 체크포인트 모델 저장
             if args.checkpoint_model_dir is not None and (batch_id + 1) % args.checkpoint_interval == 0:
                 transformer.eval().cpu()
                 ckpt_model_filename = "ckpt_epoch_" + str(e) + "_batch_id_" + str(batch_id + 1) + ".pth"
@@ -146,6 +166,7 @@ def train(args):
                 torch.save(transformer.state_dict(), ckpt_model_path)
                 transformer.to(device).train()
 
+    # 트레이닝 종료 후 최종 모델 저장
     transformer.eval().cpu()
     save_model_filename = "epoch_" + str(args.epochs) + "_" + str(time.ctime()).replace(' ', '_').replace(':', '') + "_" + str(int(
         args.content_weight)) + "_" + str(int(args.style_weight)) + ".model"
