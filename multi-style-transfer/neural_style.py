@@ -169,7 +169,7 @@ def train(args):
     # 트레이닝 종료 후 최종 모델 저장
     transformer.eval().cpu()
     save_model_filename = "epoch_" + str(args.epochs) + "_" + str(time.ctime()).replace(' ', '_').replace(':', '') + "_" + str(int(
-        args.content_weight)) + "_" + str(int(args.style_weight)) + ".model"
+        args.content_weight)) + "_" + str(int(args.style_weight)) + ".pth"
     save_model_path = os.path.join(args.save_model_dir, save_model_filename)
     torch.save(transformer.state_dict(), save_model_path)
 
