@@ -25,7 +25,12 @@ from vgg import Vgg16
 from moviepy.video.io.VideoFileClip import VideoFileClip
 import moviepy.video.io.ffmpeg_writer as ffmpeg_writer
 from PIL import Image
+import random
 
+def random_style_control(style_num, seed=None):
+    if seed is not None:
+        random.seed(seed)
+    return [random.choice([0, 1]) for _ in range(style_num)]
 
 def check_paths(args):
     try:
@@ -64,7 +69,7 @@ def train(args):
     print("Total number of styles: ", style_num)
     for style_id, style_img in enumerate(style_image):
         print(f"id: %3s image: %30s" % (style_id, style_img))
-
+    
     # TransformerNet 모델 초기화
     transformer = TransformerNet(style_num=style_num)
 
@@ -161,7 +166,7 @@ def train(args):
             # 중간 체크포인트 모델 저장
             if args.checkpoint_model_dir is not None and (batch_id + 1) % args.checkpoint_interval == 0:
                 transformer.eval().cpu()
-                ckpt_model_filename = "ckpt_epoch_" + str(e) + "_batch_id_" + str(batch_id + 1) + ".pth"
+                ckpt_model_filename = "ckpt_epoch_" + str(e) + "_batch_id_" + str(batch_id + 1) + "_style_num_"+str(style_num)+".pth"
                 ckpt_model_path = os.path.join(args.checkpoint_model_dir, ckpt_model_filename)
                 torch.save(transformer.state_dict(), ckpt_model_path)
                 transformer.to(device).train()
@@ -169,7 +174,7 @@ def train(args):
     # 트레이닝 종료 후 최종 모델 저장
     transformer.eval().cpu()
     save_model_filename = "epoch_" + str(args.epochs) + "_" + str(time.ctime()).replace(' ', '_').replace(':', '') + "_" + str(int(
-        args.content_weight)) + "_" + str(int(args.style_weight)) + ".pth"
+        args.content_weight)) + "_" + str(int(args.style_weight)) + "_style_num_"+str(style_num)+ ".pth"
     save_model_path = os.path.join(args.save_model_dir, save_model_filename)
     torch.save(transformer.state_dict(), save_model_path)
 
@@ -297,8 +302,12 @@ def main():
                                  help="saved model to be used for stylizing the image. If file ends in .pth - PyTorch path is used, if in .onnx - Caffe2 path")
     eval_arg_parser.add_argument("--cuda", type=int, default=0,
                                  help="set it to 1 for running on GPU, 0 for CPU")
-    eval_arg_parser.add_argument("--style-control", type=int, nargs='+', required = True,
+    eval_arg_parser.add_argument("--style-control", nargs='*', type=int,
                                  help="style control weights corresponding to the order in training")
+    eval_arg_parser.add_argument("--random-style-control", action='store_true',
+                                 help="generate random style control values")
+    eval_arg_parser.add_argument("--seed", type=int, default=None,
+                                 help="seed for generating random style control values")
     eval_arg_parser.add_argument("--batch-size", type=int, default=4,
                                   help="batch size for testing, default is 4")
     eval_arg_parser.add_argument("--style-num", type=int, default=4,
@@ -320,6 +329,8 @@ def main():
         if args.content_video:
             stylize_video(args)
         else:
+            if args.random_style_control or not args.style_control:
+                args.style_control = random_style_control(args.style_num, seed=args.seed)
             stylize_img(args)
 
 

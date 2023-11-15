@@ -25,6 +25,7 @@ class TransformerNet(torch.nn.Module):
         self.in5 = ConditionalInstanceNorm2d(style_num, 32)
         self.deconv3 = ConvLayer(32, 3, kernel_size = 9, stride = 1)
         self.relu = torch.nn.ReLU()
+        
 
     def forward(self, X, style_control):             #nn.Module을 상속 받았기 때문에 forward는 따로 호출하지 않아도 알아서 호출됨.
  
