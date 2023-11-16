@@ -1,9 +1,3 @@
-# Modified from https://github.com/pytorch/examples/blob/master/fast_neural_style/neural_style/
-# The main changes are 
-# 1) conditional instance normalization logic 
-# 2) allow user to choose and combine multiple styles to transfer
-# 3) video multiple style combine and transfer
-
 import argparse
 import os
 import sys
@@ -31,6 +25,9 @@ def random_style_control(style_num, seed=None):
     if seed is not None:
         random.seed(seed)
     return [random.choice([0, 1]) for _ in range(style_num)]
+
+
+
 
 def check_paths(args):
     try:
@@ -60,7 +57,10 @@ def train(args):
     ])
 
     # 트레이닝 데이터셋 로딩
-    train_dataset = datasets.ImageFolder(args.dataset, transform)
+    if not os.path.exists(args.dataset):
+        print("ERROR: The specified dataset path does not exist.")
+        sys.exit(1)
+    train_dataset = datasets.ImageFolder(os.path.abspath(args.dataset), transform)
     train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)
 
     # 스타일 이미지 리스트 로드
@@ -75,6 +75,9 @@ def train(args):
 
     # 이어서 트레이닝 진행할 경우 모델 상태 불러오기
     if args.resume and os.path.isfile(args.resume):
+        if not os.path.isfile(args.resume) or not args.resume.endswith('.pth'):
+            print("ERROR: Invalid model path or file format.")
+            sys.exit(1)
         state_dict = torch.load(args.resume)
         transformer.load_state_dict(state_dict)
 
@@ -132,8 +135,9 @@ def train(args):
             x = utils.normalize_batch(x)
 
             # VGG 특징 추출
-            features_y = vgg(y.to(device))
-            features_x = vgg(x.to(device))
+            with torch.no_grad():
+                features_y = vgg(y.to(device))
+                features_x = vgg(x.to(device))
 
             # 콘텐츠 손실 계산
             content_loss = args.content_weight * mse_loss(features_y.relu2_2, features_x.relu2_2)
@@ -195,7 +199,7 @@ def stylize_one_img(args, content_image, style_control):
     ])
     content_image = content_transform(content_image)
     content_image = content_image.unsqueeze(0).to(device)
-
+    
     with torch.no_grad():
         style_model = load_trained_model(args, device)
         output = style_model(content_image, style_control=[style_control]).cpu()
@@ -205,7 +209,8 @@ def stylize_one_img(args, content_image, style_control):
 def stylize_img(args):
     content_image = utils.load_image(args.content_image, scale=args.content_scale)
     output = stylize_one_img(args, content_image, args.style_control)
-    utils.save_image('./images/output_images/'+args.output_image+'_style'+''.join(str(e) for e in args.style_control)+'.jpg', output[0])
+    utils.save_image('./images/output_images/' + args.prefix + '_style' + str(args.style_num) + str(args.seed) + '.jpg', output[0])
+
 
 def stylize_video(args):
     batch_size = 4
@@ -248,7 +253,7 @@ def stylize_video(args):
     video_writer.close()
 
 def main():
-    main_arg_parser = argparse.ArgumentParser(description="parser for fast-neural-style")
+    main_arg_parser = argparse.ArgumentParser(description="parser for multi-fast-neural-style")
     subparsers = main_arg_parser.add_subparsers(title="subcommands", dest="subcommand")
 
     train_arg_parser = subparsers.add_parser("train", help="parser for training arguments")
@@ -294,8 +299,8 @@ def main():
                                  help="path to content video you want to stylize")
     eval_arg_parser.add_argument("--content-scale", type=float, default=None,
                                  help="factor for scaling down the content image")
-    eval_arg_parser.add_argument("--output-image", type=str, 
-                                 help="path for saving the output image")
+    eval_arg_parser.add_argument("--prefix", type=str, 
+                                 help="prefix for output image")
     eval_arg_parser.add_argument("--output-video", type=str, 
                                  help="path for saving the output video")
     eval_arg_parser.add_argument("--model", type=str, required=True,
@@ -310,7 +315,7 @@ def main():
                                  help="seed for generating random style control values")
     eval_arg_parser.add_argument("--batch-size", type=int, default=4,
                                   help="batch size for testing, default is 4")
-    eval_arg_parser.add_argument("--style-num", type=int, default=4,
+    eval_arg_parser.add_argument("--style-num", type=int, required=True,
                                   help="number of styles used in training, default is 4")
 
     args = main_arg_parser.parse_args()
