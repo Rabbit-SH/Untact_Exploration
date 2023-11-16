@@ -8,28 +8,28 @@
             <div class = "d-flex justify-center flex-grow-1">
                 <span class="mr-2">물두꺼비를 따라가보자!</span>
             </div>
-            </v-app-bar>
+        </v-app-bar>
         <v-bottom-navigation
             :value = "value"
             color = "teal"
             grow
         >
-        <v-btn @click="showTutorialPopup" class="story">
-            <span>튜토리얼 다시보기</span>
-            <v-icon>mdi-book-open-page-variant-outline</v-icon>
-        </v-btn>
-        <v-btn @click="getGallery" class="gallery">
-            <span>사진첩</span>
-            <v-icon>mdi-image-multiple</v-icon>
-        </v-btn>
-        <v-btn @click="getDurumari" class="credit">
-            <span>미션 현황</span>
-            <v-icon>mdi-text-box-check-outline</v-icon>
-        </v-btn>
-        <v-btn @click="shwoUImg" class="uploadImg">
-            <span>수묵화 변환</span>
-            <v-icon>mdi-panorama-variant-outline</v-icon>
-        </v-btn>
+            <v-btn @click="showTutorialPopup" class="story">
+                <span>튜토리얼 다시보기</span>
+                <v-icon>mdi-book-open-page-variant-outline</v-icon>
+            </v-btn>
+            <v-btn @click="getGallery" class="gallery">
+                <span>사진첩</span>
+                <v-icon>mdi-image-multiple</v-icon>
+            </v-btn>
+            <v-btn @click="getDurumari" class="credit">
+                <span>미션 현황</span>
+                <v-icon>mdi-text-box-check-outline</v-icon>
+            </v-btn>
+            <v-btn @click="shwoUImg" class="uploadImg">
+                <span>수묵화 변환</span>
+                <v-icon>mdi-panorama-variant-outline</v-icon>
+            </v-btn>
 
         </v-bottom-navigation>
         
@@ -74,7 +74,7 @@ export default {
 
             isCredit: false,
             gallery_open: false,
-            showtutorial: true,
+            showtutorial: false,
             showShelter: false,
             uploadIMG: false,
         }
