@@ -1,26 +1,38 @@
 <template>
     <div>
-        <div class= "navi">
-            <img :src="require('@/assets/Navi/logo2.png')" alt="Logo" class="logo">
-        </div>
-        <div class= "bar">
-            <div @click="showTutorialPopup" class="story">
-                <img :src="require('@/assets/Navi/tutorial.png')">
+        <v-app-bar
+            app
+            color="green"
+            dark
+            >
+            <div class = "d-flex justify-center flex-grow-1">
+                <span class="mr-2">물두꺼비를 따라가보자!</span>
             </div>
-            <div @click="getGallery" class="gallery">
-                <img :src="require('@/assets/Navi/credit.png')">
-            </div>
-            <div @click="getDurumari" class="credit">
-                <img :src="require('@/assets/Navi/gallery.png')">
-            </div>
-            <div @click="goShelter" class="shelter">
-                <img :src="require('@/assets/Navi/shelter.png')">
-            </div>
-            <div @click="shwoUImg" class="uploadImg">
-                <img :src="require('@/assets/Navi/uploadImg.png')">
-            </div>
-        </div>
+            </v-app-bar>
+        <v-bottom-navigation
+            :value = "value"
+            color = "teal"
+            grow
+        >
+        <v-btn @click="showTutorialPopup" class="story">
+            <span>튜토리얼 다시보기</span>
+            <v-icon>mdi-book-open-page-variant-outline</v-icon>
+        </v-btn>
+        <v-btn @click="getGallery" class="gallery">
+            <span>사진첩</span>
+            <v-icon>mdi-image-multiple</v-icon>
+        </v-btn>
+        <v-btn @click="getDurumari" class="credit">
+            <span>미션 현황</span>
+            <v-icon>mdi-text-box-check-outline</v-icon>
+        </v-btn>
+        <v-btn @click="shwoUImg" class="uploadImg">
+            <span>수묵화 변환</span>
+            <v-icon>mdi-panorama-variant-outline</v-icon>
+        </v-btn>
 
+        </v-bottom-navigation>
+        
         <TutorialView :show="showtutorial" 
             @closeTutorial="closeTutorial"
             @openTutorial="showTutorialPopup" />
@@ -52,9 +64,7 @@ export default {
     },
     data(){
         return{
-            showCourseOptions: false, // 탐방코스 선택 창 표시 여부
-            selectedCourse: '', // 선택된 탐방코스
-
+            value: '',
             r1: this.result1,
             r2: this.result2,
             r3: this.result3,
@@ -134,88 +144,6 @@ export default {
 </script>
 
 <style>
-    .navi {
-        display: flex;
-        justify-content: center; /* 수평 가운데 정렬*/
-        align-content: center; /* 수직 가운데 정렬 */
-        top: 10px;
-        left: 10px;
-        right: 10px;
-        background: #ECF3E4;
-        z-index: 1000;
-        position: absolute;
-        border-radius: 11px;
-        height: 55px;
-    }
-    .logo{
-        height: 100%;
-        width: auto;
-    }
-    .bar {
-        display: flex;
-        justify-content: space-around; /* 버튼들 사이에 동일한 간격을 줍니다 */
-        align-items: center;
-        position: absolute;
-        top: 65px; /* navi 높이에 따라 조정하세요 */
-        left: 10px;
-        right: 10px;
-        z-index: 900; /* navi 바로 아래에 위치하도록 z-index 설정 */
-        padding-top: 5px;
-    }
-    .bar div{
-        /* width: auto; */
-        max-width: 55px;
-        margin: 0 auto;
-    }
-    .bar div img{
-        max-width: 100%;
-        height: 40px; 
-        width: 78px;
-        object-fit: contain;
-        transition: transform 0.3s ease;
-        opacity: 0.7;
-        /* height: 60px;
-        width: 180px; */
-        /* height: 120px; */
-    }
-    .bar button:hover img{
-        transform: scale(1.1);
-    }
-    /* 반응형 */
-    @media (max-width: 768px) {
-        .bar div {
-            max-width: 30%; /* Smaller max-width for smaller screens */
-            margin: 0 3px;
-            width: 22%;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .bar div {
-            max-width: 30%; /* Even smaller max-width for mobile screens */
-            margin: 0 3px;
-            width: 22%;
-        }
-    }
-    .course-selection {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 70px;
-        left: 30px;
-        right: 30px;
-        padding: 10px;
-        background: #fff;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        border-radius: 15px;
-        overflow: hidden;
-        max-height: 500px;
-        transition: max-height 0.3s ease-in-out;
-    }
-
-    .course-selection > div {
-        margin-bottom: 10px;
-    }
     .google-form-button{
     z-index: 1001;
     position: absolute;

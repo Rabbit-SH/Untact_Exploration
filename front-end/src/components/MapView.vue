@@ -88,10 +88,18 @@
       <l-circle :lat-lng="currentPos" :radius=circle.radius :color=circle.color />
 
       <l-tile-layer :url="url" :attribution="attribution"/>
+      <v-btn
+        elevation="2"
+        icon
+        :color="isZoom ? 'red' : 'gray'"
+        class="my-location-button"
+        @click="ZoomInToCurrentPosition"
+        height = "33px"
+        width = "33px"
+      >
+        <v-icon size = "28">mdi-crosshairs-gps</v-icon>
+      </v-btn>
 
-      <button @click="ZoomInToCurrentPosition" :class="{'location-button' : !isZoom, 'location-button-red' : isZoom }" class="my-location-button">
-        <img :src="require('@/assets/location.png')">
-      </button>
       <div @click="InfoChiak" class="chiakInfo">
         <img :src="require('@/assets/reward_a.png')">
       </div>
@@ -100,7 +108,7 @@
         <img :src="require('@/assets/present.png')">
       </div>
 
-      <l-control-zoom position="bottomleft"></l-control-zoom>
+      <l-control-zoom></l-control-zoom>
 
     </l-map>
   </div>
@@ -200,12 +208,12 @@ export default {
 
       ],
       defaultIcon: new Icon({  // 지도의 마커 사용자 지정 아이콘(기본 디폴트 아이콘)
-        iconUrl: require('@/assets/꺼비위치아이콘.png'),
+        iconUrl: require('@/assets/marker.png'),
         iconSize: [50, 50],
         iconAnchor: [16,32]
       }),
       customIcon: new Icon({  // 정답 시 바뀔 아이콘
-        iconUrl: require('@/assets/따봉꺼비.png'),
+        iconUrl: require('@/assets/꺼비위치아이콘.png'),
         iconSize: [60, 60],
         iconAnchor: [16,32]
       }),
@@ -228,7 +236,6 @@ export default {
     GiftView,
   },
   mounted(){
-
     delete Icon.Default.prototype._getIconUrl;
     Icon.Default.mergeOptions({ //marker-icon-2x.png 이미지 파일을 못찾는 에러 제거 코드
       iconRetinaUrl: markerRetinaImg,
@@ -435,8 +442,8 @@ export default {
     position: absolute;
     bottom: 90px;
     left: 10px;
-    padding: 0px;
-    border-radius: 3px;
+    width: 30px;
+    height: 30px;
   }
   .chiakInfo{
     right: 1.5%;
@@ -469,7 +476,6 @@ export default {
       transform: translateY(-15px);
     }
   }
-
   .animated-marker {
     animation: bounce 1s infinite;
     z-index: 1001;
