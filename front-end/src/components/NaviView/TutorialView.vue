@@ -80,6 +80,8 @@ export default {
         width: 100%; height: 100%;
         background: rgba(255, 255, 255, 0.1);
         position: fixed; padding: 20px;
+        top: 0;
+        left: 0;
         z-index: 10000;
         display: flex;
         align-items: center;

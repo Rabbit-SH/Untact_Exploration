@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import StartView from '../views/StartView.vue';
 import MainView from '../views/MainView.vue';
 import TutorialPage from '../views/TutorialPage.vue';
+import AIView from '../components/NaviView/AIView.vue';
 
 Vue.use(VueRouter)
 
@@ -12,6 +13,7 @@ const router = new VueRouter({
         { path: '/', component: StartView, name: 'StartView' },
         { path: '/map', component: MainView, name: 'MainView' },
         { path: '/tutorial', component: TutorialPage, name: 'TutorialPage' },
+        { path: '/ai', component: AIView, name: 'AIView' },
     ]
 })
 

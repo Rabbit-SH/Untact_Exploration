@@ -8,12 +8,6 @@
         <br>
         <div class="button-container">
           <button class="submit" @click="checkAnswer">제출하기</button>
-          <button class="hint" @click="showHint">예시</button>
-        </div>
-        <div class="hint-popup" v-if="showPopup">
-          <button class="close-popup" @click="closePopup">X</button>
-          <!-- <p> 힌트 팝업 페이지 </p> -->
-          <img :src="require('@/assets/carbornHint.png')">
         </div>
       </div>
     </div>
@@ -75,28 +69,35 @@
     box-sizing: border-box;
   }
   .black-bg{
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    position: fixed; padding: 20px;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        position: fixed; 
+        top: 0;
+        left: 0;
+        padding: 20px;
+        z-index: 1500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
   .white-bg{
-    width: 85%; height: 80%; 
-    background:white;
-    border-radius: 8px;
-    padding: 30px;
-    background-image: url('~@/assets/background_pop5.png');
-    background-size: contain;
-    background-position: center; /* 이미지를 중앙에 정렬합니다 */
+      width: 90%; height: 90%;
+      /* position: relative; */
+      border-radius: 8px;
+      position: fixed; 
+      padding: 20px;
+      overflow-y: auto;
+      background-image: url('~@/assets/background_pop5.png');
+      background-size: contain;
+      background-position: center; /* 이미지를 중앙에 정렬합니다 */
   }
+
   .button-container{
     /* display: flex; */
     position: absolute; /* 고정 위치 */
     /* bottom: 50%; 하단에 위치 */
     left: 0; /* 왼쪽에 위치 */
+    bottom: 3%;
     width: 100%; /* 너비를 전체로 설정 */
     background-color: #fff; /* 배경 색상 */
     padding: 10px 20px; /* 패딩을 상하에만 적용 */
@@ -132,11 +133,23 @@
   button:hover{
     background-color: #0056b3;
   }
-  .close-button{
-    position: absolute;
-    top: 20px; /* 위로 10px 이동 */
-    right: 20px; /* 오른쪽으로 10px 이동 */
-  }
+  .close{
+  /* position: absolute;
+  top: 20px; /* 위로 10px 이동
+  right: 20px; 오른쪽으로 10px 이동 */
+    display: flex;
+    width: 5%;
+    padding: 10px 10px;
+    margin-top: 5px;
+    background-color: #ccc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: auto; /* 왼쪽 마진을 오토로 설정해서 오른쪽으로 밀어냄 */
+    justify-content: center;
+        
+      }
   .br{
     display: inline-block;
     height: 60%;

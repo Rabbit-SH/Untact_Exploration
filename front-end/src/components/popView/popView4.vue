@@ -2,15 +2,6 @@
     <div class="black-bg" v-if="show">
         <div class="white-bg">
             <button class="close" @click="closeP">X</button> 
-
-                <!-- <h4>쉿! 가만히 앉아 눈을 감아보세요.</h4>
-                <p>60초 동안 주변 수리에 귀 기울여 볼까요?</p>
-                <p>새들이 지저귀는 소리가 들리나요?!</p>
-                <br>
-                <p> 꿩은 울 때 꿩- 하고 울어서 이름이 꿩이랍니다.</p>
-                <p> 다음 중 어떤 소리가 꿩의 소리인지 찾아보세요!</p> -->
-                <!-- <br> -->
-                <!-- </div> -->
                 <div class="br" />
                 <div clas="soundDiv">
                     <div class="sound">
@@ -31,11 +22,6 @@
                 <br>
                 <div class="button-container">
                     <button class="submit" @click="submitSoundRes">제출하기</button>
-                    <button class="hint" @click="showHint">힌트</button>
-                </div>
-                <div class="hint-popup" v-if="showPopup">
-                    <button class="close-popup" @click="closePopup">X</button>
-                    <p> 힌트 팝업 페이지 </p>
                 </div>
         </div>
     </div>
@@ -106,34 +92,41 @@ export default {
     .black-bg{
         width: 100%; height: 100%;
         background: rgba(0, 0, 0, 0.5);
-        position: fixed;
-        padding:20px;
-        z-index: 1000;
-        align-items: center;
+        position: fixed; 
+        top: 0;
+        left: 0;
+        padding: 20px;
+        z-index: 1500;
         display: flex;
-        justify-content: center;
-    }
-    .white-bg{
-        width: 85%; height: 80%; 
-        background:white;
-        border-radius: 8px;
-        padding: 10px;
-        background-image: url('~@/assets/background_pop4.png');
-        background-size: contain;
-        background-position: center; /* 이미지를 중앙에 정렬합니다 */
-
-    }
-    .close{
-        position: absolute;
-        /* padding: 10px;
-        height:20px;
-        width: 20px; */
-        top: 20px;
-        right: 20px;
-        justify-content: center;
         align-items: center;
-        margin-left: auto;
-    }
+        justify-content: center;
+      }
+      .white-bg{
+          width: 90%; height: 90%;
+          /* position: relative; */
+          border-radius: 8px;
+          position: fixed; 
+          padding: 20px;
+          overflow-y: auto;
+          background-image: url('~@/assets/background_pop4.png');
+          background-size: contain;
+          background-position: center; /* 이미지를 중앙에 정렬합니다 */
+      }
+
+      .close{
+            display: flex;
+            width: 5%;
+            padding: 10px 10px;
+            margin-top: 5px;
+            background-color: #ccc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: auto; /* 왼쪽 마진을 오토로 설정해서 오른쪽으로 밀어냄 */
+            justify-content: center;
+        
+      }
     .sound {
         white-space: nowrap; /*줄바꿈 방지해 한 줄에 표시*/
     }
