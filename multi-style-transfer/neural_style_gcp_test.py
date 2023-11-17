@@ -238,7 +238,7 @@ def stylize_video(args):
     X = np.zeros(batch_shape, dtype=np.float32)
 
     def style_and_write(count, X):
-        
+        outputs = list()
         for i in range(count, batch_size):
             X[i] = X[count - 1]  # Use last frame to fill X
             

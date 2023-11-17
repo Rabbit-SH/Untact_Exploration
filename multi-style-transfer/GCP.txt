@@ -1,6 +1,8 @@
 train 명령어(gcp기준):
 python neural_style.py train --dataset /home/bigleader3840/dataset --style-image /home/bigleader3840/images/style_images --save-model-dir /home/bigleader3840/model/trained-model --epochs 15 --cuda 1 --log-interval 100 --batch-size 8
 
+python neural_style.py train --dataset /home/bigleader3840/dataset --style-image /home/bigleader3840/images/style_images --save-model-dir /home/bigleader3840/model/trained-model --epochs 1000 --cuda 1 --batch-size 8 --log-interval 36
+
 
 쿠다 11.8기준 파이토치 설치:
 pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
@@ -10,10 +12,7 @@ rm -r /home/bigleader3840/dataset/.ipynb_checkpoints
 
 변환 명령어: 
 
-예시 : python neural_style.py eval --content-image [바꿀이미지 경로]  \
-	--model .model/trained_models/guruk_epoch_15_Wed_Nov_15_074206_2023_100000_10000000000_style_num_265.pth  \
-	--output-image guruk 
-	--style-num 265
+예시 : python neural_style.py eval --content-image ./images/content_images/chiak2.jpg --model ./model/trained-model/guruk_epoch_15_Wed_Nov_15_074206_2023_100000_10000000000_style_num_265.pth --prefix guruk --style-num 265 --batch-size 8 --cuda 1
 
 --content-image: 바꿀이미지
 --model: 모델
@@ -22,3 +21,7 @@ rm -r /home/bigleader3840/dataset/.ipynb_checkpoints
 --style-num: 스타일 이미지 개수, 훈련에 사용된 개수랑 같아야 함
 --style-control: 특정한 스타일 이미지를 선택하고 싶으면 --style-control 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 1 처럼 벡터값을 넣어주면됨
 --seed : style-control에 특정한 벡터를 넣어주지 않는경우 랜덤값이 지정되는데 시드를 넣어주면 고정됨
+
+./model/trained-model/guruk_epoch_15_Wed_Nov_15_074206_2023_100000_10000000000_style_num_265.pth
+
+jupyter lab --ip 0.0.0.0 --port 8888
