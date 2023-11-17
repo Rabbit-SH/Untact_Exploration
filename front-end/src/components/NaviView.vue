@@ -2,14 +2,15 @@
     <div>
         <v-app-bar
             app
-            color="green"
+            color="teal"
             dark
             >
             <div class = "d-flex justify-center flex-grow-1">
                 <span class="mr-2">물두꺼비를 따라가보자!</span>
             </div>
         </v-app-bar>
-        <v-bottom-navigation
+        
+        <!-- <v-bottom-navigation
             :value = "value"
             color = "teal"
             grow
@@ -31,27 +32,17 @@
                 <v-icon>mdi-panorama-variant-outline</v-icon>
             </v-btn>
 
-        </v-bottom-navigation>
-        
-        <TutorialView :show="showtutorial" 
-            @closeTutorial="closeTutorial"
-            @openTutorial="showTutorialPopup" />
-        <Durumari :show="isCredit" @close="closeDurumari"/>
-        <GalleryView :show="gallery_open" @close="closeGallery" />
-        <ShelterView :show="showShelter" @close="closeShelter" />
-        <UploadImageView :show="uploadIMG" :class="{'show':uploadIMG}" @close="closeUImg" />
-
+        </v-bottom-navigation> -->
         <button @click="openGoogleForm" class="google-form-button">Google 폼 열기</button>
 
     </div>
 </template>
 
 <script>
-import Durumari from './NaviView/DurumariView.vue';
-import GalleryView from './NaviView/GalleryView.vue';
-import TutorialView from './NaviView/TutorialView.vue';
-import ShelterView from './NaviView/ShelterView.vue';
-import UploadImageView from './/NaviView/UploadImageView2.vue';
+// import Durumari from './NaviView/DurumariView.vue';
+// import GalleryView from './NaviView/GalleryView.vue';
+// import TutorialView from './NaviView/TutorialView.vue';
+// import UploadImageView from './/NaviView/UploadImageView2.vue';
 
 export default {
     props:{
@@ -75,64 +66,68 @@ export default {
             isCredit: false,
             gallery_open: false,
             showtutorial: false,
-            showShelter: false,
             uploadIMG: false,
         }
     },
     components:{
-    Durumari,
-    GalleryView,
-    TutorialView,
-    ShelterView,
-    UploadImageView,
+    // Durumari,
+    // GalleryView,
+    // TutorialView,
+    // UploadImageView,
 },
     methods: {
-        // toggle(코스 선택) 관련 메서드
-        toggleCourseOptions(){
-            this.showCourseOptions = !this.showCourseOptions;
-        },
-        finalizeCourseSelection() {
-            if (this.selectedCourse) {
-            // 선택된 코스로 로직 처리...
-            alert(`선택된 탐방로: ${this.selectedCourse}`);
-            }
-            this.showCourseOptions = false; // 선택 창 닫기
-        },
-        getDurumari(){
-            this.isCredit = true;
-        },
-        closeDurumari(){
-            this.isCredit = false;
-        },
-        getGallery(){
-            this.gallery_open = true;
-        },
-        closeGallery(){
-            this.gallery_open = false;
-        },
-        closeTutorial(){
-            this.showtutorial = false;
-        },
-        showTutorialPopup(){
-            this.showtutorial = true;
+        // getDurumari(){
+        //     this.isCredit = true;
+        //     this.gallery_open = false;
+        //     this.showtutorial = false;
+        //     this.uploadIMG = false;
+        // },
+        // closeDurumari(){
+        //     this.isCredit = false;
+        //     this.gallery_open = false;
+        //     this.showtutorial = false;
+        //     this.uploadIMG = false;
+        // },
+        // getGallery(){
+        //     this.gallery_open = true;
+        //     this.showtutorial = false;
+        //     this.uploadIMG = false;
+        //     this.isCredit = false;
+        // },
+        // closeGallery(){
+        //     this.gallery_open = false;
+        //     this.isCredit = false;
+        //     this.showtutorial = false;
+        //     this.uploadIMG = false;
+        // },
+        // closeTutorial(){
+        //     this.isCredit = false;
+        //     this.gallery_open = false;
+        //     this.showtutorial = false;
+        //     this.uploadIMG = false;
+        // },
+        // showTutorialPopup(){
+        //     this.showtutorial = true;
+        //     this.uploadIMG = false;
+        //     this.isCredit = false;
+        //     this.gallery_open = false;
 
-        },
-        goShelter(){
-            this.showShelter = true;
-        },
-        closeShelter(){
-            this.showShelter = false;
-        },
-
-        shwoUImg(){
-        this.uploadIMG = true;
-        },
-        closeUImg(){
-            this.uploadIMG = false;
-        },
-        closeModal(){
-            this.showModal = false;
-        },
+        // },
+        // shwoUImg(){
+        //     this.uploadIMG = true;
+        //     this.showtutorial = false;
+        //     this.isCredit = false;
+        //     this.gallery_open = false;
+        // },
+        // closeUImg(){
+        //     this.isCredit = false;
+        //     this.gallery_open = false;
+        //     this.showtutorial = false;
+        //     this.uploadIMG = false;
+        // },
+        // closeModal(){
+        //     this.showModal = false;
+        // },
         openGoogleForm(){
             const url = "https://docs.google.com/forms/d/e/1FAIpQLSdBCQgSi7xSaxSddm6OTSFwxXKcOjrNvLxfllJq-o0S7_09OQ/viewform?usp=sf_link";
             const options = "width = 700, height=600, left=200, top=200";
@@ -150,4 +145,9 @@ export default {
     bottom: 20px;
     right: 10px;
   }
+  /* .navi-bar{
+    position: flex;
+    justify-content: space-between;
+    align-items: center;
+  } */
 </style>

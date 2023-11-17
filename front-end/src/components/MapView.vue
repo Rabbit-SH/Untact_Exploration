@@ -86,29 +86,86 @@
         :icon="defaultIcon" />
 
       <l-circle :lat-lng="currentPos" :radius=circle.radius :color=circle.color />
-
-      <l-tile-layer :url="url" :attribution="attribution"/>
       <v-btn
         elevation="2"
         icon
-        :color="isZoom ? 'red' : 'gray'"
+        :color="isZoom ? 'red' : 'blue'"
         class="my-location-button"
         @click="ZoomInToCurrentPosition"
         height = "33px"
         width = "33px"
+        style="border-radius: 50%; background-color: white;"
       >
         <v-icon size = "28">mdi-crosshairs-gps</v-icon>
       </v-btn>
 
-      <div @click="InfoChiak" class="chiakInfo">
+      <div class="navi-bar">
+            <v-btn
+                elevation="2"
+                icon
+                color="teal"
+                @click="showTutorialPopup" 
+                class="story"
+                height = "50px"
+                width = "50px"
+                style="border-radius: 50%; background-color: white;">
+                <v-icon size = "28">mdi-book-open-page-variant-outline</v-icon>
+            </v-btn>
+            <v-btn
+                elevation="2"
+                icon
+                color="teal"
+                @click="getGallery" 
+                class="gallery"
+                height = "50px"
+                width = "50px"
+                style="border-radius: 50%; background-color: white;">
+                <v-icon size = "28">mdi-image-multiple</v-icon>
+            </v-btn>
+            <v-btn
+                elevation="2"
+                icon
+                color="teal"
+                @click="getDurumari" 
+                class="credit"
+                height = "50px"
+                width = "50px"
+                style="border-radius: 50%; background-color: white;">
+                <v-icon size = "28">mdi-text-box-check-outline</v-icon>
+            </v-btn>
+            <v-btn
+                elevation="2"
+                icon
+                color="teal"
+                @click="shwoUImg" 
+                class="uploadImg"
+                height = "80px"
+                width = "80px"
+                style="border-radius: 50%; background-color: white;">
+
+                <v-icon size = "50">mdi-panorama-variant-outline</v-icon>
+            </v-btn>
+        </div>
+        
+        <l-tile-layer :url="url" :attribution="attribution"/>
+
+        <TutorialView :show="showtutorial" 
+            @closeTutorial="closeTutorial"
+            @openTutorial="showTutorialPopup" />
+        <Durumari :show="isCredit" @close="closeDurumari"/>
+        <GalleryView :show="gallery_open" @close="closeGallery" />
+        <UploadImageView :show="uploadIMG" :class="{'show':uploadIMG}" @close="closeUImg" />
+
+
+      <!-- <div @click="InfoChiak" class="chiakInfo">
         <img :src="require('@/assets/reward_a.png')">
-      </div>
+      </div> -->
 
       <div  class="animated-marker" v-show="isGift">
         <img :src="require('@/assets/present.png')">
       </div>
 
-      <l-control-zoom></l-control-zoom>
+      <l-control-zoom position = "topleft"></l-control-zoom>
 
     </l-map>
   </div>
@@ -137,6 +194,11 @@ import 'leaflet-gpx';
 import markerImg from 'leaflet/dist/images/marker-icon.png';
 import markerShadowImg from 'leaflet/dist/images/marker-shadow.png';
 import markerRetinaImg from 'leaflet/dist/images/marker-icon-2x.png';
+
+import Durumari from './NaviView/DurumariView.vue';
+import GalleryView from './NaviView/GalleryView.vue';
+import TutorialView from './NaviView/TutorialView.vue';
+import UploadImageView from './/NaviView/UploadImageView2.vue';
 
 export default {
 
@@ -179,6 +241,11 @@ export default {
       current : [0,0], // ZoomInToCurrentPosition 메서드에서 버튼 누른 시점의 위치 저장을 위한 변수
       currentPos: [0,0], // 실시간 내 위치 변화 저장 변수
       showInfoChiak: false,
+
+      isCredit: false,
+      gallery_open: false,
+      showtutorial: false,
+      uploadIMG: false,
 
       isPositionReady : false,
       positionObj: {
@@ -234,6 +301,10 @@ export default {
     pop6,
     infoChiakView,
     GiftView,
+    Durumari,
+    GalleryView,
+    TutorialView,
+    UploadImageView,
   },
   mounted(){
     delete Icon.Default.prototype._getIconUrl;
@@ -255,6 +326,59 @@ export default {
     });
   },
   methods: {
+        getDurumari(){
+            this.isCredit = true;
+            this.gallery_open = false;
+            this.showtutorial = false;
+            this.uploadIMG = false;
+        },
+        closeDurumari(){
+            this.isCredit = false;
+            this.gallery_open = false;
+            this.showtutorial = false;
+            this.uploadIMG = false;
+        },
+        getGallery(){
+            this.gallery_open = true;
+            this.showtutorial = false;
+            this.uploadIMG = false;
+            this.isCredit = false;
+        },
+        closeGallery(){
+            this.gallery_open = false;
+            this.isCredit = false;
+            this.showtutorial = false;
+            this.uploadIMG = false;
+        },
+        closeTutorial(){
+            this.isCredit = false;
+            this.gallery_open = false;
+            this.showtutorial = false;
+            this.uploadIMG = false;
+        },
+        showTutorialPopup(){
+            this.showtutorial = true;
+            this.uploadIMG = false;
+            this.isCredit = false;
+            this.gallery_open = false;
+
+        },
+        shwoUImg(){
+            this.uploadIMG = true;
+            this.showtutorial = false;
+            this.isCredit = false;
+            this.gallery_open = false;
+        },
+        closeUImg(){
+            this.isCredit = false;
+            this.gallery_open = false;
+            this.showtutorial = false;
+            this.uploadIMG = false;
+        },
+        closeModal(){
+            this.showModal = false;
+        },
+
     zoomUpdated (zoom) {
       this.zoom = zoom;
     },
@@ -425,7 +549,7 @@ export default {
   .my-location-button {
     z-index: 1001;
     position: absolute;
-    bottom: 90px;
+    top: 85px;
     left: 10px;
     padding: 0px;
     border-radius: 3px;
@@ -484,4 +608,41 @@ export default {
     right: 25%;
     /* transform: translate(-50%, -50%); */
   }
+  .navi-bar {
+  position: fixed; /* 고정 위치 */
+  bottom: 5%; /* 화면 하단 */
+  left: 50%; /* 화면 중앙 정렬을 위해 왼쪽에서 50% 위치 */
+  transform: translateX(-50%); /* 중앙 정렬을 위해 X축으로 -50% 이동 */
+  display: flex; /* 내부 요소를 가로로 정렬 */
+  justify-content: center; /* 내부 요소들을 중앙에 배치 */
+  align-items: center; /* 세로 방향으로 중앙 정렬 */
+  z-index: 1001; /* 다른 요소들 위에 표시 */
+}
+
+  .navi-bar .story{
+    display: absolute;
+    align-items: center;
+    z-index: 1001;
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+  .navi-bar .gallery{
+    display: absolute; 
+    align-items: center;
+    z-index: 1001;
+    margin-right: 30px;
+  }
+  .navi-bar .credit{
+    display: absolute; 
+    align-items: center;
+    z-index: 1001;
+    margin-right: 30px;
+  }
+  .navi-bar .uploadImg{
+    display: absolute;
+    align-items: center;
+    z-index: 1001;
+    margin-right: 30px;
+  }
+
 </style>
