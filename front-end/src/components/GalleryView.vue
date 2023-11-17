@@ -52,7 +52,11 @@ export default {
     },
 };
 </script>
-<style scoped>
+<style>
+.white-bg{
+    width: 335px;
+    height: 627px;
+}
 .gallery-container {
     display: flex;
     flex-wrap: wrap;

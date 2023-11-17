@@ -1,15 +1,15 @@
 <template>
   <div class="black-bg" v-if="show">
-    <!-- <div class="white-bg">  -->
-        <!-- <button @click="closeP" class="close">X</button> -->
+    <div class="white-bg"> 
+        <button @click="closeP" class="close">X</button>
         <div class="mission">
           <button @click="closeP" class="close">X</button>
           <img :src="require('@/assets/background_duru.png')">
           
-          <!-- <button @click="closeP" class="close">X</button> -->
+          <button @click="closeP" class="close">X</button>
           
-          <!-- <div class="durumari-overlay"> -->
-            <!-- <button @click="closeP" class="close">X</button> -->
+          <div class="durumari-overlay">
+            <button @click="closeP" class="close">X</button>
             <div class="durumari">
               <div class="durumari-row">
                 <div class="d">
@@ -33,9 +33,9 @@
                 </div>
               </div>
             </div>
-          <!-- </div> -->
+          </div>
       </div>    
-    <!-- </div> -->
+    </div>
   </div>
 </template>
 
@@ -90,7 +90,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     body{
       margin: 0;
     }
@@ -106,12 +106,12 @@ export default {
       align-items: center;
       justify-content: center;
     }
-    /* .white-bg{
+    .white-bg{
       width: 80%; height: 80%; 
       background:white;
       border-radius: 8px;
       padding: 50px;
-    } */
+    }
     .close-button{
       position: absolute;
       top: 20px; /* 위로 10px 이동 */
@@ -139,7 +139,7 @@ export default {
       border-radius: 15px;
       display: relative;
     }
-    .durumari-row{
+    /* .durumari-row{
       display: flex;
-    }
+    } */
 </style>

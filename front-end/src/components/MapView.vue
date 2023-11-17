@@ -7,12 +7,38 @@
       :zoomAnimation=true
       :options="mapOptions"
       :maxBounds="maxBounds"
-      class="map"
+      class="map" 
       ref="map"
       @update:zoom="zoomUpdated"
       @update:center="centerUpdated"
       @update:bounds="boundsUpdated"
     >
+    
+    <v-app-bar
+      app
+      color="green"
+      dark
+      style="z-index: 1000"
+      >
+      <div class = "d-flex justify-center flex-grow-1">
+          <span class="mr-2">물두꺼비를 따라가보자!</span>
+      </div>
+      <div class="mission">
+        <img :src="require('@/assets/mission.png')" @click="getDurumari">
+      </div>
+      <v-btn
+        elevation="2"
+        icon
+        :color="isZoom ? 'red' : 'blue'"
+        class="my-location-button"
+        @click="ZoomInToCurrentPosition"
+        height = "33px"
+        width = "33px"
+        style="border-radius: 50%; background-color: white;"
+      >
+        <v-icon size = "28">mdi-crosshairs-gps</v-icon>
+      </v-btn>
+    </v-app-bar>
 
       <pop1 :show="popVal1" @close="closeP" @answerCorrect="updateResult(1)" class="popup" :class="{'show':popVal1}" />
       <pop2 :show="popVal2" @close="closeP" @answerCorrect="updateResult(2)" class="popup" :class="{'show':popVal2}" />
@@ -86,18 +112,6 @@
         :icon="defaultIcon" />
 
       <l-circle :lat-lng="currentPos" :radius=circle.radius :color=circle.color />
-      <v-btn
-        elevation="2"
-        icon
-        :color="isZoom ? 'red' : 'blue'"
-        class="my-location-button"
-        @click="ZoomInToCurrentPosition"
-        height = "33px"
-        width = "33px"
-        style="border-radius: 50%; background-color: white;"
-      >
-        <v-icon size = "28">mdi-crosshairs-gps</v-icon>
-      </v-btn>
 
       <div class="navi-bar">
             <v-btn
@@ -147,14 +161,14 @@
             </v-btn>
         </div>
         
-        <l-tile-layer :url="url" :attribution="attribution"/>
+        <l-tile-layer :url="url" />
 
         <TutorialView :show="showtutorial" 
             @closeTutorial="closeTutorial"
             @openTutorial="showTutorialPopup" />
         <Durumari :show="isCredit" @close="closeDurumari"/>
         <GalleryView :show="gallery_open" @close="closeGallery" />
-        <UploadImageView :show="uploadIMG" :class="{'show':uploadIMG}" @close="closeUImg" />
+        <UploadImageView :show="uploadIMG" :class="{'show':uploadIMG}" @close="closeUImg"/>
 
 
       <!-- <div @click="InfoChiak" class="chiakInfo">
@@ -165,14 +179,12 @@
         <img :src="require('@/assets/present.png')">
       </div>
 
-      <l-control-zoom position = "topleft"></l-control-zoom>
-
     </l-map>
   </div>
 </template>
    
 <script>
-import { LMap, LTileLayer, LControlZoom, LMarker, LCircle } from 'vue2-leaflet';
+import { LMap, LTileLayer, LMarker, LCircle } from 'vue2-leaflet';
 import L from 'leaflet';
 import { Icon } from 'leaflet';
 
@@ -200,6 +212,7 @@ import GalleryView from './NaviView/GalleryView.vue';
 import TutorialView from './NaviView/TutorialView.vue';
 import UploadImageView from './/NaviView/UploadImageView2.vue';
 
+
 export default {
 
   data () {
@@ -207,8 +220,8 @@ export default {
       // url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       // attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       url: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-      attribution: '&copy; <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> ' +
-                   '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+      attribution: '&copy; <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> '
+                    + '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
       // center: [ 37.40436362096728, 128.0495492913938], // 처음 지도의 중심이 되는 좌표 / 각 포인트들의 중점
       // center: [37.4148911042466, 128.05010676384],
       // center:[37.405103579156, 128.04869055748],
@@ -290,7 +303,6 @@ export default {
   components: {
     LMap,
     LTileLayer,
-    LControlZoom,
     LMarker,
     LCircle,
     pop1,
@@ -397,7 +409,14 @@ export default {
         this.isZoomIn = true;
       }
       // 0.8초 뒤 팝업 열기
-      setTimeout(()=>{this['popVal' + (index+1)] = true;}, 800); 
+      setTimeout(()=>{this['popVal' + (index+1)] = true;}, 800);
+
+      // 지도의 드래그와 스크롤 줌 비활성화
+      if (this.$refs.map && this.$refs.map.mapObject) {
+      this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
+      this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
+    }
+
     },
     closeP(){
       this.popVal1 = false;
@@ -406,6 +425,12 @@ export default {
       this.popVal4 = false;
       this.popVal5 = false;
       this.popVal6 = false;
+      
+      // 지도의 드래그와 스크롤 줌 활성화
+      if (this.$refs.map && this.$refs.map.mapObject) {
+      this.$refs.map.mapObject.dragging.enable();
+      this.$refs.map.mapObject.scrollWheelZoom.enable();
+    }
 
       if (this.isZoomIn) {
         // 팝업이 닫힌 후 줌 아웃(원래 줌 레벨로 돌아가기)
@@ -513,6 +538,14 @@ export default {
       this.result6 = false;
 
       this.isGift = true;
+    },
+    Good(){
+      this.result1 = true;
+      this.result2 = true;
+      this.result3 = true;
+      this.result4 = true;
+      this.result5 = true;
+      this.result6 = true;
     }
   },
   computed:{
@@ -530,14 +563,6 @@ export default {
     height: 100%;
     overflow :hidden
   }
-  .marker-ggomi-icon {
-    height: 50px;
-    width: auto;
-  }
-  .icon{
-    height:50px;
-    width: 50px;
-  }
   .popup{
     /* 트랜지션 속성을 추가하여 부드러운 나타남 및 사라짐 만들기 */
     transition: opacity 0.5s; 
@@ -546,19 +571,29 @@ export default {
   .popup.show{
     opacity: 1; /*나타날 때 투명도를 1로 설정하여 부드럽게 나타나게 함*/
   } 
+  .mission{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35%; 
+    height: 35%; 
+    position: absolute;
+    left: 15%;
+    top: 100%;
+    transform: translate(-50%, -50%); /* 중앙에서 정확히 위치하도록 조정 */
+  }
+  .mission img{
+    width: 100%;
+    height: auto;
+  }
   .my-location-button {
     z-index: 1001;
     position: absolute;
-    top: 85px;
+    top: 100px;
     left: 10px;
     padding: 0px;
     border-radius: 3px;
     text-align: center;
-  }
-  .center-button {
-    z-index: 1001;
-    position: absolute;
-    bottom: 100px;
   }
   .location-button-red {
     filter: grayscale(100%);
@@ -589,6 +624,7 @@ export default {
     height: auto;
     width: 70px;
   }
+  
   @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
       transform: translateY(0);
@@ -600,6 +636,8 @@ export default {
       transform: translateY(-15px);
     }
   }
+
+
   .animated-marker {
     animation: bounce 1s infinite;
     z-index: 1001;
