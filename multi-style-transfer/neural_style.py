@@ -50,13 +50,13 @@ def train(args):
         transforms.Resize(args.image_size),  # 이미지 크기 조정
         transforms.CenterCrop(args.image_size),  # 이미지 중앙 자르기
         transforms.ToTensor(),  # 텐서로 변환
-        transforms.Lambda(lambda x: x.mul(255))  # 값 범위 변경
+        transforms.Lambda(lambda x: x.mul(255))  # 이미지 텐서의 각 픽셀 값에 255를 곱하여 값의 범위를 조정. 즉 , 픽셀 값을 0과 1 사이에서 0과 255 사이로 변경
     ])
 
     # 트레이닝 데이터셋 로딩
     if not os.path.exists(args.dataset):
         print("ERROR: The specified dataset path does not exist.")
-        sys.exit(1)
+        sys.exit(1)                                                                                                                                                                                                                            
     train_dataset = datasets.ImageFolder(os.path.abspath(args.dataset), transform)
     train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)
 
