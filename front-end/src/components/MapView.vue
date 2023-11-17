@@ -151,7 +151,7 @@
                 elevation="2"
                 icon
                 color="teal"
-                @click="shwoUImg" 
+                @click="$router.push({name: 'AIView'})" 
                 class="uploadImg"
                 height = "80px"
                 width = "80px"
@@ -159,6 +159,7 @@
 
                 <v-icon size = "50">mdi-panorama-variant-outline</v-icon>
             </v-btn>
+            <!-- <v-btn fab @click="Good" style="z-index:3000; position:absolte; left:30; botton:200;">ㅋㅋ</v-btn> -->
         </div>
         
         <l-tile-layer :url="url" />
@@ -590,6 +591,7 @@ export default {
     z-index: 1001;
     position: absolute;
     top: 100px;
+
     left: 10px;
     padding: 0px;
     border-radius: 3px;
