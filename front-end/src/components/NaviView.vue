@@ -14,21 +14,28 @@
             :value = "value"
             color = "teal"
             grow
+            class="navi-button"
+            justify="space-around"
+            background-color="rgba(255,255,255,0.2)"
         >
-            <v-btn @click="showTutorialPopup" class="story">
-                <span>튜토리얼 다시보기</span>
+            <v-btn style="border-radius:50%;"
+            @click="showTutorialPopup" class="story">
+                <!-- <span>튜토리얼</span> -->
                 <v-icon>mdi-book-open-page-variant-outline</v-icon>
             </v-btn>
-            <v-btn @click="getGallery" class="gallery">
-                <span>사진첩</span>
+            <v-btn style="border-radius:50%;"
+            @click="getGallery" class="gallery">
+                <!-- <span>사진첩</span> -->
                 <v-icon>mdi-image-multiple</v-icon>
             </v-btn>
-            <v-btn @click="getDurumari" class="credit">
-                <span>미션 현황</span>
+            <v-btn style="border-radius:50%;"
+            @click="getDurumari" class="credit">
+                <!-- <span>미션 현황</span> -->
                 <v-icon>mdi-text-box-check-outline</v-icon>
             </v-btn>
-            <v-btn @click="shwoUImg" class="uploadImg">
-                <span>수묵화 변환</span>
+            <v-btn x-large style="border-radius:50%;" 
+            @click="shwoUImg" class="uploadImg">
+                <!-- <span>수묵화 변환</span> -->
                 <v-icon>mdi-panorama-variant-outline</v-icon>
             </v-btn>
 
@@ -145,9 +152,15 @@ export default {
     bottom: 20px;
     right: 10px;
   }
+<<<<<<< Updated upstream
   /* .navi-bar{
     position: flex;
     justify-content: space-between;
     align-items: center;
   } */
+=======
+  .navi-button{
+    z-index: 450;
+  }
+>>>>>>> Stashed changes
 </style>
