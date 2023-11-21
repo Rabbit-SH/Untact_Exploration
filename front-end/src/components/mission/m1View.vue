@@ -144,7 +144,7 @@ export default {
         flex-direction: column; 
         align-items: flex-end;
         background-image: url('@/assets/mission/bg_1.png');
-        background-size: cover; /* 배경 이미지 크기 조정 옵션 */
+        background-size: contain; /* 배경 이미지 크기 조정 옵션 */
         background-position: center; /* 배경 이미지 위치 조정 옵션 */
         background-repeat: no-repeat; /* 배경 이미지 반복 설정 */
       }
