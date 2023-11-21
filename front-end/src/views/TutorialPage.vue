@@ -26,10 +26,8 @@
       return {
         items: [
           { src: require('@/assets/tutorialView/캐릭터 소개 예시.png') },
-          { src: require('@/assets/tutorialView/튜토리얼_병합.jpg') },
+          { src: require('@/assets/tutorialView/튜토리얼.jpg') },
           { src: require('@/assets/tutorialView/튜토리얼_마지막.png') },
-          // { src: require('@/assets/tutorialView/tutorial2.png') },
-          // { src: require('@/assets/tutorialView/tutorial3.png') },
         ],
       };
     },
