@@ -1,9 +1,9 @@
 <template>
     <div class="black-bg" v-if="show">
         <div class="white-bg">
-            <img :src="require('@/assets/mission/bg_2.png')">
-
-            <button class="close" @click="closeP">X</button>
+            <button class="close" @click="closeP">
+                <img src="@/assets/mission/close.png">
+            </button>
             <div class="content-container" justify="center" align="center">
 
                 <v-text-field
@@ -19,7 +19,7 @@
                 
                 
                 <br>
-                <v-btn color="primary" class="text-center mt-3 pl-10 pr-10" @click="submitSoundRes">제출하기</v-btn>
+                <v-btn class="custom-submit-button mt-3 pl-10 pr-10" color="#EF8200" @click="submitSoundRes">제출하기</v-btn>
             </div>
         </div>
         <v-dialog v-model="dialog" max-width="500">
@@ -120,12 +120,6 @@ export default {
         width: 100%;
         border-radius: 8px;
     }
-    body{
-        margin: 0;
-    }
-    div{
-        box-sizing: border-box;
-    }
     .black-bg{
         width: 100%; height: 100%;
         background: rgba(0, 0, 0, 0.5);
@@ -140,41 +134,41 @@ export default {
       }
       .white-bg{
         width: 90%; height: 90%;
-        border-radius: 8px;
+        border-radius: 22px;
         position: fixed; 
-        background-color: white;
+        /* background-color: white; */
         overflow:hidden;
-
         display:flex;
-        flex-direction: column; /*수직 배치*/
-        align-items: flex-end; /* 오른쪽 정렬 */
+        flex-direction: column; 
+        align-items: flex-end;
+        background-image: url('@/assets/mission/bg_2.png');
+        background-size: cover; /* 배경 이미지 크기 조정 옵션 */
+        background-position: center; /* 배경 이미지 위치 조정 옵션 */
+        background-repeat: no-repeat; /* 배경 이미지 반복 설정 */
       }
 
       .content-container{
         width:100%;
-        position: relative;
-        top:10%;
-      }
-
+        position: absolute;
+        bottom: 7%;
+    }
     .close{
-        width: 20px;
-        height: 20px;
-
-        background-color: #ccc;
-        color: white;
-        border: none;
-        border-radius: 4px;
+        width: 22px;
+        height: 22px;
         cursor: pointer;
-
         justify-content: center;
         align-items: center;
         position:absolute;
-        top:10px;
-        right:10px;
-    
+        top: 3%;
+        right: 5%;
+
     }
     .textarea{
         justify-content: center;
     }
-
+    .custom-submit-button {
+        color: white !important; /* 텍스트 색상을 흰색으로 */
+        font-weight: bold; /* 글씨 두께를 굵게 */
+        font-size: 18px; /* 글씨 크기를 18px로 설정 */
+    }
 </style>

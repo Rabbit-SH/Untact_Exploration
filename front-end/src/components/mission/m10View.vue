@@ -1,10 +1,9 @@
 <template>
     <div class="black-bg" v-if="show">
         <div class="white-bg">
-            <button class="close" @click="closeP">X</button>
-            <div class="quiz">
-                <img :src="require('@/assets/mission/bg-10.png')" class="img">
-            </div>
+            <button class="close" @click="closeP">
+                <img src="@/assets/mission/close.png">
+            </button>
             <div class="content">
                 <div class="cam-container">
                     <div @click="triggerCamera" class="cam-button mb-3">
@@ -18,7 +17,7 @@
                     <img src="" id="photoimg">
                 </div>
                 <div class="button-container">
-                    <v-btn color="primary" class="text-center mt-3 pl-10 pr-10" @click="submitResponse">제출하기</v-btn>
+                    <v-btn class="custom-submit-button mt-3 pl-10 pr-10" color="#EF8200" @click="submitSoundRes">제출하기</v-btn>
                 </div>
             </div>
         </div>
@@ -182,12 +181,6 @@ export default {
 </script>
 
 <style scoped>
-    body{
-        margin: 0;
-    }
-    div{
-        box-sizing: border-box;
-    }
     .black-bg{
         width: 100%; height: 100%;
         background: rgba(0, 0, 0, 0.5);
@@ -201,20 +194,33 @@ export default {
         justify-content: center;
     }
     .white-bg{
-        width: 90%; 
-        height: 90%;
-        border-radius: 8px;
+        width: 90%; height: 90%;
+        border-radius: 22px;
         position: fixed; 
-        display: flex; 
-        flex-direction: column; /* 자식 요소들을 수직 방향으로 배열 */
-        overflow-y: auto; /* 내용이 넘칠 경우 스크롤 가능하도록 설정 */
-
-    }
-
-    .content-container{
+        /* background-color: white; */
+        overflow:hidden;
+        display:flex;
+        flex-direction: column; 
+        align-items: flex-end;
+        background-image: url('@/assets/mission/bg_10.png');
+        background-size: cover; /* 배경 이미지 크기 조정 옵션 */
+        background-position: center; /* 배경 이미지 위치 조정 옵션 */
+        background-repeat: no-repeat; /* 배경 이미지 반복 설정 */
+      }
+    .content{
         width:100%;
-        position: relative;
-        top:8%;
+        position: absolute;
+        bottom: 7%;
+    }
+    .close img{
+        width: 22px;
+        height: 22px;
+        cursor: pointer;
+        justify-content: center;
+        align-items: center;
+        position:absolute;
+        top: 3%;
+        right: 5%;
     }
     .img-container{
         justify-content: center;
@@ -236,28 +242,6 @@ export default {
     #dialogPhoto {
         width: 80%; /* 이미지 크기 조절 */
     }
-    .quiz{
-        flex: 1; /* 각 요소가 동일한 공간을 차지하도록 설정 */
-        display: flex; /* flex 레이아웃 사용 */
-        flex-direction: column; /* 자식 요소들을 수직 방향으로 배열 */
-        justify-content: center; /* 중앙 정렬 */
-        align-items: center; /* 중앙 정렬 */
-    }
-    .quiz img{
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* 이미지가 컨테이너를 꽉 채우도록 설정 */
-    }
-    .content {
-        background-color: white;
-        flex-grow: 1; /* 가능한 모든 공간을 차지하도록 설정 */
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start; /* 내용을 위에서부터 시작 */
-        align-items: center;
-        overflow-y: auto;
-        padding-bottom: 20px; /* 하단 여백 추가 */
-    }
     .cam-container {
         display: flex;
         justify-content: center;
@@ -270,19 +254,5 @@ export default {
         display: flex; /* 버튼들을 가로로 정렬 */
         justify-content: center; /* 가운데 정렬 */
         margin-top: auto; /* 위쪽 요소들이 차지한 후 남은 공간을 모두 차지 */
-    }
-    .close {
-        position: absolute; /* 절대적 위치 지정 */
-        top: 10px; /* 상단에서 10px 떨어진 곳에 위치 */
-        right: 10px; /* 오른쪽에서 10px 떨어진 곳에 위치 */
-        display: flex;
-        width: auto; /* 너비를 자동으로 설정 */
-        padding: 10px;
-        background-color: #ccc;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        justify-content: center;
     }
 </style>s

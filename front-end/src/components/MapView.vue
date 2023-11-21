@@ -13,17 +13,17 @@
       @update:center="centerUpdated"
       @update:bounds="boundsUpdated"
     >
-    
-    <div class="header">
-      <div class="mission">
-        <img :src="require('@/assets/mission.png')" @click="getDurumari">
-        <div class="mission-current">
-          {{ completedMissionsCount }}/{{ totalMissions }}
-        </div>
+
+    <div class="logo">
+      <img :src="require('@/assets/logo.png')">
+    </div>
+
+    <div class="mission">
+      <img :src="require('@/assets/mission.png')" @click="getDurumari">
+      <div class="mission-current">
+        {{ completedMissionsCount }}/{{ totalMissions }}
       </div>
-      <div class="logo">
-        <img :src="require('@/assets/logo.png')">
-      </div>
+      
     </div>
     <v-btn
       elevation="2"
@@ -49,7 +49,7 @@
       <m9 :show="popVal9" @close="closeP" @answerCorrect="updateResult(9)" class="popup" :class="{'show':popVal9}" />
       <m10 :show="popVal10" @close="closeP" @answerCorrect="updateResult(10)" class="popup" :class="{'show':popVal10}" />
 
-      <infoChiakView :show="showInfoChiak" class="infoChiak" :class="{'show': showInfoChiak}" @closeTutorial="closed"/>
+      <InfoChiakView :show="showInfoChiak" class="infoChiak" :class="{'show': showInfoChiak}" @closeTutorial="closed"/>
       <GiftView :show="allRes" :class="{'show': allRes}" @closeGift="closeLast"/>
 
       <LMarker
@@ -211,7 +211,7 @@ import Durumari from './NaviView/DurumariView.vue';
 import GalleryView from './NaviView/GalleryView.vue';
 import TutorialView from './NaviView/TutorialView.vue';
 import UploadImageView from './NaviView/UploadImageView2.vue';
-import infoChiakView from './NaviView/infoChiakView.vue';
+import InfoChiakView from './NaviView/InfoChiakView.vue';
 
 
 // 결과를 세션 스토리지에 저장하는 함수
@@ -327,7 +327,7 @@ export default {
     m8,
     m9,
     m10,
-    infoChiakView,
+    InfoChiakView,
     GiftView,
     Durumari,
     GalleryView,
@@ -706,18 +706,23 @@ export default {
     z-index: 1001;
     margin-right: 30px;
   }
-  .header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
+  .logo {
+    position: absolute; /* 절대 위치 */
+    top: 1%; /* 상단에 위치 */
+    left: 50%; /* 화면의 가로 중앙에 위치 */
+    transform: translateX(-50%); /* X축으로 -50% 이동하여 정확한 중앙 정렬 */
+    z-index: 1000; /* 다른 요소들 위에 표시 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    width: 70%;
   }
+  .logo img{
+    width: 100%;
+    height: auto;
+  }
+
   .mission {
-    flex: 1;
+    top: 9%;
+    z-index: 1000;
     width: 30%;
     height: 30%;
     position: relative; /* mission 요소 내에서 mission-current의 위치를 결정하기 위해 relative 설정 */
@@ -730,24 +735,17 @@ export default {
 
   .mission-current {
     position: absolute; /* mission 요소 내에서 절대 위치 설정 */
-    top: 35%; 
+    top: 20%; 
     left: 35%;
     transform: translate(-50%, -50%); /* 정확한 중앙 정렬을 위해 */
     z-index: 1000; /* 이미지 위에 오도록 z-index 설정 */
     font-size: 20px; /* 폰트 크기 */
     color: black; /* 폰트 색상 */
   }
-
-  .logo{
-    flex: 3;
-  }
-  .logo img{
-    width: 100%;
-  }
   .my-location-button {
     z-index: 1001;
     position: absolute;
-    top: 15%;
+    top: 25%;
     left: 5%;
     padding: 0px;
     border-radius: 3px;
