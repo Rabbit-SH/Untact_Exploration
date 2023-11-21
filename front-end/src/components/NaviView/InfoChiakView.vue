@@ -1,24 +1,20 @@
 <template>
     <div class="black-bg" v-if="show">
-        <!-- <div class="tutorial" :style="{ background: slide.backgroundColor }"> -->
-        <div v-for="(slide, index) in slides" v-show="currentSlideIndex === index" :key="slide.id" class="slideDIV">
-            <div class="tutorial" :style="{ background: slide.backgroundColor }">
-
-                <div class="img-container">
-                    <img :src="slide.image" alt="Tutorial Image" :style="{ width: '100%', height: '100%' }"/>
-                </div>
-
-                <button class="prev" @click="prevSlide" >
-                    <img :src="require('@/assets/left.png')">
-                </button>
-                <button class="next" @click="nextSlide" v-if="currentSlideIndex < slides.length - 1">
-                    <img :src="require('@/assets/right.png')">
-                </button>
-                <button class="closetutorial" @click="closetutorial" >X</button>
-            </div>
+        <div class="white-bg">  
+            <v-carousel v-model="currentSlideIndex" hide-delimiters class="tutorial-img">
+                <v-carousel-item
+                    v-for="slide in slides"
+                    class="tutorial-img-ca"
+                    :key="slide.id"
+                    :src="slide.image" cover>
+                    <button class="closetutorial text-center" @click="closetutorial">X</button> 
+                    
+                </v-carousel-item>
+            </v-carousel>
         </div>
     </div>
 </template>
+
 
 <script>
 export default {
@@ -44,127 +40,76 @@ export default {
         }
     },
     methods: {
-        nextSlide() {
-            if (this.currentSlideIndex < this.slides.length - 1) {
-                this.currentSlideIndex++;
-            }
-        },
-        prevSlide() {
-            if(this.currentSlideIndex > 0){
-                this.currentSlideIndex--;
-            }
-        },
         closetutorial(){
             this.currentSlideIndex = 0;
             this.$emit('closeTutorial');
-        },
-        showTutorialPopup(){
-            this.currentSlideIndex = 0;
-            this.$emit('openTutorial');
         },
 
     },
 }
 </script>
 
-<style>
+<style scoped>
     .black-bg{
         width: 100%; height: 100%;
-        background: rgba(255, 255, 255, 0.1);
-        position: fixed; padding: 20px;
-        z-index: 10000;
+        background: rgba(0, 0, 0, 0.5);
+        position: fixed; 
+        top: 0;
+        left: 0;
+        padding: 20px;
+        z-index: 1500;
         display: flex;
         align-items: center;
         justify-content: center;
-        text-align: center;
     }
-    .tutorial{
-        position: relative;
+    .white-bg{
+        width: 80%;
+        position: fixed; 
+        overflow-y: auto;
+        background-size: contain;
+        background-position: center; /* 이미지를 중앙에 정렬합니다 */
+        z-index: 1600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius:5px;
+    }
+
+    .tutorial-img-ca {
+        background-size: 100% 100%; /* 이미지를 컨테이너 크기에 맞춰 늘림 */
+        background-position: center;
         width: 100%;
         height: 100%;
-        z-index: 1000;
-        text-align: center;
-        border-radius: 8px;
-        justify-content: center;
-        padding: 10px;
-        display: flex;
-        align-items: center;
-        overflow: auto;
-        flex-direction: column;
-    }
-    .prev{
-        position: absolute;
-        left: 10px;
-        bottom: 50%;
-        background-color: #ccc;
-        color: white;
-        border-radius: 4px;
-        border: none;
-        padding: 5px 10px;
-    }
-    .next{
-        position: absolute;
-        right: 10px;
-        bottom: 50%;
-        background-color: #ccc;
-        color: white;
-        border-radius: 4px;
-        border: none;
-        padding: 5px 10px;
     }
     .closetutorial{
-        position: absolute;
-        top: 15px;
-        right: 25px;
+        /* position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 10px;
+        height: 10px;
         display: flex;
         width: auto;
-        padding: 5px 10px;
         margin-top: 5px;
         background-color: #ccc;
         color: white;
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        margin-left: auto; /* 왼쪽 마진을 오토로 설정해서 오른쪽으로 밀어냄 */
-    }
-    .start{
-        position: absolute;
-        background-color: white;
+        margin-left: auto; */
+        width: 20px;
+        height: 20px;
+
+        background-color: #ccc;
         color: white;
         border: none;
-        /* border-radius: 4px; */
-        /* padding: 10px 20px; */
-        /* bottom: 20%; */
-        top: 25%;
-        width: 100%;
-        height:auto;
-        /* pointer-events: none; */
-    }
-     /* 이미지 크기 조정을 위한 CSS */
-     .image-container {
-        width: 100%; /* div 폭에 맞게 조정 */
-        max-height: 60vh; /* 최대 높이 설정 (60% 화면 높이) */
-        overflow: hidden; /* 넘치는 부분 숨김 */
-        display: block;
-        align-items: center;
+        border-radius: 4px;
+        cursor: pointer;
+
         justify-content: center;
-        /* z-index: 2000; */
-        object-fit: contain;
-
-    }
-
-    .image-container img {
-        width: auto;
-        height: 100%;
-        max-width: 100%; /* 이미지 폭 최대 크기 설정 */
-        max-height: 100%; /* 이미지 높이 최대 크기 설정 */
-        object-fit: fill;
-
-    }
-    .slideDIV{
-        justify-content: center;
-        text-align: center;
         align-items: center;
+        position:absolute;
+        top:10px;
+        right:10px;
     }
 
 </style>

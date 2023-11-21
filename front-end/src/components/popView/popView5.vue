@@ -3,7 +3,15 @@
       <div class="white-bg"> 
         <button class="close" @click="closeP">X</button> 
         <div class="br" />
-        <input type="text" v-model="userAnswer" class="textarea">
+        <!-- <input type="text" v-model="userAnswer" class="textarea"> -->
+        <v-text-field
+            label="답변을 입력해주세요"
+            single-line
+            outlined
+            class="textarea"
+            v-model="userAnswer"
+            justify="center"
+          ></v-text-field>
         <br>
         <br>
         <div class="button-container">
@@ -163,8 +171,8 @@
     padding: 10px;
     /* justify-content: center; */
     font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    /* border: 1px solid #ccc;
+    border-radius: 4px; */
   }
   .hint-popup{
     width: 65%; height: 65%;

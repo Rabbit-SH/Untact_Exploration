@@ -14,38 +14,40 @@
       @update:bounds="boundsUpdated"
     >
     
-    <v-app-bar
-      app
-      color="green"
-      dark
-      style="z-index: 1000"
-      >
-      <div class = "d-flex justify-center flex-grow-1">
-          <span class="mr-2">물두꺼비를 따라가보자!</span>
-      </div>
+    <div class="header">
       <div class="mission">
         <img :src="require('@/assets/mission.png')" @click="getDurumari">
+        <div class="mission-current">
+          {{ completedMissionsCount }}/{{ totalMissions }}
+        </div>
       </div>
-      <v-btn
-        elevation="2"
-        icon
-        :color="isZoom ? 'red' : 'blue'"
-        class="my-location-button"
-        @click="ZoomInToCurrentPosition"
-        height = "33px"
-        width = "33px"
-        style="border-radius: 50%; background-color: white;"
-      >
-        <v-icon size = "28">mdi-crosshairs-gps</v-icon>
-      </v-btn>
-    </v-app-bar>
+      <div class="logo">
+        <img :src="require('@/assets/logo.png')">
+      </div>
+    </div>
+    <v-btn
+      elevation="2"
+      icon
+      :color="isZoom ? 'red' : 'blue'"
+      class="my-location-button"
+      @click="ZoomInToCurrentPosition"
+      height = "33px"
+      width = "33px"
+      style="border-radius: 50%; background-color: white;"
+    >
+      <v-icon size = "28">mdi-crosshairs-gps</v-icon>
+    </v-btn>
 
-      <pop1 :show="popVal1" @close="closeP" @answerCorrect="updateResult(1)" class="popup" :class="{'show':popVal1}" />
-      <pop2 :show="popVal2" @close="closeP" @answerCorrect="updateResult(2)" class="popup" :class="{'show':popVal2}" />
-      <pop3 :show="popVal3" @close="closeP" @answerCorrect="updateResult(3)" class="popup" :class="{'show':popVal3}" />
-      <pop4 :show="popVal4" @close="closeP" @answerCorrect="updateResult(4)" class="popup" :class="{'show':popVal4}" />
-      <pop5 :show="popVal5" @close="closeP" @answerCorrect="updateResult(5)" class="popup" :class="{'show':popVal5}" />
-      <pop6 :show="popVal6" @close="closeP" @answerCorrect="updateResult(6)" class="popup" :class="{'show':popVal6}" />
+      <m1 :show="popVal1" @close="closeP" @answerCorrect="updateResult(1)" class="popup" :class="{'show':popVal1}" />
+      <m2 :show="popVal2" @close="closeP" @answerCorrect="updateResult(2)" class="popup" :class="{'show':popVal2}" />
+      <m3 :show="popVal3" @close="closeP" @answerCorrect="updateResult(3)" class="popup" :class="{'show':popVal3}" />
+      <m4 :show="popVal4" @close="closeP" @answerCorrect="updateResult(4)" class="popup" :class="{'show':popVal4}" />
+      <m5 :show="popVal5" @close="closeP" @answerCorrect="updateResult(5)" class="popup" :class="{'show':popVal5}" />
+      <m6 :show="popVal6" @close="closeP" @answerCorrect="updateResult(6)" class="popup" :class="{'show':popVal6}" />
+      <m7 :show="popVal7" @close="closeP" @answerCorrect="updateResult(7)" class="popup" :class="{'show':popVal7}" />
+      <m8 :show="popVal8" @close="closeP" @answerCorrect="updateResult(8)" class="popup" :class="{'show':popVal8}" />
+      <m9 :show="popVal9" @close="closeP" @answerCorrect="updateResult(9)" class="popup" :class="{'show':popVal9}" />
+      <m10 :show="popVal10" @close="closeP" @answerCorrect="updateResult(10)" class="popup" :class="{'show':popVal10}" />
 
       <infoChiakView :show="showInfoChiak" class="infoChiak" :class="{'show': showInfoChiak}" @closeTutorial="closed"/>
       <GiftView :show="allRes" :class="{'show': allRes}" @closeGift="closeLast"/>
@@ -89,79 +91,78 @@
       <LMarker
         :key="markers[6].id"
         :lat-lng="markers[6].coordinates"
-        :icon="defaultIcon" />
+        @click="openP(6)"
+        :icon="result7 ? customIcon: defaultIcon" />
 
       <LMarker
         :key="markers[7].id"
         :lat-lng="markers[7].coordinates"
-        :icon="defaultIcon" />
+        @click="openP(7)"
+        :icon="result8 ? customIcon: defaultIcon" />
 
       <LMarker
         :key="markers[8].id"
         :lat-lng="markers[8].coordinates"
-        :icon="defaultIcon" />
+        @click="openP(8)"
+        :icon="result9 ? customIcon: defaultIcon" />
 
       <LMarker
         :key="markers[9].id"
         :lat-lng="markers[9].coordinates"
-        :icon="defaultIcon" />
-
-      <LMarker
-        :key="markers[10].id"
-        :lat-lng="markers[10].coordinates"
-        :icon="defaultIcon" />
+        @click="openP(9)"
+        :icon="result10 ? customIcon: defaultIcon" />
 
       <l-circle :lat-lng="currentPos" :radius=circle.radius :color=circle.color />
 
       <div class="navi-bar">
-            <v-btn
-                elevation="2"
-                icon
-                color="teal"
-                @click="showTutorialPopup" 
-                class="story"
-                height = "50px"
-                width = "50px"
-                style="border-radius: 50%; background-color: white;">
-                <v-icon size = "28">mdi-book-open-page-variant-outline</v-icon>
-            </v-btn>
-            <v-btn
-                elevation="2"
-                icon
-                color="teal"
-                @click="getGallery" 
-                class="gallery"
-                height = "50px"
-                width = "50px"
-                style="border-radius: 50%; background-color: white;">
-                <v-icon size = "28">mdi-image-multiple</v-icon>
-            </v-btn>
-            <v-btn
-                elevation="2"
-                icon
-                color="teal"
-                @click="getDurumari" 
-                class="credit"
-                height = "50px"
-                width = "50px"
-                style="border-radius: 50%; background-color: white;">
-                <v-icon size = "28">mdi-text-box-check-outline</v-icon>
-            </v-btn>
-            <v-btn
-                elevation="2"
-                icon
-                color="teal"
-                @click="$router.push({name: 'AIView'})" 
-                class="uploadImg"
-                height = "80px"
-                width = "80px"
-                style="border-radius: 50%; background-color: white;">
+        <v-btn
+          elevation="2"
+          icon
+          color="teal"
+          @click="showTutorialPopup" 
+          class="story"
+          height = "50px"
+          width = "50px"
+          style="border-radius: 50%; background-color: white;">
+          <v-icon size = "28">mdi-book-open-page-variant-outline</v-icon>
+        </v-btn>
+        <v-btn
+          elevation="2"
+          icon
+          color="teal"
+          @click="getGallery" 
+          class="gallery"
+          height = "50px"
+          width = "50px"
+          style="border-radius: 50%; background-color: white;">
+          <v-icon size = "28">mdi-image-multiple</v-icon>
+        </v-btn>
+        <v-btn
+          elevation="2"
+          icon
+          color="teal"
+          @click="InfoChiak" 
+          class="credit"
+          height = "50px"
+          width = "50px"
+          style="border-radius: 50%; background-color: white;">
+          <v-icon size = "28">mdi-text-box-check-outline</v-icon>
+        </v-btn>
+        <v-btn
+          elevation="2"
+          icon
+          color="teal"
+          @click="$router.push({name: 'AIView'})" 
+          class="uploadImg"
+          height = "80px"
+          width = "80px"
+          style="border-radius: 50%; background-color: white;">
 
-                <v-icon size = "50">mdi-panorama-variant-outline</v-icon>
-            </v-btn>
-        </div>
+          <v-icon size = "50">mdi-panorama-variant-outline</v-icon>
+        </v-btn>
+      </div>
         
-        <l-tile-layer :url="url" />
+      <l-tile-layer :url="url" />
 
         <TutorialView :show="showtutorial" 
             @closeTutorial="closeTutorial"
@@ -170,13 +171,9 @@
         <GalleryView :show="gallery_open" @close="closeGallery" />
         <UploadImageView :show="uploadIMG" :class="{'show':uploadIMG}" @close="closeUImg"/>
 
-
-      <!-- <div @click="InfoChiak" class="chiakInfo">
-        <img :src="require('@/assets/reward_a.png')">
-      </div> -->
-
       <div  class="animated-marker" v-show="isGift">
-        <img :src="require('@/assets/present.png')">
+        <img :src="require('@/assets/present.png')" 
+        @click="$router.push({name: 'FinalView'})">
       </div>
 
     </l-map>
@@ -190,14 +187,17 @@ import { Icon } from 'leaflet';
 
 import EventBus from '@/EventBus.js';
 
-import pop1 from '../components/popView/popView1.vue';
-import pop2 from '../components/popView/popView2.vue';
-import pop3 from '../components/popView/popView3.vue';
-import pop4 from '../components/popView/popView4.vue';
-import pop5 from '../components/popView/popView5.vue';
-import pop6 from '../components/popView/popView6.vue';
+import m1 from '../components/mission/m1View.vue';
+import m2 from '../components/mission/m2View.vue';
+import m3 from '../components/mission/m3View.vue';
+import m4 from '../components/mission/m4View.vue';
+import m5 from '../components/mission/m5View.vue';
+import m6 from '../components/mission/m6View.vue';
+import m7 from '../components/mission/m7View.vue';
+import m8 from '../components/mission/m8View.vue';
+import m9 from '../components/mission/m9View.vue';
+import m10 from '../components/mission/m10View.vue';
 
-import infoChiakView from '../components/NaviView/InfoChiakView.vue';
 import GiftView from '../components/GiftView.vue';
 
 import 'leaflet/dist/leaflet.css';
@@ -210,22 +210,29 @@ import markerRetinaImg from 'leaflet/dist/images/marker-icon-2x.png';
 import Durumari from './NaviView/DurumariView.vue';
 import GalleryView from './NaviView/GalleryView.vue';
 import TutorialView from './NaviView/TutorialView.vue';
-import UploadImageView from './/NaviView/UploadImageView2.vue';
+import UploadImageView from './NaviView/UploadImageView2.vue';
+import infoChiakView from './NaviView/infoChiakView.vue';
 
+
+// 결과를 세션 스토리지에 저장하는 함수
+function saveResultsToLocalStorage(results) {
+  sessionStorage.setItem('missionResults', JSON.stringify(results));
+}
+
+// 세션 스토리지에서 결과를 가져오는 함수
+function getResultsFromSessionStorage() {
+  const resultsJSON = sessionStorage.getItem('missionResults');
+  return resultsJSON ? JSON.parse(resultsJSON) : {};
+}
 
 export default {
 
   data () {
     return {
-      // url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      // attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       url: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
       attribution: '&copy; <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> '
                     + '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
-      // center: [ 37.40436362096728, 128.0495492913938], // 처음 지도의 중심이 되는 좌표 / 각 포인트들의 중점
-      // center: [37.4148911042466, 128.05010676384],
-      // center:[37.405103579156, 128.04869055748],
-      center: [37.4014687, 128.049426499],
+      center: [37.3994891299528, 128.049967288971],
       zoom: 15, // 초기 확대 레벨
       previousZoom : null, //현재의 확대 레벨
       bounds: null, //지도 경계가 변경될 때 발생하는 이벤트(드래그되거나 확대/축소 시 발생)
@@ -240,6 +247,10 @@ export default {
       popVal4 : false,
       popVal5 : false,
       popVal6 : false,
+      popVal7 : false,
+      popVal8 : false,
+      popVal9 : false,
+      popVal10 : false,
 
       result1: false,
       result2: false,
@@ -247,6 +258,10 @@ export default {
       result4: false,
       result5: false,
       result6: false,
+      result7: false,
+      result8: false,
+      result9: false,
+      result10: false,
 
       isZoomIn: false, //줌인이 된 상태인지 아닌지 확인(팝업창 띄우기 위한 변수)
       isZoom : false, //내 위치 버튼을 위한 줌인 상태 확인 변수
@@ -273,19 +288,16 @@ export default {
       },
 
       markers: [
-        {id:1, coordinates: [37.4045112586344, 128.047172427177], name:'시작 지점'},
-        {id:2, coordinates: [37.4047243241094, 128.04743796587], name:'황장금표'},
-        {id:3, coordinates: [37.40485112, 128.04897584], name:'황장숲목길 시작'},
-        {id:4, coordinates: [37.40344835, 128.04888571], name:'가족사진 미션(후보)'},
-        {id:5, coordinates: [37.3994891299528, 128.049967288971], name:'구룡사 사진미션 장소'},
-        // {id:6, coordinates: [37.39832721, 128.05118929], name:'출렁다리 이후 잎 비교 미션'},
-        {id:7, coordinates: [37.3972602794003, 128.051370084286], name:'꿩 전설(범람로 시작)'},
-        {id:8, coordinates: [37.39634559, 128.05203636], name:'나무 잎 비교 미션'},
-        {id:9, coordinates: [37.3962438504021, 128.051914572716], name:'솔방울 줍기 미션'},
-        {id:10, coordinates: [37.395769, 128.052579], name:'갈림길 합쳐지는 곳'},
-        {id:11, coordinates: [37.3943047128225, 128.053515851498], name:'종료 지점'},
-        {id:12, coordinates: [37.394792698322, 128.053207397461], name:'히든미션(금강초롱꽃을 찾아라)'},        
-
+        {id:1, coordinates: [37.4148974953341, 128.050171136856], name:'치악산 체험학습관 맛보기 미션'},
+        {id:2, coordinates: [37.4047839823339, 128.047338724136], name:'황장금표'},
+        {id:3, coordinates: [37.40485112, 128.04897584], name:'황장목숲길 안내판'},
+        {id:4, coordinates: [37.403465098361, 128.048915863037], name:'데크길1: 가족사진'},
+        {id:5, coordinates: [37.40172059, 128.05039145], name:'데크길 2 : 꺾인 후 지점'},
+        {id:6, coordinates: [37.3992934, 128.0498706], name:'구룡사'},
+        {id:7, coordinates: [37.39793653, 128.05143569], name:'돌탑 미션'},
+        {id:8, coordinates: [37.3972176621091, 128.051402270794], name:'범람로 시작 전 표지판'},
+        {id:9, coordinates: [37.3946674, 128.0533533], name:'탄소중립 미션'},
+        {id:10, coordinates: [37.3950754, 128.0534256], name:'솔비로길(야생화원)'},
       ],
       defaultIcon: new Icon({  // 지도의 마커 사용자 지정 아이콘(기본 디폴트 아이콘)
         iconUrl: require('@/assets/marker.png'),
@@ -305,12 +317,16 @@ export default {
     LTileLayer,
     LMarker,
     LCircle,
-    pop1,
-    pop2,
-    pop3,
-    pop4,
-    pop5,
-    pop6,
+    m1,
+    m2,
+    m3,
+    m4,
+    m5,
+    m6,
+    m7,
+    m8,
+    m9,
+    m10,
     infoChiakView,
     GiftView,
     Durumari,
@@ -326,6 +342,8 @@ export default {
       shadowUrl: markerShadowImg,
     });
 
+    this.$refs.map.mapObject.attributionControl.setPrefix(''); // attribution을 제거하는 코드
+
     // gpx 파일을 위한 코드
     this.loadGPX();
 
@@ -338,58 +356,66 @@ export default {
     });
   },
   methods: {
-        getDurumari(){
-            this.isCredit = true;
-            this.gallery_open = false;
-            this.showtutorial = false;
-            this.uploadIMG = false;
-        },
-        closeDurumari(){
-            this.isCredit = false;
-            this.gallery_open = false;
-            this.showtutorial = false;
-            this.uploadIMG = false;
-        },
-        getGallery(){
+    getDurumari(){
+      this.isCredit = true;
+      this.gallery_open = false;
+      this.showtutorial = false;
+      this.uploadIMG = false;
+    },
+    closeDurumari(){
+      this.isCredit = false;
+      this.gallery_open = false;
+      this.showtutorial = false;
+      this.uploadIMG = false;
+    },
+    getGallery(){
             this.gallery_open = true;
             this.showtutorial = false;
             this.uploadIMG = false;
             this.isCredit = false;
+            if (this.$refs.map && this.$refs.map.mapObject) {
+                this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
+                this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
+              }
         },
         closeGallery(){
             this.gallery_open = false;
             this.isCredit = false;
             this.showtutorial = false;
             this.uploadIMG = false;
+            if (this.$refs.map && this.$refs.map.mapObject) {
+              this.$refs.map.mapObject.dragging.enable();
+              this.$refs.map.mapObject.scrollWheelZoom.enable();
+            }
         },
-        closeTutorial(){
-            this.isCredit = false;
-            this.gallery_open = false;
-            this.showtutorial = false;
-            this.uploadIMG = false;
-        },
-        showTutorialPopup(){
-            this.showtutorial = true;
-            this.uploadIMG = false;
-            this.isCredit = false;
-            this.gallery_open = false;
+    closeTutorial(){
+      this.isCredit = false;
+      this.gallery_open = false;
+      this.showtutorial = false;
+      this.uploadIMG = false;
+    },
+    showTutorialPopup(){
+      this.showtutorial = true;
+      this.uploadIMG = false;
+      this.isCredit = false;
+      this.gallery_open = false;
 
-        },
-        shwoUImg(){
-            this.uploadIMG = true;
-            this.showtutorial = false;
-            this.isCredit = false;
-            this.gallery_open = false;
-        },
-        closeUImg(){
-            this.isCredit = false;
-            this.gallery_open = false;
-            this.showtutorial = false;
-            this.uploadIMG = false;
-        },
-        closeModal(){
-            this.showModal = false;
-        },
+    },
+    shwoUImg(){
+      this.uploadIMG = true;
+      this.showtutorial = false;
+      this.isCredit = false;
+      this.gallery_open = false;
+    },
+    closeUImg(){
+      this.isCredit = false;
+      this.gallery_open = false;
+      this.showtutorial = false;
+      this.uploadIMG = false;
+    },
+    closeModal(){
+      this.showModal = false;
+    },
 
     zoomUpdated (zoom) {
       this.zoom = zoom;
@@ -425,6 +451,10 @@ export default {
       this.popVal4 = false;
       this.popVal5 = false;
       this.popVal6 = false;
+      this.popVal7 = false;
+      this.popVal8 = false;
+      this.popVal9 = false;
+      this.popVal10 = false;
       
       // 지도의 드래그와 스크롤 줌 활성화
       if (this.$refs.map && this.$refs.map.mapObject) {
@@ -477,7 +507,6 @@ export default {
     },
     loadGPX(){
       //.gpx 파일 로드 및 지도에 표시
-      // const gpxUrl = process.env.BASE_URL + '치악산 탐방서비스 등산로.gpx'
       const gpxUrl = process.env.BASE_URL + '1108 치악산 GPS탐방로.gpx'
       fetch(gpxUrl)
       .then(response => response.text())
@@ -510,16 +539,21 @@ export default {
     },
 
     updateResult(id){
-      this['result' + (id)]=true;
+      this['result' + (id)]= true;
       const results = {
-        r1: this.result1,
-        r2: this.result2,
-        r3: this.result3,
-        r4: this.result4,
-        r5: this.result5,
-        r6: this.result6,
+        result1: this.result1,
+        result2: this.result2,
+        result3: this.result3,
+        result4: this.result4,
+        result5: this.result5,
+        result6: this.result6,
+        result7: this.result7,
+        result8: this.result8,
+        result9: this.result9,
+        result10: this.result10,
       };
       EventBus.$emit('send-results-to-durumari', results);
+      saveResultsToLocalStorage(results);
     },
     InfoChiak(){
       this.showInfoChiak = true;
@@ -536,6 +570,10 @@ export default {
       this.result4 = false;
       this.result5 = false;
       this.result6 = false;
+      this.result7 = false;
+      this.result8 = false;
+      this.result9 = false;
+      this.result10 = false;
 
       this.isGift = true;
     },
@@ -546,11 +584,29 @@ export default {
       this.result4 = true;
       this.result5 = true;
       this.result6 = true;
+      this.result7 = true;
+      this.result8 = true;
+      this.result9 = true;
+      this.result10 = true;
     }
   },
   computed:{
     allRes(){
-      return [this.result1, this.result2, this.result3, this.result4, this.result5, this.result6].every(Boolean);
+      return [this.result1, this.result2, this.result3, this.result4, this.result5, this.result6, this.result7, this.result8, this.result9, this.result10].every(Boolean); 
+    },
+    completedMissionsCount() {
+      return [this.result1, this.result2, this.result3, this.result4, this.result5, this.result6, this.result7, this.result8, this.result98, this.result10].filter(Boolean).length;
+    },
+    totalMissions() {
+      return 10; // 전체 미션의 수
+    }
+  },
+  created(){
+    const storedResults = getResultsFromSessionStorage();
+    for (const key in storedResults) {
+      if (Object.hasOwnProperty.call(storedResults, key)) {
+        this[key] = storedResults[key];
+      }
     }
   }
 }
@@ -571,39 +627,7 @@ export default {
   .popup.show{
     opacity: 1; /*나타날 때 투명도를 1로 설정하여 부드럽게 나타나게 함*/
   } 
-  .mission{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 35%; 
-    height: 35%; 
-    position: absolute;
-    left: 15%;
-    top: 100%;
-    transform: translate(-50%, -50%); /* 중앙에서 정확히 위치하도록 조정 */
-  }
-  .mission img{
-    width: 100%;
-    height: auto;
-  }
-  .my-location-button {
-    z-index: 1001;
-    position: absolute;
-    top: 100px;
-    left: 10px;
-    padding: 0px;
-    border-radius: 3px;
-    text-align: center;
-  }
-  .location-button-red {
-    filter: grayscale(100%);
-    z-index: 1001;
-    position: absolute;
-    bottom: 90px;
-    left: 10px;
-    width: 30px;
-    height: 30px;
-  }
+
   .chiakInfo{
     right: 1.5%;
     bottom: 40px;
@@ -648,7 +672,7 @@ export default {
   }
   .navi-bar {
   position: fixed; /* 고정 위치 */
-  bottom: 5%; /* 화면 하단 */
+  bottom: 3%; /* 화면 하단 */
   left: 50%; /* 화면 중앙 정렬을 위해 왼쪽에서 50% 위치 */
   transform: translateX(-50%); /* 중앙 정렬을 위해 X축으로 -50% 이동 */
   display: flex; /* 내부 요소를 가로로 정렬 */
@@ -681,6 +705,53 @@ export default {
     align-items: center;
     z-index: 1001;
     margin-right: 30px;
+  }
+  .header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  .mission {
+    flex: 1;
+    width: 30%;
+    height: 30%;
+    position: relative; /* mission 요소 내에서 mission-current의 위치를 결정하기 위해 relative 설정 */
+  }
+
+  .mission img {
+    width: 100%;
+    height: auto;
+  }
+
+  .mission-current {
+    position: absolute; /* mission 요소 내에서 절대 위치 설정 */
+    top: 35%; 
+    left: 35%;
+    transform: translate(-50%, -50%); /* 정확한 중앙 정렬을 위해 */
+    z-index: 1000; /* 이미지 위에 오도록 z-index 설정 */
+    font-size: 20px; /* 폰트 크기 */
+    color: black; /* 폰트 색상 */
+  }
+
+  .logo{
+    flex: 3;
+  }
+  .logo img{
+    width: 100%;
+  }
+  .my-location-button {
+    z-index: 1001;
+    position: absolute;
+    top: 15%;
+    left: 5%;
+    padding: 0px;
+    border-radius: 3px;
+    text-align: center;
   }
 
 </style>
