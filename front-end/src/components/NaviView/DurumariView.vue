@@ -110,27 +110,39 @@ export default {
     .black-bg{
       width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.5);
-      position: fixed; padding: 20px;
-      z-index: 1000;
+      position: fixed; 
+      top: 0;
+      left: 0;
+      padding: 20px;
+      z-index: 1500;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .white-bg{
-          width: 100%; height: 100%;
-          position: relative;
-          border-radius: 8px;
-          padding: 30px;
-          overflow-y: auto;
-          background-image: url('~@/assets/background_duru.png');
-          background-size: cover;
-          background-position: center; /* 이미지를 중앙에 정렬합니다 */
-      }
+      width: 100%; height: 100%;
+      position: relative;
+      border-radius: 8px;
+      padding: 30px;
+      overflow-y: auto;
+      background-image: url('~@/assets/background_duru.png');
+      background-size: cover;
+      background-position: center; /* 이미지를 중앙에 정렬합니다 */
+    }
 
-    .close-button{
-      position: absolute;
-      top: 20px; /* 위로 10px 이동 */
-      right: 20px; /* 오른쪽으로 10px 이동 */
+      .close{
+        display: flex;
+        width: 5%;
+        padding: 10px 10px;
+        margin-top: 5px;
+        background-color: #ccc;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: auto; /* 왼쪽 마진을 오토로 설정해서 오른쪽으로 밀어냄 */
+        justify-content: center;
+
     }
     .d{
       display: flex;
