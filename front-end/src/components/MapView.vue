@@ -50,7 +50,7 @@
       <m10 :show="popVal10" @close="closeP(10)" @answerCorrect="updateResult(10)" class="popup" :class="{'show':popVal10}" />
 
       <InfoChiakView :show="showInfoChiak" class="infoChiak" :class="{'show': showInfoChiak}" @closeTutorial="closed"/>
-      <GiftView :show="allRes" :class="{'show': allRes}" @closeGift="closeLast"/>
+      <GiftView :show="allResValue" :class="{'show': allRes}" @closeGift="closeLast" ref="GiftView"/>
 
       <LMarker
         :key="markers[0].id"
@@ -272,6 +272,8 @@ export default {
       result9: false,
       result10: false,
 
+      allResValue: false,
+
       isZoomIn: false, //줌인이 된 상태인지 아닌지 확인(팝업창 띄우기 위한 변수)
       isZoom : false, //내 위치 버튼을 위한 줌인 상태 확인 변수
       isGift: false, //마지막 모든 미션 수행 후 선물 버튼(한국화 변환 + 세그멘테이션)을 나타낼 변수
@@ -479,6 +481,11 @@ export default {
         this.isZoomIn = false;
       }
     }, 300);
+
+    if (idx === 10){
+      this.allRes();
+      this.$refs.map.mapObject.setView(this.markers[4].coordinates, 15);
+    }
     }, 
 
     getPositionValue(pos) {
@@ -576,16 +583,18 @@ export default {
       this.uploadIMG = false;
     },
     closeLast(){
-      this.result1 = false;
-      this.result2 = false;
-      this.result3 = false;
-      this.result4 = false;
-      this.result5 = false;
-      this.result6 = false;
-      this.result7 = false;
-      this.result8 = false;
-      this.result9 = false;
-      this.result10 = false;
+      // this.result1 = false;
+      // this.result2 = false;
+      // this.result3 = false;
+      // this.result4 = false;
+      // this.result5 = false;
+      // this.result6 = false;
+      // this.result7 = false;
+      // this.result8 = false;
+      // this.result9 = false;
+      // this.result10 = false;
+      // this.$refs.GiftView.close()
+      this.allResValue = false;
 
       this.isGift = true;
     },
@@ -600,12 +609,23 @@ export default {
       this.result8 = true;
       this.result9 = true;
       this.result10 = true;
-    }
+    },
+    allRes(){
+      if(this.result1 && this.result2 && this.result3 && this.result4 && this.result5 && this.result6 && this.result7 && this.result8 && this.result9 && this.result10){
+        // [this.result1, this.result2, this.result3, this.result4, this.result5, this.result6, this.result7, this.result8, this.result9, this.result10].every(Boolean); 
+        this.allResValue = true;
+      }
+      return this.allResValue
+    },
   },
   computed:{
-    allRes(){
-      return [this.result1, this.result2, this.result3, this.result4, this.result5, this.result6, this.result7, this.result8, this.result9, this.result10].every(Boolean); 
-    },
+    // allRes(){
+    //   if(this.result1 && this.result2 && this.result3 && this.result4 && this.result5 && this.result6 && this.result7 && this.result8 && this.result9 && this.result10){
+    //     // [this.result1, this.result2, this.result3, this.result4, this.result5, this.result6, this.result7, this.result8, this.result9, this.result10].every(Boolean); 
+    //     this.allResValue = true;
+    //   }
+    //   return this.allResValue
+    // },
     completedMissionsCount() {
       return [this.result1, this.result2, this.result3, this.result4, this.result5, this.result6, this.result7, this.result8, this.result9, this.result10].filter(Boolean).length;
     },

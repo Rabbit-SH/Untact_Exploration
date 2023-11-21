@@ -6,11 +6,12 @@
             </button>
             <div class="content-container" justify="center" align="center">
                 <v-textarea
+                    outlined
                     class="mx-2"
                     label="소원을 적어주세요 !"
                     v-model="userResult"
                     style="width: 80%;"
-                    prepend-icon="mdi mdi-hands-pray"
+                    prepend-inner-icon="mdi mdi-hands-pray"
                 ></v-textarea>
                 
                 <br>
@@ -35,8 +36,8 @@
                         </v-col>
                     </v-row>
                 </v-card-text>
-                <v-card-actions>
-                <v-btn @click="handleDialogConfirmation(userResult)" class="ml-auto">확인</v-btn>
+                <v-card-actions class="card">
+                <v-btn @click="handleDialogConfirmation(userResult)" class="ok-btn mt-3 pl-10 pr-10" color="#EF8200">확인</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -111,7 +112,6 @@ export default {
       }
       .white-bg{
         width: 90%; height: 90%;
-        border-radius: 22px;
         position: fixed; 
         /* background-color: white; */
         overflow:hidden;
@@ -141,6 +141,14 @@ export default {
     }
     .textarea{
         justify-content: center;
+    }
+    .card {
+    justify-content: center; /* 내부 요소를 중앙 정렬 */
+    }
+    .ok-btn{
+        color: white !important; 
+        font-weight: bold; 
+        font-size: 18px;
     }
 
 </style>

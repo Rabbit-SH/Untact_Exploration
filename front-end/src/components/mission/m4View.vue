@@ -7,7 +7,7 @@
             <div class="content">
                 <div class="cam-container">
                     <div @click="triggerCamera" class="cam-button mb-3">
-                        <svg-icon type="mdi" :path="path"></svg-icon>
+                        <v-btn class="custom-submit-button mt-3 pl-10 pr-10" color="#EF8200">사진 촬영하기</v-btn>
                     </div>
                     <input type="file" name="photofile" id="photofile" accept="image/*" capture="camera"
                     @change="onPhotoFileChange">
@@ -16,9 +16,9 @@
                 <div class="img-container text-center">
                     <img src="" id="photoimg">
                 </div>
-                <div class="button-container">
+                <!-- <div class="button-container">
                     <v-btn class="custom-submit-button mt-3 pl-10 pr-10" color="#EF8200" @click="submitResponse">제출하기</v-btn>
-                </div>
+                </div> -->
             </div>
         </div>
         <v-dialog v-model="dialog" max-width="500">
@@ -32,15 +32,14 @@
                     <br>
                     <div class="text-center">
                         <p>이미지 다운로드를 원하면 아래의 <strong>다운로드</strong> 버튼을 눌러주세요.</p>
-                        <p>내가 찍은 사진을 수묵화 그림으로 바꿔보고 싶다면 <strong>AI 화가</strong> 버튼을 눌러주세요.</p>
                     </div>
                     <div>
                         <div class="btn_container">
-                            <v-btn @click="downloadImage" class="mr-3">다운로드</v-btn>
-                            <v-btn @click="goToAiPainter" class="ml-3">AI 화가</v-btn>
+                            <v-btn @click="downloadImage" class="ok-btn mt-3 pl-10 pr-10" color="#EF8200">다운로드</v-btn>
+                            <!-- <v-btn @click="goToAiPainter" class="ml-3">AI 화가</v-btn> -->
                         </div>
-                        <div>
-                            <v-btn @click="handleDialogConfirmation" class="mt-3" color="primary">다음 미션으로</v-btn>
+                        <div class="card">
+                            <v-btn @click="handleDialogConfirmation" class="ok-btn mt-3 pl-10 pr-10" color="#EF8200">다음 미션으로 >></v-btn>
                         </div>
                     </div>
                     </v-col>
@@ -53,8 +52,8 @@
 
 <script >
 import EventBus from '@/EventBus.js';
-import SvgIcon from '@jamescoyle/vue-icon';
-import { mdiCameraOutline } from '@mdi/js';
+// import SvgIcon from '@jamescoyle/vue-icon';
+// import { mdiCameraOutline } from '@mdi/js';
 
 export default {
     props: {
@@ -67,7 +66,7 @@ export default {
         }
     },
     components:{
-        SvgIcon
+        // SvgIcon
     },
     data(){
       return {
@@ -77,7 +76,7 @@ export default {
         userResponse:'',
         uploadedPhoto: null, // 업로드된 사진 데이터를 위한 변수
 
-        path: mdiCameraOutline,
+        // path: mdiCameraOutline,
       }
     },
     methods: {
@@ -101,7 +100,7 @@ export default {
             this.previewImage(event.target);
   
               // 업로드된 파일 데이터를 저장합니다.
-            this.uploadedPhoto = event.target.files[0];
+            // this.uploadedPhoto = event.target.files[0];
 
               // 파일데이터를 갤러리 리스트에 추가합니다.
             const fileReader = new FileReader();
@@ -113,6 +112,7 @@ export default {
                 this.uploadedPhoto = photoDataUrl;
                 EventBus.$emit('add-photo', photoDataUrl);
             }
+            this.dialog = true;
         },
         previewImage(inputElement){
             if (inputElement.files && inputElement.files[0]) {
@@ -124,19 +124,19 @@ export default {
                 reader.readAsDataURL(inputElement.files[0]);
             }
         },
-        submitResponse(){
-            // 사진이 업로드되었는지 확인
-            if (this.uploadedPhoto) {
-                console.log(this.userResponse); // 콘솔에 출력
-                this.userResponse = ''; // 답변 리셋
+        // submitResponse(){
+        //     // 사진이 업로드되었는지 확인
+        //     if (this.uploadedPhoto) {
+        //         console.log(this.userResponse); // 콘솔에 출력
+        //         this.userResponse = ''; // 답변 리셋
 
-                this.dialog = true;
+        //         this.dialog = true;
 
-            } else {
-                // 사진이 업로드되지 않았다면 경고 알림
-                alert("사진을 찍어주세요!");
-            }
-        },
+        //     } else {
+        //         // 사진이 업로드되지 않았다면 경고 알림
+        //         alert("사진을 찍어주세요!");
+        //     }
+        // },
         handleDialogConfirmation(){
             this.dialog = false;
 
@@ -145,15 +145,6 @@ export default {
             }
             this.userResult = ''; // 사용자 응답 리셋
             this.closeP();        // 다이얼로그 닫기
-        },
-        goToAiPainter(){
-            this.$router.push({name:'AIView'});
-            if (this.result4 === false){
-                this.$emit('answerCorrect');
-            }
-            this.userResult = '';
-            this.closeP();
-
         },
 
         downloadImage() {
@@ -228,7 +219,6 @@ export default {
     }
     .white-bg{
         width: 90%; height: 90%;
-        border-radius: 22px;
         position: fixed; 
         /* background-color: white; */
         overflow:hidden;
@@ -263,5 +253,14 @@ export default {
         color: white !important; /* 텍스트 색상을 흰색으로 */
         font-weight: bold; /* 글씨 두께를 굵게 */
         font-size: 18px; /* 글씨 크기를 18px로 설정 */
+    }
+    .card {
+    justify-content: center; /* 내부 요소를 중앙 정렬 */
+    }
+    .ok-btn{
+        color: white !important; 
+        font-weight: bold; 
+        font-size: 18px;
+        width: 150px;
     }
 </style>

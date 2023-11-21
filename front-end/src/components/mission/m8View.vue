@@ -8,7 +8,6 @@
 
                 <v-text-field
                     label="000은 무엇일까요?"
-                    single-line
                     outlined
                     class="textarea"
                     v-model="userResult"
@@ -43,8 +42,8 @@
                         </v-col>
                     </v-row>
                 </v-card-text>
-                <v-card-actions>
-                <v-btn @click="handleDialogConfirmation(userResult === '깃대종')" class="ml-auto">확인</v-btn>
+                <v-card-actions class="card">
+                <v-btn @click="handleDialogConfirmation(userResult === '깃대종')" class="ok-btn mt-3 pl-10 pr-10" color="#EF8200">확인</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -133,7 +132,6 @@ export default {
       }
     .white-bg{
         width: 90%; height: 90%;
-        border-radius: 22px;
         position: fixed; 
         /* background-color: white; */
         overflow:hidden;
@@ -163,6 +161,19 @@ export default {
     }
     .textarea{
         justify-content: center;
+    }
+    .card {
+    justify-content: center; /* 내부 요소를 중앙 정렬 */
+    }
+    .custom-submit-button {
+        color: white !important; /* 텍스트 색상을 흰색으로 */
+        font-weight: bold; /* 글씨 두께를 굵게 */
+        font-size: 18px; /* 글씨 크기를 18px로 설정 */
+    }
+    .ok-btn{
+        color: white !important; 
+        font-weight: bold; 
+        font-size: 18px;
     }
 
 </style>
