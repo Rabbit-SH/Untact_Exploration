@@ -5,6 +5,7 @@ import MainView from '../views/MainView.vue';
 import TutorialPage from '../views/TutorialPage.vue';
 import AIView from '../components/NaviView/AIView.vue';
 import FinalView from '../components/FinalView.vue';
+import CourseChoose from '../views/CourseChoose.vue';
 
 Vue.use(VueRouter)
 
@@ -16,6 +17,7 @@ const router = new VueRouter({
         { path: '/tutorial', component: TutorialPage, name: 'TutorialPage' },
         { path: '/ai', component: AIView, name: 'AIView' },
         { path: '/final', component: FinalView, name: 'FinalView' },
+        { path: '/cousrse', component: CourseChoose, name: 'CourseChoose' },
     ]
 })
 

@@ -116,7 +116,7 @@ export default {
     async uploadImg(event) {
       // 이미지 업로드 로직
       //만약 사진을 고르지 않았다면?
-
+      this.imageUrl = null;
       this.preimage = event.target.files[0];
       if (!this.preimage) {
           console.log("파일을 선택해주세요.");
