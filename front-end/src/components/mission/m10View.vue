@@ -17,7 +17,7 @@
                     <img src="" id="photoimg">
                 </div>
                 <div class="button-container">
-                    <v-btn class="custom-submit-button mt-3 pl-10 pr-10" color="#EF8200" @click="submitSoundRes">제출하기</v-btn>
+                    <v-btn class="custom-submit-button mt-3 pl-10 pr-10" color="#EF8200" @click="submitResponse">제출하기</v-btn>
                 </div>
             </div>
         </div>
