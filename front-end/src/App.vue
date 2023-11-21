@@ -1,5 +1,15 @@
 <template>
   <v-app>
+    <!-- <v-app-bar
+      app
+      color="green"
+      dark
+    >
+      <div class = "d-flex justify-center flex-grow-1">
+        <span class="mr-2">물두꺼비를 따라가보자!</span>
+      </div>
+    </v-app-bar> -->
+
     <v-main>
       <router-view/>
     </v-main>

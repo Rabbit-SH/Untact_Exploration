@@ -91,22 +91,29 @@ export default {
     .black-bg{
         width: 100%; height: 100%;
         background: rgba(0, 0, 0, 0.5);
-        position: fixed; padding: 20px;
-        z-index: 1000;
+        position: fixed; 
+        top: 0;
+        left: 0;
+        padding: 20px;
+        z-index: 1500;
         display: flex;
         align-items: center;
         justify-content: center;
     }
     .white-bg{
-        width: 100%; height: 100%;
-        position: relative;
+        width: 90%; height: 90%;
+        position: absolute;
         background:white;
         border-radius: 8px;
         /* padding: 30px; */
-        /* overflow-y: auto; */
-        background-image: url('~@/assets/KImage.png');
-        background-size: cover;
-        background-position: center; /* 이미지를 중앙에 정렬합니다 */
+        overflow-y: auto;
+        z-index: 2000;
+        top: 50%; /* 상단에서부터 화면의 50% 위치에 배치 */
+        left: 50%; /* 왼쪽에서부터 화면의 50% 위치에 배치 */
+        transform: translate(-50%, -50%); /* X축과 Y축으로 -50% 만큼 이동하여 정중앙에 위치하도록 함 */
+        /* background-image: url('~@/assets/KImage.png'); */
+        /* background-size: cover; */
+        /* background-position: center; 이미지를 중앙에 정렬합니다 */
     }
     .image_preview{
         /* max-height: 45%; */
@@ -120,4 +127,21 @@ export default {
         top: 52%;
         left: 20%;
     }
+    .close{
+    /* position: absolute;
+    top: 20px; /* 위로 10px 이동
+    right: 20px; 오른쪽으로 10px 이동 */
+        display: flex;
+        width: 5%;
+        padding: 10px 10px;
+        margin: 10px;
+        background-color: #ccc;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: auto; /* 왼쪽 마진을 오토로 설정해서 오른쪽으로 밀어냄 */
+        justify-content: center;
+        
+      }
 </style>

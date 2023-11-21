@@ -1,28 +1,25 @@
 <template>
     <div class="black-bg" v-if="show">
-        <!-- <div class="tutorial" :style="{ background: slide.backgroundColor }"> -->
-        <div v-for="(slide, index) in slides" v-show="currentSlideIndex === index" :key="slide.id" class="slideDIV">
-            <div class="tutorial" :style="{ background: slide.backgroundColor }">
-
-                <div class="img-container">
-                    <img :src="slide.image" alt="Tutorial Image" :style="{ width: '100%', height: '100%' }"/>
-                </div>
-
-                <button class="prev" @click="prevSlide" >
-                    <img :src="require('@/assets/left.png')">
-                </button>
-                <button class="next" @click="nextSlide" v-if="currentSlideIndex < slides.length - 1">
-                    <img :src="require('@/assets/right.png')">
-                </button>
-                <button class="closetutorial" @click="closetutorial" v-if="currentSlideIndex < slides.length - 1">skip</button>
-                <button class="start" @click="closetutorial" v-if="currentSlideIndex === slides.length - 1">
-                    <img :src="require('@/assets/start_button_img.png')">
-                </button>
-
-            </div>
+        <div class="white-bg">  
+            <v-carousel v-model="currentSlideIndex" hide-delimiters class="tutorial-img"
+            :continuous="false"
+            :cycle="false">
+                <v-carousel-item
+                    v-for="slide in slides"
+                    class="tutorial-img-ca"
+                    :key="slide.id"
+                    :style="{ backgroundImage: 'url(' + require('@/assets/tutorialView/' + slide.image) + ')' }"
+                    cover>
+                    <button class="closetutorial" @click="closetutorial" v-if="currentSlideIndex < slides.length - 1">skip</button> 
+                    <button class="start" @click="closetutorial" v-if="currentSlideIndex === slides.length - 1">
+                        <img :src="require('@/assets/start_button_img.png')">
+                    </button>
+                </v-carousel-item>
+            </v-carousel>
         </div>
     </div>
 </template>
+
 
 <script>
 export default {
@@ -38,13 +35,13 @@ export default {
             currentSlideIndex: 0,
 
             slides: [
-                {id:1, image : require('@/assets/tutorialView/info.png'), backgroundColor: '#F5F9EF'},
-                {id:2, image : require('@/assets/tutorialView/character.png'), backgroundColor: '#F5F9EF'},
-                {id:3, image : require('@/assets/tutorialView/tutorial1.png'), backgroundColor: '#E4F0D5'},
-                {id:4, image : require('@/assets/tutorialView/tutorial2.png'), backgroundColor: '#E4F0D5'},
-                {id:5, image : require('@/assets/tutorialView/tutorial3.png'), backgroundColor: '#E4F0D5'},
+                {id:1, image : 'info.png', backgroundColor: '#F5F9EF'},
+                {id:2, image : 'character.png', backgroundColor: '#F5F9EF'},
+                {id:3, image : 'tutorial1.png', backgroundColor: '#E4F0D5'},
+                {id:4, image : 'tutorial2.png', backgroundColor: '#E4F0D5'},
+                {id:5, image : 'tutorial3.png', backgroundColor: '#E4F0D5'},
                 // {id:6, image : require('@/assets/tutorialView/tutorial4.png'), backgroundColor: 'white'},
-                {id:7, image : require('@/assets/tutorialView/last_tu.png'), backgroundColor: 'white'},
+                {id:7, image : 'last_tu.png', backgroundColor: 'white'},
             ],
 
             checkedExercise: false,
@@ -52,23 +49,9 @@ export default {
         }
     },
     methods: {
-        nextSlide() {
-            if (this.currentSlideIndex < this.slides.length - 1) {
-                this.currentSlideIndex++;
-            }
-        },
-        prevSlide() {
-            if(this.currentSlideIndex > 0){
-                this.currentSlideIndex--;
-            }
-        },
         closetutorial(){
             this.currentSlideIndex = 0;
             this.$emit('closeTutorial');
-        },
-        showTutorialPopup(){
-            this.currentSlideIndex = 0;
-            this.$emit('openTutorial');
         },
 
     },
@@ -78,47 +61,34 @@ export default {
 <style scoped>
     .black-bg{
         width: 100%; height: 100%;
-        background: rgba(255, 255, 255, 0.1);
-        position: fixed; padding: 20px;
-        z-index: 10000;
+        background: rgba(0, 0, 0, 0.5);
+        position: fixed; 
+        top: 0;
+        left: 0;
+        padding: 20px;
+        z-index: 1500;
         display: flex;
         align-items: center;
         justify-content: center;
-        text-align: center;
     }
-    .tutorial{
-        position: relative;
+    .white-bg{
+        width: 80%;
+        position: fixed; 
+        overflow-y: auto;
+        background-size: contain;
+        background-position: center; /* 이미지를 중앙에 정렬합니다 */
+        z-index: 1600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius:5px;
+    }
+
+    .tutorial-img-ca {
+        background-size: 100% 100%; /* 이미지를 컨테이너 크기에 맞춰 늘림 */
+        background-position: center;
         width: 100%;
         height: 100%;
-        z-index: 1000;
-        text-align: center;
-        border-radius: 8px;
-        justify-content: center;
-        padding: 10px;
-        display: flex;
-        align-items: center;
-        overflow: auto;
-        flex-direction: column;
-    }
-    .prev{
-        position: absolute;
-        left: 10px;
-        bottom: 50%;
-        background-color: #ccc;
-        color: white;
-        border-radius: 4px;
-        border: none;
-        padding: 5px 10px;
-    }
-    .next{
-        position: absolute;
-        right: 10px;
-        bottom: 50%;
-        background-color: #ccc;
-        color: white;
-        border-radius: 4px;
-        border: none;
-        padding: 5px 10px;
     }
     .closetutorial{
         position: absolute;
@@ -140,39 +110,13 @@ export default {
         background-color: white;
         color: white;
         border: none;
-        /* border-radius: 4px; */
-        /* padding: 10px 20px; */
-        /* bottom: 20%; */
-        top: 25%;
-        width: 100%;
-        height:auto;
-        /* pointer-events: none; */
-    }
-     /* 이미지 크기 조정을 위한 CSS */
-     .image-container {
-        width: 100%; /* div 폭에 맞게 조정 */
-        max-height: 60vh; /* 최대 높이 설정 (60% 화면 높이) */
-        overflow: hidden; /* 넘치는 부분 숨김 */
-        display: block;
-        align-items: center;
-        justify-content: center;
-        /* z-index: 2000; */
-        object-fit: contain;
-
-    }
-
-    .image-container img {
+        left: 50%; /* 왼쪽에서 50% 위치에 배치 */
+        transform: translateX(-50%); /* 버튼의 너비의 절반만큼 왼쪽으로 이동 */
+        top: 25%; /* 필요한 경우 상단 위치 조정 */
+        max-width: 200px; /* 최대 너비 설정, 필요에 따라 조정 */
         width: auto;
-        height: 100%;
-        max-width: 100%; /* 이미지 폭 최대 크기 설정 */
-        max-height: 100%; /* 이미지 높이 최대 크기 설정 */
-        object-fit: fill;
+        height: auto;
+    }
 
-    }
-    .slideDIV{
-        justify-content: center;
-        text-align: center;
-        align-items: center;
-    }
 
 </style>

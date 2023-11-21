@@ -1,21 +1,10 @@
-<!-- <template>
-  <div>
-    <p>시작해볼까</p>
-    <button @click="$router.push({name: 'MainView'})">MainView로 이동</button>
-  </div>
-</template> -->
 <template>
   <div>
-    <h1> 코스 선택 </h1>
-    <br>
-    <v-btn> 금강초롱꽃을 찾아줘! </v-btn>
-    <br>
-    <br>
-    <v-btn @click="$router.push({name: 'TutorialPage'})">물두꺼비를 따라가보자! </v-btn>
-    <br>
-    <br>
-    <p> 대상 : 어린아이 </p>
-    <p> 체험예상시간: 1시간 30분 </p>
+    <v-img :src="require('@/assets/tutorialView/표지 예시.png')"
+    @click="$router.push({name:'CourseChoose'})"></v-img>
+    <div justify="center" align="center" class="text-container">
+      <p> 화면을 클릭해주세요 ! </p>
+    </div>
   </div>
 </template>
 
@@ -25,6 +14,13 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.text-container {
+  position: absolute;
+  top: 10%; /* 세로 가운데 정렬을 위해 50%로 설정 */
+  left: 50%; /* 가로 가운데 정렬을 위해 50%로 설정 */
+  transform: translate(-50%, -50%); /* 정확한 중앙 정렬을 위한 transform */
+  text-align: center; /* 가운데 정렬을 위해 텍스트를 가운데 정렬 */
+  color: gray; /* 글씨 색상을 회색으로 설정 */
+}
 </style>

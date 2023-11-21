@@ -14,13 +14,7 @@
             </div>
             <div class="button-container">
                 <button class="submit" @click="submitResponse">제출하기</button>
-                <button class="hint" @click="showHint">예시</button>
             </div>
-            <div class="hint-popup" v-if="showPopup">
-                    <button class="close-popup" @click="closePopup">X</button>
-                    <p> 힌트 팝업 페이지 </p>
-            </div>
-    
         </div>
         </div>
 
@@ -131,20 +125,23 @@
           box-sizing: border-box;
       }
       .black-bg{
-          width: 100%; height: 100%;
-          background: rgba(0, 0, 0, 0.5);
-          position: fixed; 
-          padding: 20px;
-          z-index: 1000;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        position: fixed; 
+        top: 0;
+        left: 0;
+        padding: 20px;
+        z-index: 1500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       .white-bg{
-          width: 100%; height: 100%;
-          position: relative;
+          width: 90%; height: 90%;
+          /* position: relative; */
           border-radius: 8px;
-          padding: 30px;
+          position: fixed; 
+          padding: 20px;
           overflow-y: auto;
           background-image: url('~@/assets/background_pop6.png');
           background-size: contain;
@@ -191,6 +188,7 @@
           bottom: 50%; /* 하단에 위치 */
           left: 0; /* 왼쪽에 위치 */
           width: 100%; /* 너비를 전체로 설정 */
+          bottom: 3%;
           background-color: #fff; /* 배경 색상 */
           padding: 10px 20px; /* 패딩을 상하에만 적용 */
           display: flex; /* 버튼들을 가로로 정렬 */

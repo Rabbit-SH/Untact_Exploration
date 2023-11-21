@@ -2,13 +2,7 @@
   <div class="black-bg" v-if="show">
     <div class="white-bg">
       <button class="close" @click="closeP">X</button> 
-      <!-- <h4> 쉿! 가만히 앉아 눈을 감아요</h4>
-        <p> 60초 동안 주변 소리에 귀 기울여 볼까요? </p>
-        <p> 어떤 소리가 들리나요? </p>
-        <p> 들리는 소리를 글로 표현해 적습니다 </p>
-        <p> 예) 째액째액, 까악까악, 윙윙 </p>
         <br>
-        <br> -->
       <div class="br"></div>
       <figure>
         <!-- <figcaption>새소리를 들어보세요!!!</figcaption> -->
@@ -20,11 +14,6 @@
       <textarea class="text" v-model="userResponse" placeholder="여기에 소리를 표현해보세요..."></textarea>
       <div class="button-container">
         <button class="submit" @click="submitResponse">제출하기</button>
-        <button class="hint" @click="showHint">힌트</button>
-      </div>
-      <div class="hint-popup" v-if="showPopup">
-          <button class="close-popup" @click="closePopup">X</button>
-          <p> 힌트 팝업 페이지 </p>
       </div>
     </div>
   </div>
@@ -95,22 +84,27 @@ export default {
     .black-bg{
         width: 100%; height: 100%;
         background: rgba(0, 0, 0, 0.5);
-        position: fixed; padding: 20px;
-        z-index: 1000;
+        position: fixed; 
+        top: 0;
+        left: 0;
+        padding: 20px;
+        z-index: 1500;
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-    .white-bg{
-        width: 80%; height: 80%; 
-        background:white;
-        border-radius: 8px;
-        padding: 30px;
-        overflow: scroll;
-        background-image: url('~@/assets/background_pop2.png');
-        background-size: contain;
-        background-position: center;
-    }
+      }
+      .white-bg{
+          width: 90%; height: 90%;
+          /* position: relative; */
+          border-radius: 8px;
+          position: fixed; 
+          padding: 20px;
+          overflow-y: auto;
+          background-image: url('~@/assets/background_pop2.png');
+          background-size: contain;
+          background-position: center; /* 이미지를 중앙에 정렬합니다 */
+      }
+
     figure {
       margin: 0;
     }
@@ -149,6 +143,7 @@ export default {
       position: absolute; /* 고정 위치 */
       /* bottom: 50%; 하단에 위치 */
       left: 0; /* 왼쪽에 위치 */
+      bottom: 3%;
       width: 100%; /* 너비를 전체로 설정 */
       background-color: #fff; /* 배경 색상 */
       padding: 10px 20px; /* 패딩을 상하에만 적용 */

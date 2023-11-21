@@ -9,13 +9,11 @@
         @click="goToMain" class="skipButton">Skip</v-btn>
         <v-btn x-small color="primary" dark
         class="beforeButton"
-        v-if="i==0" @click="$router.push({name:'StartView'})">이전으로</v-btn>
+        v-if="i==0" @click="$router.push({name:'CourseChoose'})">이전으로</v-btn>
       </v-carousel-item>
       <!-- 마지막 페이지에만 컨트롤 버튼을 표시X -->
-      <v-carousel-item v-if="!hasNext" :src="require('@/assets/tutorialView/last_tu.png')">
-        <img 
-        :src="require('@/assets/start_button_img.png')"
-        @click="goToMain" class="moveToMainButton" />
+      <v-carousel-item v-if="!hasNext" :src="require('@/assets/tutorialView/게임시작 페이지 예시.png')">
+        <div class="goToMainPage" @click="goToMain"></div>
       </v-carousel-item>
     </v-carousel>
 </template>
@@ -25,11 +23,10 @@
     data() {
       return {
         items: [
-          { src: require('@/assets/tutorialView/info.png') },
-          { src: require('@/assets/tutorialView/character.png') },
-          { src: require('@/assets/tutorialView/tutorial1.png') },
-          { src: require('@/assets/tutorialView/tutorial2.png') },
-          { src: require('@/assets/tutorialView/tutorial3.png') },
+          { src: require('@/assets/tutorialView/캐릭터 소개 예시.png') },
+          { src: require('@/assets/tutorialView/튜토리얼 1.png') },
+          { src: require('@/assets/tutorialView/튜토리얼2.jpg') },
+          { src: require('@/assets/tutorialView/튜토리얼3.png') },
         ],
       };
     },
@@ -63,5 +60,12 @@
   position: absolute;
   top: 10px;
   right: 10px;
+}
+.goToMainPage {
+  position: absolute;
+  bottom: 15%;
+  left: 10%;
+  width: 80%;
+  height: 10%;
 }
 </style>

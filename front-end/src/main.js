@@ -4,6 +4,8 @@ import VueGeolocationApi from 'vue-geolocation-api';
 import VueRouter from 'vue-router';
 import router from './router';
 import vuetify from './plugins/vuetify'
+import '@mdi/font/css/materialdesignicons.css';
+
 
 Vue.config.productionTip = false;
 
