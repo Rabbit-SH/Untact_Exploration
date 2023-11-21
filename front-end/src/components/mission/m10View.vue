@@ -211,6 +211,8 @@ export default {
         width:100%;
         position: absolute;
         bottom: 7%;
+        max-height: 22%;
+        overflow-y: auto;
     }
     .close img{
         width: 22px;
