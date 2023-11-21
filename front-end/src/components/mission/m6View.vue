@@ -149,8 +149,7 @@ export default {
                 this.$emit('answerCorrect');
             }
             this.userResult = '';
-            this.closeP();
-
+            // this.closeP();
         },
 
         downloadImage(uploadedPhoto) {

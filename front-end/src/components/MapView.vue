@@ -474,18 +474,24 @@ export default {
     }
 
     setTimeout(() => {
-      if (this.isZoomIn && idx < 10) {
+      if (this.isZoomIn && idx < 10 && idx > 1) {
         // 팝업이 닫힌 후 줌 아웃(원래 줌 레벨로 돌아가기)
+        const lat_ = (this.markers[idx-1].coordinates[0] + this.markers[idx].coordinates[0])/2;
+        const lng_ = (this.markers[idx-1].coordinates[1] + this.markers[idx].coordinates[1])/2;
+        this.$refs.map.mapObject.panTo([lat_, lng_], { duration: 0.3 });
+        this.$refs.map.mapObject.setView([lat_, lng_], this.previousZoom);
+        this.isZoomIn = false;
+      } else if (this.isZoomIn && idx === 1){
         this.$refs.map.mapObject.panTo(this.markers[idx].coordinates, { duration: 0.3 });
-        this.$refs.map.mapObject.setView(this.markers[idx].coordinates, this.previousZoom);
+        this.$refs.map.mapObject.setView(this.markers[idx].coordinates, 15);
         this.isZoomIn = false;
       }
     }, 300);
 
-    if (idx === 10){
-      this.allRes();
-      this.$refs.map.mapObject.setView(this.markers[4].coordinates, 15);
-    }
+      if (idx === 10){
+        this.allRes();
+        this.$refs.map.mapObject.setView(this.markers[4].coordinates, 15);
+      }
     }, 
 
     getPositionValue(pos) {
