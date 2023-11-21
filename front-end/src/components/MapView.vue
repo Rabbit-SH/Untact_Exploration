@@ -38,16 +38,16 @@
       <v-icon size = "28">mdi-crosshairs-gps</v-icon>
     </v-btn>
 
-      <m1 :show="popVal1" @close="closeP" @answerCorrect="updateResult(1)" class="popup" :class="{'show':popVal1}" />
-      <m2 :show="popVal2" @close="closeP" @answerCorrect="updateResult(2)" class="popup" :class="{'show':popVal2}" />
-      <m3 :show="popVal3" @close="closeP" @answerCorrect="updateResult(3)" class="popup" :class="{'show':popVal3}" />
-      <m4 :show="popVal4" @close="closeP" @answerCorrect="updateResult(4)" class="popup" :class="{'show':popVal4}" />
-      <m5 :show="popVal5" @close="closeP" @answerCorrect="updateResult(5)" class="popup" :class="{'show':popVal5}" />
-      <m6 :show="popVal6" @close="closeP" @answerCorrect="updateResult(6)" class="popup" :class="{'show':popVal6}" />
-      <m7 :show="popVal7" @close="closeP" @answerCorrect="updateResult(7)" class="popup" :class="{'show':popVal7}" />
-      <m8 :show="popVal8" @close="closeP" @answerCorrect="updateResult(8)" class="popup" :class="{'show':popVal8}" />
-      <m9 :show="popVal9" @close="closeP" @answerCorrect="updateResult(9)" class="popup" :class="{'show':popVal9}" />
-      <m10 :show="popVal10" @close="closeP" @answerCorrect="updateResult(10)" class="popup" :class="{'show':popVal10}" />
+      <m1 :show="popVal1" @close="closeP(1)" @answerCorrect="updateResult(1)" class="popup" :class="{'show':popVal1}" />
+      <m2 :show="popVal2" @close="closeP(2)" @answerCorrect="updateResult(2)" class="popup" :class="{'show':popVal2}" />
+      <m3 :show="popVal3" @close="closeP(3)" @answerCorrect="updateResult(3)" class="popup" :class="{'show':popVal3}" />
+      <m4 :show="popVal4" @close="closeP(4)" @answerCorrect="updateResult(4)" class="popup" :class="{'show':popVal4}" />
+      <m5 :show="popVal5" @close="closeP(5)" @answerCorrect="updateResult(5)" class="popup" :class="{'show':popVal5}" />
+      <m6 :show="popVal6" @close="closeP(6)" @answerCorrect="updateResult(6)" class="popup" :class="{'show':popVal6}" />
+      <m7 :show="popVal7" @close="closeP(7)" @answerCorrect="updateResult(7)" class="popup" :class="{'show':popVal7}" />
+      <m8 :show="popVal8" @close="closeP(8)" @answerCorrect="updateResult(8)" class="popup" :class="{'show':popVal8}" />
+      <m9 :show="popVal9" @close="closeP(9)" @answerCorrect="updateResult(9)" class="popup" :class="{'show':popVal9}" />
+      <m10 :show="popVal10" @close="closeP(10)" @answerCorrect="updateResult(10)" class="popup" :class="{'show':popVal10}" />
 
       <InfoChiakView :show="showInfoChiak" class="infoChiak" :class="{'show': showInfoChiak}" @closeTutorial="closed"/>
       <GiftView :show="allRes" :class="{'show': allRes}" @closeGift="closeLast"/>
@@ -62,55 +62,64 @@
         :key="markers[1].id"
         :lat-lng="markers[1].coordinates"
         @click="openP(1)"
-        :icon="result2 ? customIcon: defaultIcon" />
+        :icon="result2 ? customIcon: defaultIcon" 
+        v-if="result1 === true" />
 
       <LMarker
         :key="markers[2].id"
         :lat-lng="markers[2].coordinates"
         @click="openP(2)"
-        :icon="result3 ? customIcon: defaultIcon" />
+        :icon="result3 ? customIcon: defaultIcon" 
+        v-if="result2 === true" />
 
       <LMarker
         :key="markers[3].id"
         :lat-lng="markers[3].coordinates"
         @click="openP(3)"
-        :icon="result4 ? customIcon: defaultIcon"></LMarker>
+        :icon="result4 ? customIcon: defaultIcon"
+        v-if="result3 === true" />
 
       <LMarker
         :key="markers[4].id"
         :lat-lng="markers[4].coordinates"
         @click="openP(4)"
-        :icon="result5 ? customIcon: defaultIcon" />
+        :icon="result5 ? customIcon: defaultIcon" 
+        v-if="result4 === true" />
       
       <LMarker
         :key="markers[5].id"
         :lat-lng="markers[5].coordinates"
         @click="openP(5)"
-        :icon="result6 ? customIcon: defaultIcon" />
+        :icon="result6 ? customIcon: defaultIcon" 
+        v-if="result5 === true" />
 
       <LMarker
         :key="markers[6].id"
         :lat-lng="markers[6].coordinates"
         @click="openP(6)"
-        :icon="result7 ? customIcon: defaultIcon" />
+        :icon="result7 ? customIcon: defaultIcon" 
+        v-if="result6 === true" />
 
       <LMarker
         :key="markers[7].id"
         :lat-lng="markers[7].coordinates"
         @click="openP(7)"
-        :icon="result8 ? customIcon: defaultIcon" />
+        :icon="result8 ? customIcon: defaultIcon" 
+        v-if="result7 === true" />
 
       <LMarker
         :key="markers[8].id"
         :lat-lng="markers[8].coordinates"
         @click="openP(8)"
-        :icon="result9 ? customIcon: defaultIcon" />
+        :icon="result9 ? customIcon: defaultIcon" 
+        v-if="result8 === true" />
 
       <LMarker
         :key="markers[9].id"
         :lat-lng="markers[9].coordinates"
         @click="openP(9)"
-        :icon="result10 ? customIcon: defaultIcon" />
+        :icon="result10 ? customIcon: defaultIcon" 
+        v-if="result9 === true" />
 
       <l-circle :lat-lng="currentPos" :radius=circle.radius :color=circle.color />
 
@@ -232,8 +241,8 @@ export default {
       url: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
       attribution: '&copy; <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> '
                     + '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
-      center: [37.3994891299528, 128.049967288971],
-      zoom: 15, // 초기 확대 레벨
+      center: [37.4148974953341, 128.050171136856],
+      zoom: 16, // 초기 확대 레벨
       previousZoom : null, //현재의 확대 레벨
       bounds: null, //지도 경계가 변경될 때 발생하는 이벤트(드래그되거나 확대/축소 시 발생)
       maxBounds:[
@@ -444,7 +453,7 @@ export default {
     }
 
     },
-    closeP(){
+    closeP(idx){
       this.popVal1 = false;
       this.popVal2 = false;
       this.popVal3 = false;
@@ -462,11 +471,14 @@ export default {
       this.$refs.map.mapObject.scrollWheelZoom.enable();
     }
 
-      if (this.isZoomIn) {
+    setTimeout(() => {
+      if (this.isZoomIn && idx < 10) {
         // 팝업이 닫힌 후 줌 아웃(원래 줌 레벨로 돌아가기)
-        this.$refs.map.mapObject.setZoom(this.previousZoom);
+        this.$refs.map.mapObject.panTo(this.markers[idx].coordinates, { duration: 0.3 });
+        this.$refs.map.mapObject.setView(this.markers[idx].coordinates, this.previousZoom);
         this.isZoomIn = false;
       }
+    }, 300);
     }, 
 
     getPositionValue(pos) {

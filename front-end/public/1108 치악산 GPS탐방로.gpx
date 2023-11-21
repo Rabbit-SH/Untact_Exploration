@@ -90,15 +90,6 @@ Distance from start: 3.74 km
   </wpt>
   <trk>
     <trkseg>
-      <trkpt lat="37.4045006053447" lon="128.047183156013">
-        <ele>-1</ele>
-      </trkpt>
-      <trkpt lat="37.4045666557162" lon="128.047293126583">
-        <ele>-1</ele>
-      </trkpt>
-      <trkpt lat="37.404605007518" lon="128.047357499599">
-        <ele>-1</ele>
-      </trkpt>
       <trkpt lat="37.404711540198" lon="128.04743796587">
         <ele>-1</ele>
       </trkpt>
