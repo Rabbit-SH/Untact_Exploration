@@ -221,7 +221,7 @@ import Durumari from './NaviView/DurumariView.vue';
 import GalleryView from './NaviView/GalleryView.vue';
 import TutorialView from './NaviView/TutorialView.vue';
 import UploadImageView from './NaviView/UploadImageView2.vue';
-import infoChiakView from './NaviView/infoChiakView.vue';
+import infoChiakView from './NaviView/InfoChiakView.vue';
 
 
 // 결과를 세션 스토리지에 저장하는 함수
@@ -393,12 +393,24 @@ export default {
       this.gallery_open = false;
       this.showtutorial = false;
       this.uploadIMG = false;
+
+      // 지도의 드래그와 스크롤 줌 비활성화
+      if (this.$refs.map && this.$refs.map.mapObject) {
+      this.$refs.map.mapObject.dragging.enable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
+      this.$refs.map.mapObject.scrollWheelZoom.enable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
+    }
     },
     showTutorialPopup(){
       this.showtutorial = true;
       this.uploadIMG = false;
       this.isCredit = false;
       this.gallery_open = false;
+
+      // 지도의 드래그와 스크롤 줌 비활성화
+      if (this.$refs.map && this.$refs.map.mapObject) {
+      this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
+      this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
+    }
 
     },
     shwoUImg(){
@@ -556,11 +568,22 @@ export default {
     },
     InfoChiak(){
       this.showInfoChiak = true;
+      // 지도의 드래그와 스크롤 줌 비활성화
+      if (this.$refs.map && this.$refs.map.mapObject) {
+      this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
+      this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
+    }
     },
     
     closed(){
       this.showInfoChiak = false;
       this.uploadIMG = false;
+
+      // 지도의 드래그와 스크롤 줌 비활성화
+      if (this.$refs.map && this.$refs.map.mapObject) {
+      this.$refs.map.mapObject.dragging.enable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
+      this.$refs.map.mapObject.scrollWheelZoom.enable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
+    }
     },
     closeLast(){
       this.allResValue = false;
