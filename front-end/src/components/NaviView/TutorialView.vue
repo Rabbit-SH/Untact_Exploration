@@ -1,122 +1,122 @@
 <template>
     <div class="black-bg" v-if="show">
-        <div class="white-bg">  
-            <v-carousel v-model="currentSlideIndex" hide-delimiters class="tutorial-img"
-            :continuous="false"
-            :cycle="false">
-                <v-carousel-item
-                    v-for="slide in slides"
-                    class="tutorial-img-ca"
-                    :key="slide.id"
-                    :style="{ backgroundImage: 'url(' + require('@/assets/tutorialView/' + slide.image) + ')' }"
-                    cover>
-                    <button class="closetutorial" @click="closetutorial" v-if="currentSlideIndex < slides.length - 1">skip</button> 
-                    <button class="start" @click="closetutorial" v-if="currentSlideIndex === slides.length - 1">
-                        <img :src="require('@/assets/start_button_img.png')">
-                    </button>
-                </v-carousel-item>
-            </v-carousel>
-        </div>
+      <div class="white-bg">
+        <v-carousel hide-delimiters height="auto" class="tutorial-image" :cycle="false" :continuous="false">
+          <v-carousel-item v-for="(item, i) in items" :key="i" class="tutorial-img-ca">
+            <v-btn x-small color="teal" dark @click="goToMain" class="skipButton">X</v-btn>
+            <img :src="item.src" alt="tutorial image" width="100%" height="100%">
+          </v-carousel-item>
+          <!-- 마지막 페이지에만 컨트롤 버튼을 표시X -->
+          <v-carousel-item v-if="!hasNext">
+            <img :src="require('@/assets/tutorialView/게임시작 페이지 예시.png')" alt="last tutorial image" width="100%" height="100%">
+            <div class="goToMainPage" @click="goToMain"></div>
+          </v-carousel-item>
+        </v-carousel>
+      </div>
     </div>
-</template>
-
-
-<script>
-export default {
-    props:{
-        show: {
-                type: Boolean,
-                required: true,
-            },
-
-    },
-    data(){
-        return{
-            currentSlideIndex: 0,
-
-            slides: [
-                {id:1, image : 'info.png', backgroundColor: '#F5F9EF'},
-                {id:2, image : 'character.png', backgroundColor: '#F5F9EF'},
-                {id:3, image : 'tutorial1.png', backgroundColor: '#E4F0D5'},
-                {id:4, image : 'tutorial2.png', backgroundColor: '#E4F0D5'},
-                {id:5, image : 'tutorial3.png', backgroundColor: '#E4F0D5'},
-                // {id:6, image : require('@/assets/tutorialView/tutorial4.png'), backgroundColor: 'white'},
-                {id:7, image : 'last_tu.png', backgroundColor: 'white'},
-            ],
-
-            checkedExercise: false,
-            checkedEquipment: false,
-        }
+  </template>
+  
+  <script>
+  export default {
+    props: {
+      show: {
+        type: Boolean,
+      },
     },
     methods: {
-        closetutorial(){
-            this.currentSlideIndex = 0;
-            this.$emit('closeTutorial');
-        },
-
+      goToMain() {
+        this.currentSlideIndex = 0;
+        this.$emit('closeTutorial');
+      },
     },
+    data() {
+      return {
+        items: [
+          { src: require('@/assets/tutorialView/캐릭터 소개 예시.png') },
+          { src: require('@/assets/tutorialView/튜토리얼1.png') },
+          { src: require('@/assets/tutorialView/튜토리얼2.jpg') },
+          { src: require('@/assets/tutorialView/튜토리얼3.png') },
+        ],
+      };
+    },
+    computed: {
+      // 현재 페이지가 마지막 페이지인지 확인
+      hasNext() {
+        return this.$refs.carousel ? this.$refs.carousel.hasNext() : false;
+      },
+    },
+  };
+  </script>
+  
+  <style>
+  .black-bg {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    z-index: 1500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+.white-bg {
+    width: 80%;
+    height: auto; /* 자동으로 내용에 맞게 높이가 조절됩니다. */
+    max-height: 90%; /* 최대 높이 제한을 둘 수 있습니다. */
+    position: fixed;
+    z-index: 1600;
+    display: flex;
+    flex-direction: column;
 }
-</script>
-
-<style scoped>
-    .black-bg{
-        width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        position: fixed; 
-        top: 0;
-        left: 0;
-        padding: 20px;
-        z-index: 1500;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .white-bg{
-        width: 80%;
-        position: fixed; 
-        overflow-y: auto;
-        background-size: contain;
-        background-position: center; /* 이미지를 중앙에 정렬합니다 */
-        z-index: 1600;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius:5px;
-    }
-
-    .tutorial-img-ca {
-        background-size: 100% 100%; /* 이미지를 컨테이너 크기에 맞춰 늘림 */
-        background-position: center;
-        width: 100%;
-        height: 100%;
-    }
-    .closetutorial{
-        position: absolute;
-        top: 15px;
-        right: 25px;
-        display: flex;
-        width: auto;
-        padding: 5px 10px;
-        margin-top: 5px;
-        background-color: #ccc;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-left: auto; /* 왼쪽 마진을 오토로 설정해서 오른쪽으로 밀어냄 */
-    }
-    .start{
-        position: absolute;
-        background-color: white;
-        color: white;
-        border: none;
-        left: 50%; /* 왼쪽에서 50% 위치에 배치 */
-        transform: translateX(-50%); /* 버튼의 너비의 절반만큼 왼쪽으로 이동 */
-        top: 25%; /* 필요한 경우 상단 위치 조정 */
-        max-width: 200px; /* 최대 너비 설정, 필요에 따라 조정 */
-        width: auto;
-        height: auto;
-    }
-
-
-</style>
+.tutorial-image{
+  border-radius: 5px;
+}  
+.tutorial-img-ca {
+  width: 100%;
+  position: relative;
+  border-radius: 5px;
+}
+.tutorial-image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+.v-window.tutorial-image.v-item-group.theme--dark.v-carousel {
+  overflow: overlay; /* 혹은 다른 원하는 스타일 적용 */
+}
+  
+.closetutorial {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    display: flex;
+    width: auto;
+    padding: 5px 10px;
+    margin-top: 5px;
+    background-color: #ccc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: auto;
+}
+  
+.goToMainPage {
+    position: absolute;
+    bottom: 15%;
+    left: 10%;
+    width: 80%;
+    height: 10%;
+}
+  
+.skipButton {
+    position: absolute;
+    top: 25px;
+    left: 84%;
+}
+  </style>
+  
