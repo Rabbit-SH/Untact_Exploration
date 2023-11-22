@@ -5,7 +5,7 @@ import VueRouter from 'vue-router';
 import router from './router';
 import vuetify from './plugins/vuetify'
 import '@mdi/font/css/materialdesignicons.css';
-import { EventBus } from './assets/EventBus';
+import { EventBus } from './EventBus';
 
 Vue.prototype.$bus = EventBus
 Vue.config.productionTip = false;

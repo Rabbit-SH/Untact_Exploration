@@ -115,6 +115,7 @@ export default {
           this.showPopup=false;
         },
         submitSoundRes(){
+            this.stopAllSounds();
             if(this.userResult.trim() == ''){
                 alert("답변을 입력해주세요!")
             } else {
@@ -126,6 +127,15 @@ export default {
                     this.dialog = true;
                 }
             }
+        },
+        stopAllSounds() {
+            this.sounds.forEach((sound) => {
+                if (sound.playing) {
+                    sound.howl.stop();
+                    sound.playing = false;
+                    sound.isActive = false;
+                }
+            });
         },
         handleDialogConfirmation(correct){
             this.dialog = false;

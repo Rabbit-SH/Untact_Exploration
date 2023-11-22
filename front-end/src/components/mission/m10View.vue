@@ -51,7 +51,7 @@
 </template>
 
 <script >
-import {EventBus} from '@/assets/EventBus.js';
+import {EventBus} from '@/EventBus.js';
 
 export default {
     props: {

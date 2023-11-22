@@ -6,14 +6,13 @@
       :zoom="zoom"
       :zoomAnimation=true
       :options="mapOptions"
-      
+      :maxBounds="maxBounds"
       class="map" 
       ref="map"
       @update:zoom="zoomUpdated"
       @update:center="centerUpdated"
       @update:bounds="boundsUpdated"
     >
-    <!-- :maxBounds="maxBounds" -->
 
     <div class="logo">
       <img :src="require('@/assets/logo.png')">
@@ -50,9 +49,30 @@
       <m9 :show="popVal9" @close="closeP(9)" @answerCorrect="updateResult(9)" class="popup" :class="{'show':popVal9}" />
       <m10 :show="popVal10" @close="closeP(10)" @answerCorrect="updateResult(10)" class="popup" :class="{'show':popVal10}" />
 
-      <infoChiakView :show="showInfoChiak" class="infoChiak" :class="{'show': showInfoChiak}" @closeTutorial="closed"/>
-      <GiftView :show="allResValue" :class="{'show': allResValue}" @closeGift="closeLast" ref="GiftView"/>
-
+      <InfoChiakView :show="showInfoChiak" class="infoChiak" :class="{'show': showInfoChiak}" @closeTutorial="closed"/>
+      <GiftView :show="allResValue" :class="{'show': allRes}" @closeGift="closeLast" ref="GiftView"/>
+      
+      <LMarker
+        :lat-lng="mainplacemarkers[0].coordinates"
+        :icon="placeICON1" />
+      <LMarker
+        :lat-lng="mainplacemarkers[1].coordinates"
+        :icon="placeICON2" />
+      <LMarker
+        :lat-lng="mainplacemarkers[2].coordinates"
+        :icon="placeICON3" />
+      <LMarker
+        :lat-lng="mainplacemarkers[3].coordinates"
+        :icon="placeICON4" />
+      <LMarker
+        :lat-lng="mainplacemarkers[4].coordinates"
+        :icon="placeICON5" />
+      <LMarker
+        :lat-lng="mainplacemarkers[5].coordinates"
+        :icon="placeICON6" />
+      <LMarker
+        :lat-lng="mainplacemarkers[6].coordinates"
+        :icon="placeICON7" />
       <LMarker
         :key="markers[0].id"
         :lat-lng="markers[0].coordinates"
@@ -158,9 +178,6 @@
           style="border-radius: 50%; background-color: white;">
           <v-icon size = "28">mdi-text-box-check-outline</v-icon>
         </v-btn>
-        <div>
-        <button @click="Good">핵버튼</button>
-      </div>
         <v-btn
           elevation="2"
           icon
@@ -173,9 +190,8 @@
 
           <v-icon size = "50">mdi-panorama-variant-outline</v-icon>
         </v-btn>
-          
       </div>
-  
+        
       <l-tile-layer :url="url" />
 
         <TutorialView :show="showtutorial" 
@@ -199,7 +215,7 @@ import { LMap, LTileLayer, LMarker, LCircle } from 'vue2-leaflet';
 import L from 'leaflet';
 import { Icon } from 'leaflet';
 
-import {EventBus} from '@/assets/EventBus.js';
+import {EventBus} from '@/EventBus.js';
 
 import m1 from '../components/mission/m1View.vue';
 import m2 from '../components/mission/m2View.vue';
@@ -225,11 +241,11 @@ import Durumari from './NaviView/DurumariView.vue';
 import GalleryView from './NaviView/GalleryView.vue';
 import TutorialView from './NaviView/TutorialView.vue';
 import UploadImageView from './NaviView/UploadImageView2.vue';
-import infoChiakView from './NaviView/InfoChiakView.vue';
+import InfoChiakView from './NaviView/InfoChiakView.vue';
 
 
 // 결과를 세션 스토리지에 저장하는 함수
-function saveResultsToSessionStorage(results) {
+function saveResultsToLocalStorage(results) {
   sessionStorage.setItem('missionResults', JSON.stringify(results));
 }
 
@@ -244,8 +260,8 @@ export default {
   data () {
     return {
       url: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-      // attribution: '&copy; <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> '
-      //               + '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+      attribution: '&copy; <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> '
+                    + '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
       center: [37.4148974953341, 128.050171136856],
       zoom: 16, // 초기 확대 레벨
       previousZoom : null, //현재의 확대 레벨
@@ -278,7 +294,6 @@ export default {
       result10: false,
 
       allResValue: false,
-      showModal: false,
 
       isZoomIn: false, //줌인이 된 상태인지 아닌지 확인(팝업창 띄우기 위한 변수)
       isZoom : false, //내 위치 버튼을 위한 줌인 상태 확인 변수
@@ -292,10 +307,16 @@ export default {
       showtutorial: false,
       uploadIMG: false,
 
+      isPositionReady : false,
+      positionObj: {
+        latitude: 0,
+        longitude: 0
+      },
+
       mapOptions: {
         minZoom: 13, //최소 줌 레벨 설정
         maxZoom: 18,  //최대 줌 레벨 설정
-        zoomControl:false
+        zoomControl: false, // 줌 컨트롤러 위치를 바꿔줄 예정(왼쪽 상단 -> 왼쪽 하단)
       },
 
       markers: [
@@ -308,8 +329,59 @@ export default {
         {id:7, coordinates: [37.39793653, 128.05143569], name:'돌탑 미션'},
         {id:8, coordinates: [37.3972176621091, 128.051402270794], name:'범람로 시작 전 표지판'},
         {id:9, coordinates: [37.3946674, 128.0533533], name:'탄소중립 미션'},
-        {id:10, coordinates:[37.3950754, 128.0534256], name:'솔비로길(야생화원)-쇠 꺼비 엠블럼'}, // 위치 변경 필요
+        {id:10, coordinates: [37.3950754, 128.0534256], name:'솔비로길(야생화원)'},
       ],
+      //주요 위치 마커 위치정보와, 이름
+      mainplacemarkers: [
+        {id:1, coordinates: [37.415178702643,128.050192594528], name:"치악산체험학습관"},
+        {id:2, coordinates: [37.408346344485,128.044876456261], name:"구룡자동차야영장"},
+        {id:3, coordinates: [37.4050247453998,128.047234117985], name:"황장금표"},
+        {id:4, coordinates: [37.405188804745, 128.049248456955], name:"황장목숲길"},
+        {id:5, coordinates: [37.3996361550487, 128.049114346504], name:"구룡사"},
+        {id:6,coordinates: [37.3949972677172, 128.053389787674], name:"금강솔빛생태학습원"},
+        {id:7, coordinates: [37.3942173439044, 128.053000867367], name:"대곡안전센터"},
+        {id:8, coordinates: [37.3941725939312, 128.054344654083], name:"솔비로길(야생화원)"},
+      ],
+      placeICON1: new Icon({
+        iconUrl: require('@/assets/mainplace/치악산체험학습관.png'),
+        iconSize: [100, 100],
+        iconAnchor: [16,32]
+      }),
+      placeICON2: new Icon({
+        iconUrl: require('@/assets/mainplace/구룡자동차야영장.png'),
+        iconSize: [100, 100],
+        iconAnchor: [16,32]
+      }),
+      placeICON3: new Icon({
+        iconUrl: require('@/assets/mainplace/황장금표.png'),
+        iconSize: [90, 80],
+        iconAnchor: [16,32]
+      }),
+      placeICON4: new Icon({
+        iconUrl: require('@/assets/mainplace/황장목숲길.png'),
+        iconSize: [100, 100],
+        iconAnchor: [16,32]
+      }),
+      placeICON5: new Icon({
+        iconUrl: require('@/assets/mainplace/구룡사.png'),
+        iconSize: [100, 100],
+        iconAnchor: [16,32]
+      }),
+      placeICON6: new Icon({
+        iconUrl: require('@/assets/mainplace/금강솔빛생태학습원.png'),
+        iconSize: [100, 100],
+        iconAnchor: [16,32]
+      }),
+      placeICON7: new Icon({
+        iconUrl: require('@/assets/mainplace/대곡안전센터.png'),
+        iconSize: [90, 80],
+        iconAnchor: [16,32]
+      }),
+      placeICON8: new Icon({
+        iconUrl: require('@/assets/mainplace/솔비로길(야생화원).png'),
+        iconSize: [100, 90],
+        iconAnchor: [16,32]
+      }),
       defaultIcon: new Icon({  // 지도의 마커 사용자 지정 아이콘(기본 디폴트 아이콘)
         iconUrl: require('@/assets/marker.png'),
         iconSize: [50, 50],
@@ -320,7 +392,7 @@ export default {
         iconSize: [60, 60],
         iconAnchor: [16,32]
       }),
-      circle: { radius: 5, color: 'red', opacity: 0.5} //현재 내 위치 아이콘 변경 필요
+      circle: { radius: 5, color: 'blue'}
     };
   },
   components: {
@@ -338,7 +410,7 @@ export default {
     m8,
     m9,
     m10,
-    infoChiakView,
+    InfoChiakView,
     GiftView,
     Durumari,
     GalleryView,
@@ -360,6 +432,11 @@ export default {
 
     // 현재 위치 불러오는 코드
     this.getCurrentPosition();
+    this.currentPosIcon = L.icon({
+      iconUrl: require('@/assets/logo.png'),
+      iconSize: [16,16],
+      iconAnchor: [16,32]
+    });
   },
   methods: {
     getDurumari(){
@@ -375,48 +452,36 @@ export default {
       this.uploadIMG = false;
     },
     getGallery(){
-      this.gallery_open = true;
-      this.showtutorial = false;
-      this.uploadIMG = false;
-      this.isCredit = false;
-      if (this.$refs.map && this.$refs.map.mapObject) {
-          this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
-          this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
-      }
-    },
-    closeGallery(){
-      this.gallery_open = false;
-      this.isCredit = false;
-      this.showtutorial = false;
-      this.uploadIMG = false;
-      if (this.$refs.map && this.$refs.map.mapObject) {
-        this.$refs.map.mapObject.dragging.enable();
-        this.$refs.map.mapObject.scrollWheelZoom.enable();
-      }
-    },
+            this.gallery_open = true;
+            this.showtutorial = false;
+            this.uploadIMG = false;
+            this.isCredit = false;
+            if (this.$refs.map && this.$refs.map.mapObject) {
+                this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
+                this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
+              }
+        },
+        closeGallery(){
+            this.gallery_open = false;
+            this.isCredit = false;
+            this.showtutorial = false;
+            this.uploadIMG = false;
+            if (this.$refs.map && this.$refs.map.mapObject) {
+              this.$refs.map.mapObject.dragging.enable();
+              this.$refs.map.mapObject.scrollWheelZoom.enable();
+            }
+        },
     closeTutorial(){
       this.isCredit = false;
       this.gallery_open = false;
       this.showtutorial = false;
       this.uploadIMG = false;
-
-      // 지도의 드래그와 스크롤 줌 비활성화
-      if (this.$refs.map && this.$refs.map.mapObject) {
-      this.$refs.map.mapObject.dragging.enable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
-      this.$refs.map.mapObject.scrollWheelZoom.enable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
-    }
     },
     showTutorialPopup(){
       this.showtutorial = true;
       this.uploadIMG = false;
       this.isCredit = false;
       this.gallery_open = false;
-
-      // 지도의 드래그와 스크롤 줌 비활성화
-      if (this.$refs.map && this.$refs.map.mapObject) {
-      this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
-      this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
-    }
 
     },
     shwoUImg(){
@@ -463,30 +528,37 @@ export default {
 
     },
     closeP(idx){
-      this['popVal'+(idx)] = false;
+      this.popVal1 = false;
+      this.popVal2 = false;
+      this.popVal3 = false;
+      this.popVal4 = false;
+      this.popVal5 = false;
+      this.popVal6 = false;
+      this.popVal7 = false;
+      this.popVal8 = false;
+      this.popVal9 = false;
+      this.popVal10 = false;
       
       // 지도의 드래그와 스크롤 줌 활성화
       if (this.$refs.map && this.$refs.map.mapObject) {
-        this.$refs.map.mapObject.dragging.enable();
-        this.$refs.map.mapObject.scrollWheelZoom.enable();
-      }
+      this.$refs.map.mapObject.dragging.enable();
+      this.$refs.map.mapObject.scrollWheelZoom.enable();
+    }
 
-      setTimeout(() => {
-        if (this['result'+(idx)] === true){
-          if (this.isZoomIn && idx < 10 && idx > 1) {
-            // 팝업이 닫힌 후 줌 아웃(원래 줌 레벨로 돌아가기)
-            const lat_ = (this.markers[idx-1].coordinates[0] + this.markers[idx].coordinates[0])/2;
-            const lng_ = (this.markers[idx-1].coordinates[1] + this.markers[idx].coordinates[1])/2;
-            this.$refs.map.mapObject.panTo([lat_, lng_], { duration: 0.3 });
-            this.$refs.map.mapObject.setView([lat_, lng_], this.previousZoom);
-            this.isZoomIn = false;
-          } else if (this.isZoomIn && idx === 1){
-            this.$refs.map.mapObject.panTo(this.markers[idx].coordinates, { duration: 0.3 });
-            this.$refs.map.mapObject.setView(this.markers[idx].coordinates, 16);
-            this.isZoomIn = false;
-          }
-        }
-      }, 300);
+    setTimeout(() => {
+      if (this.isZoomIn && idx < 10 && idx > 1) {
+        // 팝업이 닫힌 후 줌 아웃(원래 줌 레벨로 돌아가기)
+        const lat_ = (this.markers[idx-1].coordinates[0] + this.markers[idx].coordinates[0])/2;
+        const lng_ = (this.markers[idx-1].coordinates[1] + this.markers[idx].coordinates[1])/2;
+        this.$refs.map.mapObject.panTo([lat_, lng_], { duration: 0.3 });
+        this.$refs.map.mapObject.setView([lat_, lng_], this.previousZoom);
+        this.isZoomIn = false;
+      } else if (this.isZoomIn && idx === 1){
+        this.$refs.map.mapObject.panTo(this.markers[idx].coordinates, { duration: 0.3 });
+        this.$refs.map.mapObject.setView(this.markers[idx].coordinates, 15);
+        this.isZoomIn = false;
+      }
+    }, 300);
 
       if (idx === 10){
         this.allRes();
@@ -495,7 +567,10 @@ export default {
     }, 
 
     getPositionValue(pos) {
-      this.currentPos = [pos.coords.latitude, pos.coords.longitude];
+      this.positionObj.latitude = pos.coords.latitude;
+      this.positionObj.longitude = pos.coords.longitude;
+      this.currentPos = [this.positionObj.latitude, this.positionObj.longitude];
+      this.isPositionReady = true;
        
       if (this.$refs.map && this.$refs.map.mapObject) {
         // 이컨 마커가 있다면 삭제 (안하면 위치 변동될때마다 계속 마커가 찍힘)
@@ -512,6 +587,7 @@ export default {
         ()=>alert('위치 정보를 찾을 수 없습니다.2')) //위치 업데이트 시 호출되는 함수 getPositionValue, 오류 발생 시 경고메세지 표시
       }
     },
+
     ZoomInToCurrentPosition(){
       this.current = this.currentPos;
       if (this.isZoom) {
@@ -521,6 +597,10 @@ export default {
         this.$refs.map.mapObject.setView(this.currentPos, 16);
         this.isZoom = true;
       }
+    },
+
+    goToCenter(){
+      this.$refs.map.mapObject.setView([37.408473, 128.045787],14);
     },
     loadGPX(){
       //.gpx 파일 로드 및 지도에 표시
@@ -569,48 +649,66 @@ export default {
         result9: this.result9,
         result10: this.result10,
       };
-      EventBus.$emit('send-results-to-durumari', results); // 두루마리 페이지 삭제 시 같이 삭제
-      saveResultsToSessionStorage(results);
+      EventBus.$emit('send-results-to-durumari', results);
+      saveResultsToLocalStorage(results);
     },
     InfoChiak(){
       this.showInfoChiak = true;
-      // 지도의 드래그와 스크롤 줌 비활성화
-      if (this.$refs.map && this.$refs.map.mapObject) {
-      this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
-      this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
-    }
     },
     
     closed(){
       this.showInfoChiak = false;
       this.uploadIMG = false;
-
-      // 지도의 드래그와 스크롤 줌 비활성화
-      if (this.$refs.map && this.$refs.map.mapObject) {
-      this.$refs.map.mapObject.dragging.enable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
-      this.$refs.map.mapObject.scrollWheelZoom.enable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
-    }
     },
     closeLast(){
+      // this.result1 = false;
+      // this.result2 = false;
+      // this.result3 = false;
+      // this.result4 = false;
+      // this.result5 = false;
+      // this.result6 = false;
+      // this.result7 = false;
+      // this.result8 = false;
+      // this.result9 = false;
+      // this.result10 = false;
+      // this.$refs.GiftView.close()
       this.allResValue = false;
+
       this.isGift = true;
     },
-    Good(){  //핵 버튼
-      this.allResValue = true;
+    Good(){
+      this.result1 = true;
+      this.result2 = true;
+      this.result3 = true;
+      this.result4 = true;
+      this.result5 = true;
+      this.result6 = true;
+      this.result7 = true;
+      this.result8 = true;
+      this.result9 = true;
+      this.result10 = true;
     },
     allRes(){
       if(this.result1 && this.result2 && this.result3 && this.result4 && this.result5 && this.result6 && this.result7 && this.result8 && this.result9 && this.result10){
+        // [this.result1, this.result2, this.result3, this.result4, this.result5, this.result6, this.result7, this.result8, this.result9, this.result10].every(Boolean); 
         this.allResValue = true;
       }
       return this.allResValue
     },
   },
   computed:{
+    // allRes(){
+    //   if(this.result1 && this.result2 && this.result3 && this.result4 && this.result5 && this.result6 && this.result7 && this.result8 && this.result9 && this.result10){
+    //     // [this.result1, this.result2, this.result3, this.result4, this.result5, this.result6, this.result7, this.result8, this.result9, this.result10].every(Boolean); 
+    //     this.allResValue = true;
+    //   }
+    //   return this.allResValue
+    // },
     completedMissionsCount() {
-      return [this.result2, this.result3, this.result4, this.result5, this.result6, this.result7, this.result8, this.result9, this.result10].filter(Boolean).length;
+      return [this.result1, this.result2, this.result3, this.result4, this.result5, this.result6, this.result7, this.result8, this.result9, this.result10].filter(Boolean).length;
     },
     totalMissions() {
-      return 9; // 전체 미션의 수
+      return 10; // 전체 미션의 수
     }
   },
   created(){
@@ -639,6 +737,27 @@ export default {
   .popup.show{
     opacity: 1; /*나타날 때 투명도를 1로 설정하여 부드럽게 나타나게 함*/
   } 
+
+  .chiakInfo{
+    right: 1.5%;
+    bottom: 40px;
+    z-index: 500;
+    position: absolute;
+  }
+  .chiakInfo img{
+    height: 70px;
+    width: auto;
+  }
+  .showUImg{
+    right: 2%;
+    bottom: 150px;
+    z-index: 1001;
+    position: absolute;
+  }
+  .showUImg img{
+    height: auto;
+    width: 70px;
+  }
   
   @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
@@ -651,25 +770,27 @@ export default {
       transform: translateY(-15px);
     }
   }
+
+
   .animated-marker {
     animation: bounce 1s infinite;
     z-index: 1001;
     position: absolute;
-  }
-  .animated-marker img{
-    width: 100%;
-    height: 100%;
+    bottom: 35%; 
+    right: 25%;
+    /* transform: translate(-50%, -50%); */
   }
   .navi-bar {
-    position: fixed; /* 고정 위치 */
-    bottom: 3%; /* 화면 하단 */
-    left: 50%; /* 화면 중앙 정렬을 위해 왼쪽에서 50% 위치 */
-    transform: translateX(-50%); /* 중앙 정렬을 위해 X축으로 -50% 이동 */
-    display: flex; /* 내부 요소를 가로로 정렬 */
-    justify-content: center; /* 내부 요소들을 중앙에 배치 */
-    align-items: center; /* 세로 방향으로 중앙 정렬 */
-    z-index: 1001; /* 다른 요소들 위에 표시 */
-  }
+  position: fixed; /* 고정 위치 */
+  bottom: 3%; /* 화면 하단 */
+  left: 50%; /* 화면 중앙 정렬을 위해 왼쪽에서 50% 위치 */
+  transform: translateX(-50%); /* 중앙 정렬을 위해 X축으로 -50% 이동 */
+  display: flex; /* 내부 요소를 가로로 정렬 */
+  justify-content: center; /* 내부 요소들을 중앙에 배치 */
+  align-items: center; /* 세로 방향으로 중앙 정렬 */
+  z-index: 1001; /* 다른 요소들 위에 표시 */
+}
+
   .navi-bar .story{
     display: absolute;
     align-items: center;
@@ -708,6 +829,7 @@ export default {
     width: 100%;
     height: auto;
   }
+
   .mission {
     top: 9%;
     z-index: 1000;
@@ -715,10 +837,12 @@ export default {
     height: 30%;
     position: relative; /* mission 요소 내에서 mission-current의 위치를 결정하기 위해 relative 설정 */
   }
+
   .mission img {
     width: 100%;
     height: auto;
   }
+
   .mission-current {
     position: absolute; /* mission 요소 내에서 절대 위치 설정 */
     top: 20%; 

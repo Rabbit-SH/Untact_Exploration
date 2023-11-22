@@ -82,7 +82,7 @@
 }
 </style>
 <script>
-import { EventBus } from '@/assets/EventBus';
+import { EventBus } from '@/EventBus';
 import axios from 'axios';
 export default {
   name: 'AIView',
