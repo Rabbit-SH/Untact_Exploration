@@ -45,12 +45,6 @@
 </script>
 
 <style scoped>
-.moveToMainButton {
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
 .beforeButton{
   position: absolute;
   top:10px;

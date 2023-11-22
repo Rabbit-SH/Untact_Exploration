@@ -30,9 +30,9 @@ export default {
             currentSlideIndex: 0,
 
             slides: [
-                {id:1, image : require('@/assets/infoChiakView/010.png'), backgroundColor: 'white'},
-                {id:2, image : require('@/assets/infoChiakView/011.png'), backgroundColor: 'white'},
-                {id:3, image : require('@/assets/infoChiakView/012.png'), backgroundColor: 'white'},
+                {id:1, image : require('@/assets/ChiakInfo/010.png'), backgroundColor: 'white'},
+                {id:2, image : require('@/assets/ChiakInfo/011.png'), backgroundColor: 'white'},
+                {id:3, image : require('@/assets/ChiakInfo/012.png'), backgroundColor: 'white'},
             ],
 
             checkedExercise: false,
