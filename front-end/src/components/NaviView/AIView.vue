@@ -147,7 +147,7 @@ export default {
       this.errorMessage = '';
 
       try {
-          this.response = await axios.post('http://localhost:8000/upload', formData,{responseType: 'blob'});
+          this.response = await axios.post('https://5e11-1-244-138-205.ngrok.io:8000/upload', formData,{responseType: 'blob'});
           
           this.imageUrl = URL.createObjectURL(this.response.data);
           // console.log("변환된 이미지 URL:", this.imageUrl);
