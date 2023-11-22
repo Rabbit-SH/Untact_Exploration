@@ -4,17 +4,32 @@
             <button class="close" @click="closeP">
                 <img src="@/assets/mission/close.png">
             </button>
-            <div class="content-container" justify="center" align="center">
+            <div class="content-container pl-8" justify="center" align="center">
 
-                <v-text-field
-                    label="0000는 무엇일까요?"
-                    outlined
-                    class="textarea"
-                    v-model="userResult"
-                    justify="center"
-                    style="width: 80%;"
-                    align-items="center"
-                ></v-text-field>
+                <v-checkbox
+                        v-model="userResult"
+                        label="황장금표"
+                        color="success"
+                        value="황장금표"
+                        hide-details
+                        style="color: black"
+                    ></v-checkbox>
+                    <v-checkbox
+                        v-model="userResult"
+                        label="황금장표"
+                        color="primary"
+                        value="황금장표"
+                        hide-details
+                        style="color: black"
+                    ></v-checkbox>
+                    <v-checkbox
+                        v-model="userResult"
+                        label="황금장이"
+                        color="primary"
+                        value="황금장이"
+                        hide-details
+                        style="color: black"
+                    ></v-checkbox>
                 
                 
                 <br>

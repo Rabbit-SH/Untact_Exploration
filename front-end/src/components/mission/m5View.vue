@@ -7,28 +7,46 @@
             <div class="content-container" justify="center" align="center">
                 <div class="correctSound mb-4">
                     <p>물두꺼비 소리</p>
-                    <audio controls src="@/assets/꿩.wav"></audio>
-                </div>
-
-                <p>다음 중 어떤 소리가 물두꺼비의 소리일까요?</p>
-                <div class="soundDiv">
-                    <div class="sound">
-                        <input type="radio" name="toad_sound" value="물두꺼비" v-model="userResult" checked="checked">
-                        <audio controls src="@/assets/꿩.wav"></audio>
-                    </div>
-                    <br>
-                    <div class="sound">
-                        <input type="radio" name="toad_sound" value="북방산개구리" v-model="userResult">
-                        <audio controls src="@/assets/99941F4C5CF91EAC0F.mp3"></audio>
-                    </div>
-                    <br>
-                    <div class="sound">
-                        <input type="radio" name="toad_sound" value="맹꽁이" v-model="userResult">
-                        <audio controls src="@/assets/비둘기.wav"></audio>
-                    </div>
+                    <!-- <audio controls src="@/assets/꿩.wav"></audio> -->
+                    <v-btn @click="toggleAudio(sounds[0])" fab>
+                        <v-icon large  :style="{ color: sounds[0].isActive ? 'green' : 'black' }">mdi mdi-volume-high</v-icon>
+                    </v-btn>
+                    
                 </div>
                 <br>
-                <v-btn class="custom-submit-button mt-3 pl-10 pr-10" color="#EF8200" @click="submitSoundRes">제출하기</v-btn>
+                <p>다음 중 어떤 소리가 물두꺼비의 소리일까요?</p>
+                <div class="soundDiv">
+                    <v-row class="sound-item pl-7 pr-7">
+                        <v-col cols="4">
+                            <v-btn @click="toggleAudio(sounds[0])" fab>
+                                <v-icon large  :style="{ color: sounds[0].isActive ? 'green' : 'black' }">mdi mdi-volume-high</v-icon>
+                            </v-btn>
+                        </v-col>
+                        <v-col cols="4">
+                            <v-btn @click="toggleAudio(sounds[1])" fab>
+                                <v-icon large  :style="{ color: sounds[1].isActive ? 'green' : 'black' }">mdi mdi-volume-high</v-icon>
+                            </v-btn>
+                        </v-col>
+                        <v-col cols="4">
+                            <v-btn @click="toggleAudio(sounds[2])" fab>
+                                <v-icon large  :style="{ color: sounds[2].isActive ? 'green' : 'black' }">mdi mdi-volume-high</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                    <v-row class="sound-item pr-3 pl-3" justify="center">
+                        <v-col cols="auto" class="mr-7 ml-7">
+                            <v-checkbox v-model="userResult" :value="sounds[0].value"></v-checkbox>
+                        </v-col>
+                        <v-col cols="auto" class="mr-7 ml-7">
+                            <v-checkbox v-model="userResult" :value="sounds[1].value"></v-checkbox>
+                        </v-col>
+                        <v-col cols="auto" class="mr-7 ml-7">
+                            <v-checkbox v-model="userResult" :value="sounds[2].value"></v-checkbox>
+                        </v-col>
+                    </v-row>
+                </div>
+                <br>
+                <v-btn class="custom-submit-button mt-3 pl-7 pr-7" color="#EF8200" @click="submitSoundRes">제출하기</v-btn>
             </div>
         </div>
         <v-dialog v-model="dialog" max-width="500">
@@ -60,6 +78,8 @@
 </template>
 
 <script >
+import {Howl} from 'howler';
+
 export default {
     props: {
         show: {
@@ -75,6 +95,12 @@ export default {
           userResult: '', //사용자 응답 저장하는 데이터
           showPopup: false, //팝업 상태
           dialog: false,
+
+          sounds: [
+                { id: 1, src: "/꿩.wav", isActive: false, howl: null, value: '꿩' },
+                { id: 2, src: "/99941F4C5CF91EAC0F.mp3", isActive: false, howl: null, value: '참새' },
+                { id: 3, src: "/비둘기.wav", isActive: false, howl: null, value: '비둘기' },
+            ],
       }
     },
     methods: {
@@ -116,7 +142,36 @@ export default {
                 this.userResult = ''; // 사용자 응답 리셋
                 this.closeP();        // 다이얼로그 닫기
             }
-        }
+        },
+        toggleAudio(sound) {
+            this.stopAllSoundsExcept(sound.id);
+
+            if (sound.playing) {
+                sound.howl.stop();
+            } else {
+                sound.howl = new Howl({
+                src: [sound.src],
+                volume: 1,
+                onend: () => {
+                    sound.playing = false;
+                },
+                });
+                sound.howl.play();
+                sound.playing = true;
+            }
+
+            // 토글하여 초록색 스타일 변경
+            sound.isActive = !sound.isActive;
+        },
+        stopAllSoundsExcept(exceptId) {
+            this.sounds.forEach((sound) => {
+                if (sound.playing && sound.id !== exceptId) {
+                sound.howl.stop();
+                sound.playing = false;
+                sound.isActive = false; // 다른 사운드 중지 시에는 isActive를 false로 설정
+                }
+            });
+        },
 
     }
 }
@@ -164,6 +219,7 @@ export default {
         bottom: 7%;
         max-height: 48%;
         overflow-y: auto;
+        overflow-x: hidden;
     }
     .close{
         width: 22px;

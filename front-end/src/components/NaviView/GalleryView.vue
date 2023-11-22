@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import EventBus from '@/EventBus.js';
+import {EventBus} from '@/assets/EventBus.js';
 
 export default {
   name: 'AppGallery',

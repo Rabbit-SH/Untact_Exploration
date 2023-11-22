@@ -24,7 +24,7 @@
       return {
         items: [
           { src: require('@/assets/tutorialView/캐릭터 소개 예시.png') },
-          { src: require('@/assets/tutorialView/튜토리얼 1.png') },
+          { src: require('@/assets/tutorialView/튜토리얼1.png') },
           { src: require('@/assets/tutorialView/튜토리얼2.jpg') },
           { src: require('@/assets/tutorialView/튜토리얼3.png') },
         ],

@@ -5,23 +5,34 @@
                 <img src="@/assets/mission/close.png">
             </button>
             <div class="content-container" justify="center" align="center">
-                
-                <div class="soundDiv">
-                    <div class="sound">
-                        <input type="radio" name="bird_sound" value="꿩" v-model="userResult" checked="checked">
-                        <audio controls src="@/assets/꿩.wav"></audio>
-                    </div>
-                    <br>
-                    <div class="sound">
-                        <input type="radio" name="bird_sound" value="참새" v-model="userResult">
-                        <audio controls src="@/assets/99941F4C5CF91EAC0F.mp3"></audio>
-                    </div>
-                    <br>
-                    <div class="sound">
-                        <input type="radio" name="bird_sound" value="비둘기" v-model="userResult">
-                        <audio controls src="@/assets/비둘기.wav"></audio>
-                    </div>
-                </div>
+                <v-row class="sound-item pl-7 pr-7">
+                    <v-col cols="4">
+                        <v-btn @click="toggleAudio(sounds[0])" fab>
+                            <v-icon large  :style="{ color: sounds[0].isActive ? 'green' : 'gray' }">mdi mdi-volume-high</v-icon>
+                        </v-btn>
+                    </v-col>
+                    <v-col cols="4">
+                        <v-btn @click="toggleAudio(sounds[1])" fab>
+                            <v-icon large  :style="{ color: sounds[1].isActive ? 'green' : 'gray' }">mdi mdi-volume-high</v-icon>
+                        </v-btn>
+                    </v-col>
+                    <v-col cols="4">
+                        <v-btn @click="toggleAudio(sounds[2])" fab>
+                            <v-icon large  :style="{ color: sounds[2].isActive ? 'green' : 'gray' }">mdi mdi-volume-high</v-icon>
+                        </v-btn>
+                    </v-col>
+                </v-row>
+                <v-row class="sound-item pr-3 pl-3" justify="center">
+                    <v-col cols="auto" class="ma-7">
+                        <v-checkbox v-model="userResult" :value="sounds[0].value"></v-checkbox>
+                    </v-col>
+                    <v-col cols="auto" class="ma-7">
+                        <v-checkbox v-model="userResult" :value="sounds[1].value"></v-checkbox>
+                    </v-col>
+                    <v-col cols="auto" class="ma-7">
+                        <v-checkbox v-model="userResult" :value="sounds[2].value"></v-checkbox>
+                    </v-col>
+                </v-row>
                 <br>
                 <v-btn class="custom-submit-button mt-3 pl-10 pr-10" color="#EF8200" @click="submitSoundRes">제출하기</v-btn>
             </div>
@@ -54,7 +65,7 @@
                     </v-row>
                 </v-card-text>
                 <v-card-actions class="card">
-                <v-btn @click="handleDialogConfirmation(userResult === '꿩')" class="ok-btn mt-3 pl-10 pr-10" color="#EF8200">찐 미션 고고씽</v-btn>
+                <v-btn @click="handleDialogConfirmation(userResult === '꿩')" class="ok-btn mt-3 pl-10 pr-10" color="#EF8200">{{ userResult === '꿩' ? '찐 미션 고고씽' : '확인' }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -62,6 +73,8 @@
 </template>
 
 <script scoped>
+import { Howl } from 'howler';
+
 export default {
     props: {
         show: {
@@ -74,9 +87,15 @@ export default {
     },
     data(){
       return {
-          userResult: '', //사용자 응답 저장하는 데이터
-          showPopup: false, //팝업 상태
-          dialog: false,
+            userResult: '', //사용자 응답 저장하는 데이터
+            showPopup: false, //팝업 상태
+            dialog: false,
+
+            sounds: [
+                { id: 1, src: "/꿩.wav", isActive: false, howl: null, value: '꿩' },
+                { id: 2, src: "/99941F4C5CF91EAC0F.mp3", isActive: false, howl: null, value: '참새' },
+                { id: 3, src: "/비둘기.wav", isActive: false, howl: null, value: '비둘기' },
+            ],
       }
     },
     methods: {
@@ -118,7 +137,36 @@ export default {
                 this.userResult = ''; // 사용자 응답 리셋
                 this.closeP();        // 다이얼로그 닫기
             }
-        }
+        },
+        toggleAudio(sound) {
+            this.stopAllSoundsExcept(sound.id);
+
+            if (sound.playing) {
+                sound.howl.stop();
+            } else {
+                sound.howl = new Howl({
+                src: [sound.src],
+                volume: 1,
+                onend: () => {
+                    sound.playing = false;
+                },
+                });
+                sound.howl.play();
+                sound.playing = true;
+            }
+
+            // 토글하여 초록색 스타일 변경
+            sound.isActive = !sound.isActive;
+        },
+        stopAllSoundsExcept(exceptId) {
+            this.sounds.forEach((sound) => {
+                if (sound.playing && sound.id !== exceptId) {
+                sound.howl.stop();
+                sound.playing = false;
+                sound.isActive = false; // 다른 사운드 중지 시에는 isActive를 false로 설정
+                }
+            });
+        },
 
     }
 }
@@ -170,18 +218,6 @@ export default {
         right: 5%;
     
     }
-    .sound {
-        white-space: nowrap; /*줄바꿈 방지해 한 줄에 표시*/
-    }
-    .sound input[type="radio"],
-    .sound audio {
-        display:inline-block;
-        vertical-align: middle;
-        padding-left: 15px;
-        padding-right: 0px;
-        margin-right: 0;
-        /* width: 250px; */
-    }
     .custom-submit-button {
         color: white !important; /* 텍스트 색상을 흰색으로 */
         font-weight: bold; /* 글씨 두께를 굵게 */
@@ -195,4 +231,9 @@ export default {
         font-weight: bold; 
         font-size: 18px;
     }
+    .center-checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 </style>

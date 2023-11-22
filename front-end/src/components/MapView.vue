@@ -158,6 +158,9 @@
           style="border-radius: 50%; background-color: white;">
           <v-icon size = "28">mdi-text-box-check-outline</v-icon>
         </v-btn>
+        <div>
+        <button @click="Good">핵버튼</button>
+      </div>
         <v-btn
           elevation="2"
           icon
@@ -170,8 +173,9 @@
 
           <v-icon size = "50">mdi-panorama-variant-outline</v-icon>
         </v-btn>
+          
       </div>
-        
+  
       <l-tile-layer :url="url" />
 
         <TutorialView :show="showtutorial" 
@@ -195,7 +199,7 @@ import { LMap, LTileLayer, LMarker, LCircle } from 'vue2-leaflet';
 import L from 'leaflet';
 import { Icon } from 'leaflet';
 
-import EventBus from '@/EventBus.js';
+import {EventBus} from '@/assets/EventBus.js';
 
 import m1 from '../components/mission/m1View.vue';
 import m2 from '../components/mission/m2View.vue';
@@ -274,6 +278,7 @@ export default {
       result10: false,
 
       allResValue: false,
+      showModal: false,
 
       isZoomIn: false, //줌인이 된 상태인지 아닌지 확인(팝업창 띄우기 위한 변수)
       isZoom : false, //내 위치 버튼을 위한 줌인 상태 확인 변수
@@ -290,6 +295,7 @@ export default {
       mapOptions: {
         minZoom: 13, //최소 줌 레벨 설정
         maxZoom: 18,  //최대 줌 레벨 설정
+        zoomControl:false
       },
 
       markers: [
@@ -649,8 +655,10 @@ export default {
     animation: bounce 1s infinite;
     z-index: 1001;
     position: absolute;
-    bottom: 35%; 
-    right: 25%;
+  }
+  .animated-marker img{
+    width: 100%;
+    height: 100%;
   }
   .navi-bar {
     position: fixed; /* 고정 위치 */

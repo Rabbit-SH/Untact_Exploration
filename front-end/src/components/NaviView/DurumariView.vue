@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import EventBus from '@/EventBus.js'
+import {EventBus} from '@/assets/EventBus.js'
 
 export default {
     props: {
@@ -125,7 +125,7 @@ export default {
       border-radius: 8px;
       padding: 30px;
       overflow-y: auto;
-      background-image: url('~@/assets/background_duru.png');
+      background-image: url('~@/assets/background.png');
       background-size: cover;
       background-position: center; /* 이미지를 중앙에 정렬합니다 */
     }

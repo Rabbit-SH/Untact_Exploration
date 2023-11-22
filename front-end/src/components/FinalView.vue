@@ -1,7 +1,11 @@
 <template>
     <div class="final-page">
+      <!-- <button class="close" @click="goToMain">
+        <img src="@/assets/mission/close.png">
+      </button> -->
       <div class="photo">
-        <img :src="require('@/assets/photo.jpeg')">
+        <img id="displayImage" alt="photo">
+        <!-- <img :src="require('@/assets/photo.jpeg')"> -->
       </div>
       <div class="present">
         <img :src="require('@/assets/open-present.png')">
@@ -14,24 +18,29 @@
   </template>
   
   <script>
-  import EventBus from '@/EventBus.js';
-
+  // import {EventBus} from '@/assets/EventBus.js'
   export default {
     name: 'FinalView',
     data(){
       return {
-        familyphoto:'',
+        familyphoto:null,
       };
     },
-    created() {
-      EventBus.$on('add-family-photo', this.addphotoDataUrl);
-      console.log("familyphoto updated: ", this.familyphoto);
+    mounted() {
+      // EventBus.$on('add-family-photo', this.addphotoDataUrl);
+      let familyphotos = sessionStorage.getItem('displayphoto')
+        // 예: 이미지 태그의 src 속성으로 설정
+      document.getElementById('displayImage').src = familyphotos;
     },
     methods: {
       addphotoDataUrl(photoDataUrl) {
         this.familyphoto = photoDataUrl;
-        
+        console.log("familyphoto updated: ", this.familyphoto);
       },
+      // goToMain() {
+      //   this.currentSlideIndex = 0;
+      //   this.$emit('closeTutorial');
+      // },
       downloadImage() {
         const imageUrl = require('@/assets/photo.jpeg');
           // Blob 객체를 생성합니다.
@@ -74,6 +83,14 @@
       align-items: center; /* 세로 중앙 정렬 */
       position: relative;
     }
+    .close img{
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      position: absolute;
+      top: 3%;
+      right: 5%;
+    }
 
     .photo {
       position: absolute;
@@ -88,7 +105,7 @@
     }
     .present{
       position: absolute;
-      bottom: 15%;
+      bottom: 18%;
       width: 100%;
       left: 7%;
       height: auto;
@@ -96,22 +113,22 @@
     .present img{
       width: 100%;
       height: 100%;
+      /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
     }
     .button-container{
       position: absolute;
-      bottom: 10%;
+      bottom: 3%;
+      display: flex; /* Flexbox 레이아웃 사용 */
+      flex-direction: column; /* 요소들을 세로로 정렬 */
+      align-items: center; /* 가로 중앙 정렬 */
+    }
 
-    }
-    .ok-btn {
-        color: white !important; /* 텍스트 색상을 흰색으로 */
-        font-weight: bold; /* 글씨 두께를 굵게 */
-        font-size: 18px; /* 글씨 크기를 18px로 설정 */
-        margin-right: 5px;
-    }
-    .google-form-button {
-        color: white !important; /* 텍스트 색상을 흰색으로 */
-        font-weight: bold; /* 글씨 두께를 굵게 */
-        font-size: 18px; /* 글씨 크기를 18px로 설정 */
+    .ok-btn, .google-form-button {
+      color: white !important;
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 10px; /* 버튼 사이의 간격 */
+      width: 80%;
     }
 
   </style>

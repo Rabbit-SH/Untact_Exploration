@@ -51,7 +51,6 @@
 </template>
 
 <script >
-import EventBus from '@/EventBus.js';
 // import SvgIcon from '@jamescoyle/vue-icon';
 // import { mdiCameraOutline } from '@mdi/js';
 
@@ -110,7 +109,9 @@ export default {
                 // EventBus.$emit('add-photo', photoDataUrl);
                 const photoDataUrl = fileReader.result;
                 this.uploadedPhoto = photoDataUrl;
-                EventBus.$emit('add-photo', photoDataUrl);
+                this.$bus.$emit('add-photo', photoDataUrl);  
+                sessionStorage.setItem('displayphoto', photoDataUrl);
+                console.log(photoDataUrl)
             }
             this.dialog = true;
         },
