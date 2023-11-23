@@ -182,7 +182,7 @@
           elevation="2"
           icon
           color="teal"
-          @click="$router.push({name: 'AIView'})" 
+          @click="goPage(AIView)" 
           class="uploadImg"
           height = "80px"
           width = "80px"
@@ -203,7 +203,7 @@
 
       <div  class="animated-marker" v-show="isGift">
         <img :src="require('@/assets/present.png')" 
-        @click="$router.push({name: 'FinalView'})">
+        @click="goPage(FinalView)">
       </div>
 
     </l-map>
@@ -683,6 +683,10 @@ export default {
       }
       return this.allResValue
     },
+    goPage(pageN){
+      //여기에 세션스토리지 ㄱ
+      this.$router.push({name: pageN});
+    }
   },
   computed:{
     completedMissionsCount() {
