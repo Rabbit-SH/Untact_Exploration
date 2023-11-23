@@ -7,7 +7,7 @@
         <img id="displayImage" alt="photo">
       </div>
       <div class="present">
-        <img :src="require('@/assets/open-present.png')">
+        <img :src="require('@/assets/open.png')">
       </div>
       <div class="button-container">
         <v-btn @click="downloadImage" class="ok-btn mt-3 pl-10 pr-10" color="#EF8200">다운로드</v-btn>
@@ -36,12 +36,31 @@ export default {
       console.log("familyphoto updated: ", this.familyphoto);
     },
     downloadImage() {
-      
+      // 이미지 요소를 가져옵니다.
+      const image = document.getElementById('displayImage');
+
+      // 이미지의 URL을 가져옵니다.
+      const imageUrl = image.src;
+
+      // 다운로드를 위한 임시 링크 요소를 생성합니다.
+      const link = document.createElement('a');
+      link.href = imageUrl;
+
+      // 다운로드될 파일의 이름을 설정합니다.
+      link.download = 'familyphoto';
+
+      // 링크를 문서에 추가하고 클릭합니다.
+      document.body.appendChild(link);
+      link.click();
+
+      // 링크를 다시 제거합니다.
+      document.body.removeChild(link);
       },
-      openGoogleForm(){
-        const url = "https://docs.google.com/forms/d/e/1FAIpQLSdBCQgSi7xSaxSddm6OTSFwxXKcOjrNvLxfllJq-o0S7_09OQ/viewform?usp=sf_link";
-        const options = "width = 700, height=600, left=200, top=200";
-        window.open(url, "_blank", options);
+
+    openGoogleForm(){
+      const url = "https://docs.google.com/forms/d/e/1FAIpQLSdBCQgSi7xSaxSddm6OTSFwxXKcOjrNvLxfllJq-o0S7_09OQ/viewform?usp=sf_link";
+      const options = "width = 700, height=600, left=200, top=200";
+      window.open(url, "_blank", options);
       },
   },
   }
@@ -69,7 +88,9 @@ export default {
 
   .photo {
     position: absolute;
-    width: 85%;
+    /* width: 85%; */
+    max-width: 60%;
+    max-height: auto;
     height: auto;
     top: 10%;
     left: 50%;
@@ -87,8 +108,7 @@ export default {
   .present{
     position: absolute;
     bottom: 18%;
-    width: 100%;
-    left: 7%;
+    width: 65%;
     height: auto;
   }
   .present img{

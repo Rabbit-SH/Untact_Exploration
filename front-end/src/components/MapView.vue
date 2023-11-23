@@ -73,6 +73,7 @@
       <LMarker
         :lat-lng="mainplacemarkers[6].coordinates"
         :icon="placeICON7" />
+
       <LMarker
         :key="markers[0].id"
         :lat-lng="markers[0].coordinates"
@@ -182,7 +183,7 @@
           elevation="2"
           icon
           color="teal"
-          @click="goPage(AIView)" 
+          @click="$router.push({name: 'AIView'})" 
           class="uploadImg"
           height = "80px"
           width = "80px"
@@ -190,6 +191,10 @@
 
           <v-icon size = "50">mdi-panorama-variant-outline</v-icon>
         </v-btn>
+
+        <!-- <div class="preview"  v-show="previewVisible">
+          <img :src="require('@/assets/preview.png')">
+        </div> -->
       </div>
         
       <l-tile-layer :url="url" />
@@ -203,7 +208,7 @@
 
       <div  class="animated-marker" v-show="isGift">
         <img :src="require('@/assets/present.png')" 
-        @click="goPage(FinalView)">
+        @click="$router.push({name: 'FinalView'})">
       </div>
 
     </l-map>
@@ -294,6 +299,8 @@ export default {
       result10: false,
 
       allResValue: false,
+
+      isFirstMissionOpened: false, //첫번째 미션의 열림 상태 추적
 
       isZoomIn: false, //줌인이 된 상태인지 아닌지 확인(팝업창 띄우기 위한 변수)
       isZoom : false, //내 위치 버튼을 위한 줌인 상태 확인 변수
@@ -476,12 +483,20 @@ export default {
       this.gallery_open = false;
       this.showtutorial = false;
       this.uploadIMG = false;
+      if (this.$refs.map && this.$refs.map.mapObject) {
+        this.$refs.map.mapObject.dragging.enable();
+        this.$refs.map.mapObject.scrollWheelZoom.enable();
+      }
     },
     showTutorialPopup(){
       this.showtutorial = true;
       this.uploadIMG = false;
       this.isCredit = false;
       this.gallery_open = false;
+      if (this.$refs.map && this.$refs.map.mapObject) {
+          this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
+          this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
+        }
 
     },
     shwoUImg(){
@@ -524,6 +539,9 @@ export default {
       if (this.$refs.map && this.$refs.map.mapObject) {
       this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
       this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
+    }
+    if(index === 0){ //첫번째 미션이 열리면 preview이미지 안보이게함
+      this.isFirstMissionOpened = true;
     }
 
     },
@@ -665,18 +683,6 @@ export default {
 
       this.isGift = true;
     },
-    Good(){
-      this.result1 = true;
-      this.result2 = true;
-      this.result3 = true;
-      this.result4 = true;
-      this.result5 = true;
-      this.result6 = true;
-      this.result7 = true;
-      this.result8 = true;
-      this.result9 = true;
-      this.result10 = true;
-    },
     allRes(){
       if(this.result1 && this.result2 && this.result3 && this.result4 && this.result5 && this.result6 && this.result7 && this.result8 && this.result9 && this.result10){
         this.allResValue = true;
@@ -694,7 +700,11 @@ export default {
     },
     totalMissions() {
       return 10; // 전체 미션의 수
-    }
+    },
+    previewVisible() {
+      // 첫 번째 미션이 한 번도 열리지 않았다면 true를 반환하여 이미지를 보여줍니다.
+      return !this.isFirstMissionOpened;
+  }
   },
   created(){
     const storedResults = getResultsFromSessionStorage();
@@ -708,12 +718,6 @@ export default {
 </script>
 
 <style scoped>
-
-  .animated-marker {
-    animation: bounce 1s infinite;
-    z-index: 1001;
-    position: absolute;
-  }
   .animated-marker img{
     width: 100%;
     height: 100%;
@@ -732,7 +736,6 @@ export default {
   .popup.show{
     opacity: 1; /*나타날 때 투명도를 1로 설정하여 부드럽게 나타나게 함*/
   } 
-  
   @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
       transform: translateY(0);
@@ -748,8 +751,9 @@ export default {
     animation: bounce 1s infinite;
     z-index: 1001;
     position: absolute;
-    bottom: 35%; 
-    right: 25%;
+    bottom: 5%;
+    width: 60%;
+    left: 18%;
   }
   .navi-bar {
   position: fixed; /* 고정 위치 */
@@ -830,6 +834,19 @@ export default {
     padding: 0px;
     border-radius: 3px;
     text-align: center;
+  }
+  .preview{
+    z-index: 1002;
+    position: absolute;
+    width: 100%;
+    height: auto;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .preview img{
+    width: 100%;
+    height: 100%;
   }
 
 </style>

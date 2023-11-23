@@ -12,7 +12,6 @@
           :style="{ backgroundColor: slide.backgroundColor }"
           >
           <button class="close" @click="closeGiftView" v-if="currentSlideIndex === slides.length - 1">
-            <img :src="require('@/assets/giftView/giftButton.png')">
         </button>
         </v-carousel-item>
       </v-carousel>
@@ -32,9 +31,9 @@
       return {
         currentSlideIndex: 0,
         slides: [
-          { id: 1, image: require('@/assets/giftView/gift1.png'), backgroundColor: '#white' },
-          { id: 2, image: require('@/assets/giftView/gift2.png'), backgroundColor: '#white' },
-          { id: 3, image: require('@/assets/giftView/gift3.png'), backgroundColor: '#white' },
+          { id: 1, image: require('@/assets/giftView/gift1.jpg'), backgroundColor: '#white' },
+          { id: 2, image: require('@/assets/giftView/gift2.jpg'), backgroundColor: '#white' },
+          { id: 3, image: require('@/assets/giftView/gift3.jpg'), backgroundColor: '#white' },
         ],
       };
     },
@@ -78,13 +77,8 @@
     transform: translateX(-50%); /* 버튼의 너비의 절반만큼 왼쪽으로 이동 */
     bottom: 10%; /* 아래쪽에서 10% 위치 */
     border: none;
-    width: auto; /* 버튼의 너비를 자동으로 설정 */
-    height: auto;
-  }
-  
-  .close img {
-    width: 220px;
-    height: 70px;
+    width: 90%;
+    height: 10%;
   }
   </style>
   

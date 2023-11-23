@@ -5,6 +5,9 @@
             <button class="close" @click="closeP">
                 <img src="@/assets/mission/close.png">
             </button>
+            <div class="pic">
+                <img src="@/assets/photo-ggomi.png">
+            </div>
             <div class="content">
                 <div class="cam-container">
                     <div @click="triggerCamera" class="cam-button mb-3">
@@ -257,5 +260,17 @@ export default {
         font-size: 18px;
         margin: 3px;
         width: 85px;
+    }
+    .pic{
+        width: 60%;
+        height:auto;
+        bottom: 17%;
+        position: absolute;
+        left: 52%;
+        transform: translateX(-50%);
+    }
+    .pic img{
+        width: 100%;
+        height: 100%;
     }
 </style>
