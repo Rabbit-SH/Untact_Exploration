@@ -26,7 +26,7 @@ export default {
     };
   },
   mounted() {
-    let familyphotos = sessionStorage.getItem('displayphoto')
+    let familyphotos = localStorage.getItem('displayphoto')
       // 예: 이미지 태그의 src 속성으로 설정
     document.getElementById('displayImage').src = familyphotos;
   },
@@ -88,8 +88,8 @@ export default {
 
   .photo {
     position: absolute;
-    /* width: 85%; */
-    max-width: 60%;
+    width: 70%;
+    max-width: 80%;
     max-height: auto;
     height: auto;
     top: 10%;
