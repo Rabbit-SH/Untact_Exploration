@@ -8,8 +8,8 @@
                 <div class="correctSound mb-4">
                     <p>물두꺼비 소리</p>
                     <!-- <audio controls src="@/assets/꿩.wav"></audio> -->
-                    <v-btn @click="toggleAudio(sounds[0])" fab>
-                        <v-icon large  :style="{ color: sounds[0].isActive ? 'green' : 'black' }">mdi mdi-volume-high</v-icon>
+                    <v-btn @click="toggleAudio(sounds[3])" fab>
+                        <v-icon large  :style="{ color: sounds[3].isActive ? 'green' : 'black' }">mdi mdi-volume-high</v-icon>
                     </v-btn>
                     
                 </div>
@@ -97,9 +97,10 @@ export default {
           dialog: false,
 
           sounds: [
-                { id: 1, src: "/꿩.wav", isActive: false, howl: null, value: '꿩' },
+                { id: 1, src: "/꿩.wav", isActive: false, howl: null, value: '물두꺼비' },
                 { id: 2, src: "/99941F4C5CF91EAC0F.mp3", isActive: false, howl: null, value: '참새' },
                 { id: 3, src: "/비둘기.wav", isActive: false, howl: null, value: '비둘기' },
+                { id: 4, src: "/꿩.wav", isActive: false, howl: null, value: '물두꺼비' },
             ],
       }
     },
@@ -120,6 +121,7 @@ export default {
           this.showPopup=false;
         },
         submitSoundRes(){
+            this.stopAllSounds();
             if(this.userResult.trim() == ''){
                 alert("답변을 입력해주세요!")
             } else {
@@ -131,6 +133,15 @@ export default {
                     this.dialog = true;
                 }
             }
+        },
+        stopAllSounds() {
+            this.sounds.forEach((sound) => {
+                if (sound.playing) {
+                    sound.howl.stop();
+                    sound.playing = false;
+                    sound.isActive = false;
+                }
+            });
         },
         handleDialogConfirmation(correct){
             this.dialog = false;
