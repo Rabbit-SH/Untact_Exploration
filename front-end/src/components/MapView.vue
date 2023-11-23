@@ -697,13 +697,6 @@ export default {
     },
   },
   computed:{
-    // allRes(){
-    //   if(this.result1 && this.result2 && this.result3 && this.result4 && this.result5 && this.result6 && this.result7 && this.result8 && this.result9 && this.result10){
-    //     // [this.result1, this.result2, this.result3, this.result4, this.result5, this.result6, this.result7, this.result8, this.result9, this.result10].every(Boolean); 
-    //     this.allResValue = true;
-    //   }
-    //   return this.allResValue
-    // },
     completedMissionsCount() {
       return [this.result1, this.result2, this.result3, this.result4, this.result5, this.result6, this.result7, this.result8, this.result9, this.result10].filter(Boolean).length;
     },
@@ -723,6 +716,16 @@ export default {
 </script>
 
 <style scoped>
+
+  .animated-marker {
+    animation: bounce 1s infinite;
+    z-index: 1001;
+    position: absolute;
+  }
+  .animated-marker img{
+    width: 100%;
+    height: 100%;
+  }
   .map {
     position: absolute;
     width: 100%;
