@@ -10,7 +10,6 @@
       <img v-if="imageUrl" :src="imageUrl" alt="preview Image">
     </div>
      <v-overlay :value="loading">
-      
       <v-card-text>
         수묵화 변환중...
         <v-progress-linear
