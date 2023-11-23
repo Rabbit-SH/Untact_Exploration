@@ -42,21 +42,20 @@
                 <v-card-text>
                     <v-row align="center" justify="center">
                         <v-col align="center">
-                            <div style="height:70%; width:70%; display: flex; align-items: center; justify-items: center;">
-                                <v-img v-if="userResult === '꿩'" src="@/assets/O.png" style="max-height:100%; max-width:100%;"></v-img>
-                                <v-img v-else src="@/assets/X.png" style="max-height:100%; max-width:100%;"></v-img>
+                            <div style="height:100%; width:100%; display: flex; align-items: center; justify-items: center;">
+                                <v-img v-if="userResult === '꿩'" src="@/assets/O.png"></v-img>
+                                <v-img v-else src="@/assets/X.png"></v-img>
                             </div>
                             <br>
                             <div v-if="userResult === '꿩'" class="text-center">
                                 <h3>정답입니다!</h3> 
                                 <br>
                                 <br>
-                                <h4> 이제 진짜 미션을 시작하러 가볼까요? </h4>
+                                <h4> 이제 본격적으로 미션을 시작하러 가볼까요? </h4>
                                 <br>
-                                <h4> 아래의 버튼을 누르면 </h4>
-                                <h4> 시작 위치를 알려줄거에요! </h4>
+                                <h4> 지도 위의 물음표가 있는 위치로 </h4>
+                                <h4> 따라와주세요! </h4>
                                 <br>
-                                <p>버튼을 눌러주세요.</p>
                             </div>
                             <div v-else class="text-center">
                                 <h3>다시 한번 풀어볼까요?</h3>
@@ -65,7 +64,7 @@
                     </v-row>
                 </v-card-text>
                 <v-card-actions class="card">
-                <v-btn @click="handleDialogConfirmation(userResult === '꿩')" class="ok-btn mt-3 pl-10 pr-10" color="#EF8200">{{ userResult === '꿩' ? '찐 미션 고고씽' : '확인' }}</v-btn>
+                <v-btn @click="handleDialogConfirmation(userResult === '꿩')" class="ok-btn mt-3 pl-10 pr-10 mb-10" color="#EF8200">{{ userResult === '꿩' ? '시작하기 >>' : '확인' }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>

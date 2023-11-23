@@ -3,7 +3,9 @@
       <div class="white-bg">
         <v-carousel hide-delimiters height="auto" class="tutorial-image" :cycle="false" :continuous="false">
           <v-carousel-item v-for="(item, i) in items" :key="i" class="tutorial-img-ca">
-            <v-btn x-small color="teal" dark @click="goToMain" class="skipButton">X</v-btn>
+            <button @click="goToMain" class="skipButton">
+              <img src="@/assets/skip.png">
+            </button>
             <img :src="item.src" alt="tutorial image" width="100%" height="100%">
           </v-carousel-item>
           <!-- 마지막 페이지에만 컨트롤 버튼을 표시X -->
@@ -48,7 +50,7 @@
   };
   </script>
   
-  <style>
+  <style scoped>
   .black-bg {
     width: 100%;
     height: 100%;
@@ -113,10 +115,13 @@
     height: 10%;
 }
   
-.skipButton {
+.skipButton img{
+    width: 20%;
+    height: auto;
+    cursor: pointer;
     position: absolute;
-    top: 25px;
-    left: 84%;
-}
+    top: 1%;
+    right: 1%;
+  }
   </style>
   

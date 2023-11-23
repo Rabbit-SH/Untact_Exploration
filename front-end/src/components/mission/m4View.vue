@@ -4,6 +4,9 @@
             <button class="close" @click="closeP">
                 <img src="@/assets/mission/close.png">
             </button>
+            <div class="pic">
+                <img src="@/assets/photo-bandal.png">
+            </div>
             <div class="content">
                 <div class="cam-container">
                     <div @click="triggerCamera" class="cam-button mb-3">
@@ -33,13 +36,12 @@
                     <div class="text-center">
                         <p>이미지 다운로드를 원하면 아래의 <strong>다운로드</strong> 버튼을 눌러주세요.</p>
                     </div>
-                    <div>
-                        <div class="btn_container">
-                            <v-btn @click="downloadImage" class="ok-btn mt-3 pl-10 pr-10" color="#EF8200">다운로드</v-btn>
-                            <!-- <v-btn @click="goToAiPainter" class="ml-3">AI 화가</v-btn> -->
+                    <div class="button-container">
+                        <div class="btn">
+                            <v-btn @click="downloadImage" class="download mr-2" color="#EF8200">다운로드</v-btn>
                         </div>
-                        <div class="card">
-                            <v-btn @click="handleDialogConfirmation" class="ok-btn mt-3 pl-10 pr-10" color="#EF8200">다음 미션으로 >></v-btn>
+                        <div class="next">
+                            <v-btn @click="handleDialogConfirmation" class="nextmission" color="#EF8200">다음 미션으로 >></v-btn>
                         </div>
                     </div>
                     </v-col>
@@ -229,13 +231,31 @@ export default {
         font-weight: bold; /* 글씨 두께를 굵게 */
         font-size: 18px; /* 글씨 크기를 18px로 설정 */
     }
-    .card {
-    justify-content: center; /* 내부 요소를 중앙 정렬 */
-    }
-    .ok-btn{
+    .next {
+        justify-content: center; /* 내부 요소를 중앙 정렬 */
+        }
+    .download{
         color: white !important; 
         font-weight: bold; 
         font-size: 18px;
-        width: 150px;
+        width: 110px;
+    }
+    .nextmission{
+        color: white !important; 
+        font-weight: bold; 
+        font-size: 18px;
+        width: 190px;
+    }
+    .pic{
+        width: auto;
+        height: 35%;
+        bottom: 17%;
+        position: absolute;
+        left: 52%;
+        transform: translateX(-50%);
+    }
+    .pic img{
+        width: 100%;
+        height: 100%;
     }
 </style>

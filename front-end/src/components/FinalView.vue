@@ -1,11 +1,10 @@
 <template>
     <div class="final-page">
-      <!-- <button class="close" @click="goToMain">
+      <button @click="$router.push({name:'MainView'})" class="close ma-2 pa-2">
         <img src="@/assets/mission/close.png">
-      </button> -->
+      </button>
       <div class="photo">
         <img id="displayImage" alt="photo">
-        <!-- <img :src="require('@/assets/photo.jpeg')"> -->
       </div>
       <div class="present">
         <img :src="require('@/assets/open-present.png')">
@@ -15,10 +14,10 @@
         <v-btn @click="openGoogleForm" class="google-form-button mt-3 pl-10 pr-10" color="#EF8200">만족도 설문조사 하기</v-btn>
       </div>
     </div>
+    
 </template>
   
 <script>
-// import {EventBus} from '@/EventBus.js'
 export default {
   name: 'FinalView',
   data(){
@@ -27,7 +26,6 @@ export default {
     };
   },
   mounted() {
-    // EventBus.$on('add-family-photo', this.addphotoDataUrl);
     let familyphotos = sessionStorage.getItem('displayphoto')
       // 예: 이미지 태그의 src 속성으로 설정
     document.getElementById('displayImage').src = familyphotos;
@@ -37,31 +35,8 @@ export default {
       this.familyphoto = photoDataUrl;
       console.log("familyphoto updated: ", this.familyphoto);
     },
-    // goToMain() {
-    //   this.currentSlideIndex = 0;
-    //   this.$emit('closeTutorial');
-    // },
     downloadImage() {
-      const imageUrl = require('@/assets/photo.jpeg');
-        // Blob 객체를 생성합니다.
-        fetch(imageUrl)
-          .then(res => res.blob())
-          .then(blob => {
-            // Blob 객체를 이용하여 다운로드 링크를 생성합니다.
-            const blobUrl = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = blobUrl;
-            link.download = 'downloaded-image.jpeg'; // 다운로드될 파일 이름
-
-            // 링크를 문서에 추가하고 클릭 이벤트를 트리거합니다.
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-
-            // Blob URL을 해제합니다.
-            window.URL.revokeObjectURL(blobUrl);
-          })
-          .catch(err => console.error(err));
+      
       },
       openGoogleForm(){
         const url = "https://docs.google.com/forms/d/e/1FAIpQLSdBCQgSi7xSaxSddm6OTSFwxXKcOjrNvLxfllJq-o0S7_09OQ/viewform?usp=sf_link";
@@ -97,11 +72,17 @@ export default {
     width: 85%;
     height: auto;
     top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .photo img{
     max-width: 100%;
     max-height: auto;
+
   }
   .present{
     position: absolute;

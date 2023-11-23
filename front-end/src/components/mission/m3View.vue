@@ -42,9 +42,9 @@
                 <v-card-text>
                     <v-row align="center" justify="center">
                         <v-col align="center">
-                            <div style="height:70%; width:70%; display: flex; align-items: center; justify-items: center;">
-                                <v-img v-if="userResult === '양서류'" src="@/assets/O.png" style="max-height:100%; max-width:100%;"></v-img>
-                                <v-img v-else src="@/assets/X.png" style="max-height:100%; max-width:100%;"></v-img>
+                            <div style="height:100%; width:100%; display: flex; align-items: center; justify-items: center;">
+                                <v-img v-if="userResult === '양서류'" src="@/assets/O.png"></v-img>
+                                <v-img v-else src="@/assets/X.png"></v-img>
                             </div>
                             <br>
                             <div v-if="userResult === '양서류'" class="text-center">
