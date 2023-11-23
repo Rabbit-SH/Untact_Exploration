@@ -344,12 +344,12 @@ export default {
       ],
       placeICON1: new Icon({
         iconUrl: require('@/assets/mainplace/치악산체험학습관.png'),
-        iconSize: [100, 100],
+        iconSize: [80, 80],
         iconAnchor: [16,32]
       }),
       placeICON2: new Icon({
         iconUrl: require('@/assets/mainplace/구룡자동차야영장.png'),
-        iconSize: [100, 100],
+        iconSize: [80, 80],
         iconAnchor: [16,32]
       }),
       placeICON3: new Icon({
@@ -359,17 +359,17 @@ export default {
       }),
       placeICON4: new Icon({
         iconUrl: require('@/assets/mainplace/황장목숲길.png'),
-        iconSize: [100, 100],
+        iconSize: [80, 80],
         iconAnchor: [16,32]
       }),
       placeICON5: new Icon({
         iconUrl: require('@/assets/mainplace/구룡사.png'),
-        iconSize: [100, 100],
+        iconSize: [80, 80],
         iconAnchor: [16,32]
       }),
       placeICON6: new Icon({
         iconUrl: require('@/assets/mainplace/금강솔빛생태학습원.png'),
-        iconSize: [100, 100],
+        iconSize: [80, 80],
         iconAnchor: [16,32]
       }),
       placeICON7: new Icon({
@@ -452,25 +452,25 @@ export default {
       this.uploadIMG = false;
     },
     getGallery(){
-            this.gallery_open = true;
-            this.showtutorial = false;
-            this.uploadIMG = false;
-            this.isCredit = false;
-            if (this.$refs.map && this.$refs.map.mapObject) {
-                this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
-                this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
-              }
-        },
-        closeGallery(){
-            this.gallery_open = false;
-            this.isCredit = false;
-            this.showtutorial = false;
-            this.uploadIMG = false;
-            if (this.$refs.map && this.$refs.map.mapObject) {
-              this.$refs.map.mapObject.dragging.enable();
-              this.$refs.map.mapObject.scrollWheelZoom.enable();
-            }
-        },
+      this.gallery_open = true;
+      this.showtutorial = false;
+      this.uploadIMG = false;
+      this.isCredit = false;
+      if (this.$refs.map && this.$refs.map.mapObject) {
+          this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
+          this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
+        }
+    },
+    closeGallery(){
+      this.gallery_open = false;
+      this.isCredit = false;
+      this.showtutorial = false;
+      this.uploadIMG = false;
+      if (this.$refs.map && this.$refs.map.mapObject) {
+        this.$refs.map.mapObject.dragging.enable();
+        this.$refs.map.mapObject.scrollWheelZoom.enable();
+      }
+    },
     closeTutorial(){
       this.isCredit = false;
       this.gallery_open = false;
@@ -543,7 +543,7 @@ export default {
       if (this.$refs.map && this.$refs.map.mapObject) {
       this.$refs.map.mapObject.dragging.enable();
       this.$refs.map.mapObject.scrollWheelZoom.enable();
-    }
+      }
 
     setTimeout(() => {
       if (this.isZoomIn && idx < 10 && idx > 1) {
@@ -661,17 +661,6 @@ export default {
       this.uploadIMG = false;
     },
     closeLast(){
-      // this.result1 = false;
-      // this.result2 = false;
-      // this.result3 = false;
-      // this.result4 = false;
-      // this.result5 = false;
-      // this.result6 = false;
-      // this.result7 = false;
-      // this.result8 = false;
-      // this.result9 = false;
-      // this.result10 = false;
-      // this.$refs.GiftView.close()
       this.allResValue = false;
 
       this.isGift = true;
@@ -690,7 +679,6 @@ export default {
     },
     allRes(){
       if(this.result1 && this.result2 && this.result3 && this.result4 && this.result5 && this.result6 && this.result7 && this.result8 && this.result9 && this.result10){
-        // [this.result1, this.result2, this.result3, this.result4, this.result5, this.result6, this.result7, this.result8, this.result9, this.result10].every(Boolean); 
         this.allResValue = true;
       }
       return this.allResValue
@@ -740,27 +728,6 @@ export default {
   .popup.show{
     opacity: 1; /*나타날 때 투명도를 1로 설정하여 부드럽게 나타나게 함*/
   } 
-
-  .chiakInfo{
-    right: 1.5%;
-    bottom: 40px;
-    z-index: 500;
-    position: absolute;
-  }
-  .chiakInfo img{
-    height: 70px;
-    width: auto;
-  }
-  .showUImg{
-    right: 2%;
-    bottom: 150px;
-    z-index: 1001;
-    position: absolute;
-  }
-  .showUImg img{
-    height: auto;
-    width: 70px;
-  }
   
   @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
@@ -773,15 +740,12 @@ export default {
       transform: translateY(-15px);
     }
   }
-
-
   .animated-marker {
     animation: bounce 1s infinite;
     z-index: 1001;
     position: absolute;
     bottom: 35%; 
     right: 25%;
-    /* transform: translate(-50%, -50%); */
   }
   .navi-bar {
   position: fixed; /* 고정 위치 */
@@ -793,7 +757,6 @@ export default {
   align-items: center; /* 세로 방향으로 중앙 정렬 */
   z-index: 1001; /* 다른 요소들 위에 표시 */
 }
-
   .navi-bar .story{
     display: absolute;
     align-items: center;
