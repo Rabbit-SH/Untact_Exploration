@@ -1,11 +1,12 @@
 <template>
     <div class="black-bg" v-if="show">
         <div class="white-bg">
+            <img class = 'background' src= '@/assets/mission/bg_1.png'>
             <button class="close" @click="closeP">
                 <img src="@/assets/mission/close.png">
             </button>
             <div class="content-container" justify="center" align="center">
-                <v-row class="sound-item pl-7 pr-7">
+                <v-row class="sound-item d-flex">
                     <v-col cols="4">
                         <v-btn @click="toggleAudio(sounds[0])" fab>
                             <v-icon large  :style="{ color: sounds[0].isActive ? 'green' : 'gray' }">mdi mdi-volume-high</v-icon>
@@ -22,20 +23,23 @@
                         </v-btn>
                     </v-col>
                 </v-row>
-                <v-row class="sound-item pr-3 pl-3" justify="center">
-                    <v-col cols="auto" class="ma-7">
-                        <v-checkbox v-model="userResult" :value="sounds[0].value"></v-checkbox>
+                <v-row class="sound-item">
+                    <v-col cols="auto" >
+                        <v-checkbox hide-details class="shrink ml-4 mr-2" style="transform: scale(1.5);" v-model="userResult" :value="sounds[0].value"></v-checkbox>
                     </v-col>
-                    <v-col cols="auto" class="ma-7">
-                        <v-checkbox v-model="userResult" :value="sounds[1].value"></v-checkbox>
+                    <v-col cols="auto" >
+                        <v-checkbox hide-details class="shrink ml-4 mr-2" style="transform: scale(1.5);" v-model="userResult" :value="sounds[1].value"></v-checkbox>
                     </v-col>
-                    <v-col cols="auto" class="ma-7">
-                        <v-checkbox v-model="userResult" :value="sounds[2].value"></v-checkbox>
+                    <v-col cols="auto" >
+                        <v-checkbox hide-details class="shrink ml-4 mr-2" style="transform: scale(1.5);" v-model="userResult" :value="sounds[2].value"></v-checkbox>
                     </v-col>
                 </v-row>
                 <br>
-                <v-btn class="custom-submit-button mt-3 pl-10 pr-10" color="#EF8200" @click="submitSoundRes">제출하기</v-btn>
+                <br>
+                <br>
+                <v-btn class="custom-submit-button" color="#EF8200" @click="submitSoundRes">제출하기</v-btn>
             </div>
+
         </div>
         <v-dialog v-model="dialog" max-width="500">
             <v-card>
@@ -64,7 +68,7 @@
                     </v-row>
                 </v-card-text>
                 <v-card-actions class="card">
-                <v-btn @click="handleDialogConfirmation(userResult === '꿩')" class="ok-btn mt-3 pl-10 pr-10 mb-10" color="#EF8200">{{ userResult === '꿩' ? '시작하기 >>' : '확인' }}</v-btn>
+                <v-btn @click="handleDialogConfirmation(userResult === '꿩')" class="ok-btn" color="#EF8200">{{ userResult === '꿩' ? '시작하기 >>' : '확인' }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -184,7 +188,6 @@ export default {
 <style scoped>
     img{
         width: 100%;
-        border-radius: 8px;
     }
     .black-bg{
         width: 100%; height: 100%;
@@ -204,17 +207,19 @@ export default {
         /* background-color: white; */
         overflow:hidden;
         display:flex;
-        flex-direction: column; 
-        align-items: flex-end;
-        background-image: url('@/assets/mission/bg_1.png');
-        background-size: contain; /* 배경 이미지 크기 조정 옵션 */
-        background-position: center; /* 배경 이미지 위치 조정 옵션 */
-        background-repeat: no-repeat; /* 배경 이미지 반복 설정 */
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
       }
+    .background{
+        width: 100%;
+        height: 100%;
+    }
     .content-container{
         width:100%;
         position: absolute;
-        bottom: 7%;
+        bottom: 15%;
     }
     .close{
         width: 22px;
@@ -228,6 +233,7 @@ export default {
     
     }
     .custom-submit-button {
+
         color: white !important; /* 텍스트 색상을 흰색으로 */
         font-weight: bold; /* 글씨 두께를 굵게 */
         font-size: 18px; /* 글씨 크기를 18px로 설정 */
@@ -245,4 +251,32 @@ export default {
     justify-content: center;
     align-items: center;
   }
+
+.v-application .justify-center {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+/* .v-input--selection-controls__ripple {
+    border-radius: 100%;
+    cursor: pointer;
+    height: 23px;
+    position: absolute;
+    transition: inherit;
+    width: 23px;
+    left: -7px;
+    top: calc(50% - 19px);
+    margin: 7px;
+} */
+    div.row.sound-item{
+        justify-content: space-evenly;
+    }
+    div.col {
+        flex-basis: 0;
+    }
+    div.v-input--selection-controls__input{
+        margin-right: 16px;
+        margin-left: 14px;
+    }
 </style>

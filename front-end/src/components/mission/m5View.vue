@@ -1,6 +1,7 @@
 <template>
     <div class="black-bg" v-if="show">
         <div class="white-bg">
+            <img class = 'background' src= '@/assets/mission/bg_5.png'>
             <button class="close" @click="closeP">
                 <img src="@/assets/mission/close.png">
             </button>
@@ -16,7 +17,7 @@
                 <br>
                 <p>다음 중 어떤 소리가 물두꺼비의 소리일까요?</p>
                 <div class="soundDiv">
-                    <v-row class="sound-item pl-7 pr-7">
+                    <v-row class="sound-item">
                         <v-col cols="4">
                             <v-btn @click="toggleAudio(sounds[0])" fab>
                                 <v-icon large  :style="{ color: sounds[0].isActive ? 'green' : 'black' }">mdi mdi-volume-high</v-icon>
@@ -33,15 +34,15 @@
                             </v-btn>
                         </v-col>
                     </v-row>
-                    <v-row class="sound-item pr-3 pl-3" justify="center">
-                        <v-col cols="auto" class="mr-7 ml-7">
-                            <v-checkbox v-model="userResult" :value="sounds[0].value"></v-checkbox>
+                    <v-row class="sound-item">
+                        <v-col cols="auto">
+                            <v-checkbox hide-details class="shrink ml-4 mr-1" style="transform: scale(1.5);" v-model="userResult" :value="sounds[0].value"></v-checkbox>
                         </v-col>
-                        <v-col cols="auto" class="mr-7 ml-7">
-                            <v-checkbox v-model="userResult" :value="sounds[1].value"></v-checkbox>
+                        <v-col cols="auto">
+                            <v-checkbox hide-details class="shrink ml-4 mr-1" style="transform: scale(1.5);" v-model="userResult" :value="sounds[1].value"></v-checkbox>
                         </v-col>
-                        <v-col cols="auto" class="mr-7 ml-7">
-                            <v-checkbox v-model="userResult" :value="sounds[2].value"></v-checkbox>
+                        <v-col cols="auto">
+                            <v-checkbox hide-details class="shrink ml-4 mr-1" style="transform: scale(1.5);" v-model="userResult" :value="sounds[2].value"></v-checkbox>
                         </v-col>
                     </v-row>
                 </div>
@@ -77,7 +78,7 @@
     </div>
 </template>
 
-<script >
+<script>
 import {Howl} from 'howler';
 
 export default {
@@ -211,18 +212,20 @@ export default {
         align-items: center;
         justify-content: center;
     }
-    .white-bg{
+      .white-bg{
         width: 90%; height: 90%;
         position: fixed; 
         /* background-color: white; */
         overflow:hidden;
         display:flex;
-        flex-direction: column; 
-        align-items: flex-end;
-        background-image: url('@/assets/mission/bg_5.png');
-        background-size: contain; /* 배경 이미지 크기 조정 옵션 */
-        background-position: center; /* 배경 이미지 위치 조정 옵션 */
-        background-repeat: no-repeat; /* 배경 이미지 반복 설정 */
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+      }
+    .background{
+        width: 100%;
+        height: 100%;
     }
     .content-container{
         width:100%;
@@ -267,5 +270,15 @@ export default {
         color: white !important; 
         font-weight: bold; 
         font-size: 18px;
+    }
+    div.row.sound-item{
+    justify-content: space-evenly;
+    }
+    div.col {
+        flex-basis: 0;
+    }
+    div.v-input--selection-controls__input{
+        margin-right: 16px;
+        margin-left: 14px;
     }
 </style>

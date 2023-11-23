@@ -1,7 +1,7 @@
 <template>
     <div class="black-bg" v-if="show">
         <div class="white-bg">
-
+            <img class = 'background' src= '@/assets/mission/bg_3.png'>
             <button class="close" @click="closeP">
                 <img src="@/assets/mission/close.png">
             </button>
@@ -13,6 +13,7 @@
                         color="primary"
                         value="파충류"
                         hide-details
+                        style="color: black; transform: scale(1.5); padding-left: 30%;"
                     ></v-checkbox>
                     <v-checkbox
                         v-model="userResult"
@@ -20,6 +21,7 @@
                         color="success"
                         value="양서류"
                         hide-details
+                        style="color: black; transform: scale(1.5); padding-left: 30%;"
                     ></v-checkbox>
                     <v-checkbox
                         v-model="userResult"
@@ -27,9 +29,9 @@
                         color="primary"
                         value="조류"
                         hide-details
+                        style="color: black; transform: scale(1.5); padding-left: 30%;"
                     ></v-checkbox>
                 </div>
-                <br>
                 <br>
                 <br>
                 <div justify="center" align="center" >
@@ -159,18 +161,19 @@ export default {
         /* background-color: white; */
         overflow:hidden;
         display:flex;
-        flex-direction: column; 
-        align-items: flex-end;
-        background-image: url('@/assets/mission/bg_3.png');
-        background-size: contain; /* 배경 이미지 크기 조정 옵션 */
-        background-position: center; /* 배경 이미지 위치 조정 옵션 */
-        background-repeat: no-repeat; /* 배경 이미지 반복 설정 */
-      }
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
 
-      .content-container{
+      }
+    .background{
+        width: 100%;
+        height: 100%;
+    }
+    .content-container{
         width:100%;
         position: absolute;
-        bottom: 7%;
+        bottom: 7%
     }
 
       .close{

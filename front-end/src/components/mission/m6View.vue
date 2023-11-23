@@ -1,6 +1,7 @@
 <template>
     <div class="black-bg" v-if="show">
         <div class="white-bg">
+            <img class = 'background' src= '@/assets/mission/bg_6.png'>
             <button class="close" @click="closeP">
                 <img src="@/assets/mission/close.png">
             </button>
@@ -159,19 +160,33 @@ export default {
         align-items: center;
         justify-content: center;
     }
-    .white-bg{
+.black-bg{
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        position: fixed; 
+        top: 0;
+        left: 0;
+        padding: 20px;
+        z-index: 1500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+      .white-bg{
         width: 90%; height: 90%;
         position: fixed; 
         /* background-color: white; */
         overflow:hidden;
         display:flex;
-        flex-direction: column; 
-        align-items: flex-end;
-        background-image: url('@/assets/mission/bg_6.png');
-        background-size: contain; /* 배경 이미지 크기 조정 옵션 */
-        background-position: center; /* 배경 이미지 위치 조정 옵션 */
-        background-repeat: no-repeat; /* 배경 이미지 반복 설정 */
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
       }
+    .background{
+        width: 100%;
+        height: 100%;
+    }
     .content{
         width:100%;
         position: absolute;

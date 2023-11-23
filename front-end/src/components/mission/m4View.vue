@@ -1,6 +1,7 @@
 <template>
     <div class="black-bg" v-if="show">
         <div class="white-bg">
+            <img class = 'background' src= '@/assets/mission/bg_4.png'>
             <button class="close" @click="closeP">
                 <img src="@/assets/mission/close.png">
             </button>
@@ -96,18 +97,18 @@ export default {
                 
                 const photoDataUrl = fileReader.result;
                 this.uploadedPhoto = photoDataUrl;
-                EventBus.$emit('add-photo', photoDataUrl);  
+                EventBus.$emit('add-photo', photoDataUrl);
 
-                let photos = JSON.parse(sessionStorage.getItem('photos')) || [];
+                let photos = JSON.parse(localStorage.getItem('photos')) || [];
   
                 // 새로운 사진을 배열에 추가합니다
                 photos.push(photoDataUrl);
 
                 // 변경된 배열을 다시 sessionStorage에 저장합니다
-                sessionStorage.setItem('photos', JSON.stringify(photos));
+                localStorage.setItem('photos', JSON.stringify(photos));
                 //가족사진 변환을 위해 따로 저장.
                 //axios.post();
-                sessionStorage.setItem('displayphoto', photoDataUrl);
+                localStorage.setItem('displayphoto', photoDataUrl);
                 
                 // console.log(photoDataUrl)
             }
@@ -160,7 +161,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-    }
+      }
 
     .img-container{
         justify-content: center;
@@ -194,19 +195,21 @@ export default {
         justify-content: center; /* 가운데 정렬 */
         margin-top: auto; /* 위쪽 요소들이 차지한 후 남은 공간을 모두 차지 */
     }
-    .white-bg{
+      .white-bg{
         width: 90%; height: 90%;
         position: fixed; 
         /* background-color: white; */
         overflow:hidden;
         display:flex;
-        flex-direction: column; 
-        align-items: flex-end;
-        background-image: url('@/assets/mission/bg_4.png');
-        background-size: contain; /* 배경 이미지 크기 조정 옵션 */
-        background-position: center; /* 배경 이미지 위치 조정 옵션 */
-        background-repeat: no-repeat; /* 배경 이미지 반복 설정 */
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
       }
+    .background{
+        width: 100%;
+        height: 100%;
+    }
 
     .content{
         width:100%;

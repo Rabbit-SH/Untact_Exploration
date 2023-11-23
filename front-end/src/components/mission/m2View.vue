@@ -1,37 +1,38 @@
 <template>
     <div class="black-bg" v-if="show">
         <div class="white-bg">
+            <img class = 'background' src= '@/assets/mission/bg_2.png'>
             <button class="close" @click="closeP">
                 <img src="@/assets/mission/close.png">
             </button>
-            <div class="content-container pl-8" justify="center" align="center">
-
-                <v-checkbox
-                        v-model="userResult"
-                        label="황장금표"
-                        color="success"
-                        value="황장금표"
-                        hide-details
-                        style="color: black"
-                    ></v-checkbox>
+            <div class="content-container" justify="center" align="center">
+                <div>
                     <v-checkbox
-                        v-model="userResult"
-                        label="황금장표"
-                        color="primary"
-                        value="황금장표"
-                        hide-details
-                        style="color: black"
-                    ></v-checkbox>
-                    <v-checkbox
-                        v-model="userResult"
-                        label="황금장이"
-                        color="primary"
-                        value="황금장이"
-                        hide-details
-                        style="color: black"
-                    ></v-checkbox>
-                
-                
+                            v-model="userResult"
+                            label="황장금표"
+                            color="success"
+                            value="황장금표"
+                            hide-details
+                            style="color: black; transform: scale(1.5); padding-left: 30%;"
+                        ></v-checkbox>
+                        <v-checkbox
+                            v-model="userResult"
+                            label="황금장표"
+                            color="primary"
+                            value="황금장표"
+                            hide-details
+                            style="color: black; transform: scale(1.5); padding-left: 30%;"
+                        ></v-checkbox>
+                        <v-checkbox
+                            v-model="userResult"
+                            label="황금장이"
+                            color="primary"
+                            value="황금장이"
+                            hide-details
+                            style="color: black; transform: scale(1.5); padding-left: 30%;"
+                        ></v-checkbox>
+                    </div>
+                <br>
                 <br>
                 <v-btn class="custom-submit-button mt-3 pl-10 pr-10" color="#EF8200" @click="submitSoundRes">제출하기</v-btn>
             </div>
@@ -152,15 +153,16 @@ export default {
         /* background-color: white; */
         overflow:hidden;
         display:flex;
-        flex-direction: column; 
-        align-items: flex-end;
-        background-image: url('@/assets/mission/bg_2.png');
-        background-size: contain; /* 배경 이미지 크기 조정 옵션 */
-        background-position: center; /* 배경 이미지 위치 조정 옵션 */
-        background-repeat: no-repeat; /* 배경 이미지 반복 설정 */
-      }
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
 
-      .content-container{
+      }
+    .background{
+        width: 100%;
+        height: 100%;
+    }
+    .content-container{
         width:100%;
         position: absolute;
         bottom: 7%;
