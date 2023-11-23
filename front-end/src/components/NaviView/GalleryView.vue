@@ -47,6 +47,7 @@ export default {
   name: 'AppGallery',
   mounted() {
       EventBus.$on('add-photo',this.addPhoto)
+      this.photos = JSON.parse(sessionStorage.getItem('photos')) || [];
   },
   props: {
       show: {

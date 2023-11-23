@@ -85,55 +85,25 @@ export default {
             photoFileInput.click();
         },
         onPhotoFileChange(event){
-            let filename;
-            if (window.FileReader) {
-                filename = event.target.files[0].name;
-            } else {
-                filename = event.target.value.split('/').pop().split('\\').pop();
-            }
-            console.log("파일 사이즈 : " + event.target.files[0].size);
-            console.log("파일명 : " + filename);
-  
-            this.previewImage(event.target);
-  
-              // 업로드된 파일 데이터를 저장합니다.
-            // this.uploadedPhoto = event.target.files[0];
 
               // 파일데이터를 갤러리 리스트에 추가합니다.
             const fileReader = new FileReader();
             fileReader.readAsDataURL(event.target.files[0]);
             fileReader.onload = () => {
-                // const photoDataUrl = fileReader.result;
-                // EventBus.$emit('add-photo', photoDataUrl);
                 const photoDataUrl = fileReader.result;
                 this.uploadedPhoto = photoDataUrl;
-                EventBus.$emit('add-photo', photoDataUrl);
+                EventBus.$emit('add-photo', photoDataUrl);  
+
+                let photos = JSON.parse(sessionStorage.getItem('photos')) || [];
+  
+                // 새로운 사진을 배열에 추가합니다
+                photos.push(photoDataUrl);
+
+                // 변경된 배열을 다시 sessionStorage에 저장합니다
+                sessionStorage.setItem('photos', JSON.stringify(photos));
             }
             this.dialog = true; //팝업창 열기
         },
-        previewImage(inputElement){
-            if (inputElement.files && inputElement.files[0]) {
-                let reader = new FileReader();
-                reader.onload = (e) => {
-                    this.$el.querySelector("#photoimg").setAttribute('src', e.target.result);
-                    this.$el.querySelector("#photoimg").style.display = "block";
-                }
-                reader.readAsDataURL(inputElement.files[0]);
-            }
-        },
-        // submitResponse(){
-        //     // 사진이 업로드되었는지 확인
-        //     if (this.uploadedPhoto) {
-        //         console.log(this.userResponse); // 콘솔에 출력
-        //         this.userResponse = ''; // 답변 리셋
-
-        //         this.dialog = true;
-
-        //     } else {
-        //         // 사진이 업로드되지 않았다면 경고 알림
-        //         alert("사진을 찍어주세요!");
-        //     }
-        // },
         handleDialogConfirmation(){
             this.dialog = false;
 
