@@ -5,6 +5,9 @@
             <button class="close" @click="closeP">
                 <img src="@/assets/mission/close.png">
             </button>
+            <button class="info" @click="openinfo">
+                <v-icon size="25">mdi-information-variant-circle</v-icon>
+            </button>
             <div class="content">
                 <div class="cam-container">
                     <div @click="triggerCamera" class="cam-button mb-3">
@@ -48,6 +51,15 @@
                 </v-card-text>
             </v-card>
         </v-dialog>
+
+        <v-dialog v-model="infodialog" class="infodialog">
+            <v-card-text class="title">
+                <h3>금강솔빛생태학습원</h3>
+                <img @click="infodialog = false" src="@/assets/mission/close.png" class="closeinfo">
+            </v-card-text>
+                <img src="@/assets/info8.jpeg" class="pic">
+        </v-dialog>
+
     </div>
 </template>
 
@@ -69,6 +81,7 @@ export default {
       return {
         userResult: '', //사용자 응답 저장하는 데이터
         dialog: false,
+        infodialog: false,
 
         userResponse:'',
         uploadedPhoto: null, // 업로드된 사진 데이터를 위한 변수
@@ -78,6 +91,9 @@ export default {
     methods: {
         closeP(){
             this.$emit('close');
+        },
+        openinfo(){
+            this.infodialog = true;
         },
         triggerCamera(){
             const photoFileInput = this.$el.querySelector("#photofile");
@@ -228,5 +244,46 @@ export default {
         font-weight: bold; 
         font-size: 18px;
         width: 150px;
+    }
+    .info{
+        position:absolute;
+        top: 3%;
+        left: 5%;
+        width: 22px;
+        height: 22px;
+        cursor: pointer;
+        justify-content: center;
+        align-items: center;
+    }
+    .infodialog{
+        position: absolute;
+        box-shadow: none;
+        /* width: 30%;
+        height: auto; */
+    }
+    .closeinfo{
+        width: 22px;
+        height: 22px;
+        cursor: pointer;
+        justify-content: center;
+        align-items: center;
+        position:absolute;
+        top: 30%;
+        right: 5%;
+    }
+    .pic{
+        width: 100%;
+        height: auto;
+    }
+    .title{
+        background-color: white;
+        position: relative;
+    }
+    .v-application .info {
+        background-color: transparent !important;
+        border-color: transparent !important;
+    }
+        ::v-deep .v-dialog { /* 지우면 안됨 */
+        box-shadow: none !important;
     }
 </style>
