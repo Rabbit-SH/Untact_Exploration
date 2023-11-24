@@ -10,9 +10,32 @@
       <img :src="require('@/assets/open.png')">
     </div>
     <div class="button-container">
-      <v-btn @click="downloadImage" class="ok-btn mt-3 pl-10 pr-10" color="#EF8200">다운로드</v-btn>
-      <v-btn @click="openGoogleForm" class="google-form-button mt-3 pl-10 pr-10" color="#EF8200">만족도 설문조사 하기</v-btn>
+      <v-btn @click="downloadImage" class="ok-btn mt-3 pl-10 pr-10" color="#EF8200">선물 받기</v-btn>
     </div>
+    <v-dialog v-model="dialog" class="dialog">
+            <v-card class="pa-3">
+                <v-card-text>
+                <v-row align="center" justify="center">
+                    <v-col align="center">
+                    <br>
+                    <div class="text-center">
+                        <h3>우리가 함께한 <strong>물두꺼비 모험</strong>은 어땠나요? 재미있었나요?</h3>
+                        <br>
+                        <p>여러분이 어떻게 느꼈는지 알려주면, 다음에 더 신나고 멋진 모험을 준비할 수 있어요!</p>
+                        <p>아래 버튼을 눌러 간단한 <strong>설문조사</strong>에 참여해 주세요</p>
+                        <p>여러분의 소중한 의견이 큰 도움이 될 거예요!</p>
+                    </div>
+                    <div class="final-img" id="dudu">
+                      <img :src="require('@/assets/final-dudu.jpg')">
+                    </div>
+                    <div>
+                        <v-btn @click="openGoogleForm" class="google-form-button mt-3 pl-10 pr-10" color="#EF8200">만족도 설문조사 하기</v-btn>
+                    </div>
+                    </v-col>
+                </v-row>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
   </div>
   
 </template>
@@ -23,6 +46,7 @@ name: 'FinalView',
 data(){
   return {
     familyphoto:null,
+    dialog: false,
   };
 },
 mounted() {
@@ -55,6 +79,9 @@ methods: {
 
     // 링크를 다시 제거합니다.
     document.body.removeChild(link);
+
+    // 다운로드 후 대화 상자를 표시합니다.
+    this.dialog = true;
     },
 
   openGoogleForm(){
@@ -107,7 +134,7 @@ methods: {
 }
 .present{
   position: absolute;
-  bottom: 18%;
+  bottom: 10%;
   width: 65%;
   height: auto;
 }
@@ -118,18 +145,34 @@ methods: {
 }
 .button-container{
   position: absolute;
-  bottom: 3%;
+  bottom: 5%;
   display: flex; /* Flexbox 레이아웃 사용 */
   flex-direction: column; /* 요소들을 세로로 정렬 */
   align-items: center; /* 가로 중앙 정렬 */
 }
 
-.ok-btn, .google-form-button {
+.ok-btn{
   color: white !important;
   font-weight: bold;
   font-size: 18px;
-  margin-bottom: 10px; /* 버튼 사이의 간격 */
-  width: 80%;
+  width: 100%;
+}
+.google-form-button{
+  color: white !important;
+  font-weight: bold;
+  font-size: 18px;
+  width: 100%;
+}
+.dialog{
+  width: 90%;
+}
+.final-img {
+  width: 70%;
+  height: auto;
+}
+.final-img img{
+  width: 100%;
+  height: 100%;
 }
 
 </style>
