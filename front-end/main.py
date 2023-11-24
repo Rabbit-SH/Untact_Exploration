@@ -2,6 +2,7 @@ import glob
 from fastapi import BackgroundTasks, FastAPI, File, UploadFile
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import shutil
 import numpy as np
@@ -9,25 +10,19 @@ import tensorflow as tf
 import tensorflow_hub as hub
 import PIL.Image
 import os
-# import functools
-
 import uvicorn
-class Item(BaseModel):
-    pass
-# import tempfile
 
 app = FastAPI()
 #CORS 오류 해결
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8080","http://192.168.35.20:8080","https://hyeoong.github.io"],  # 프론트엔드 서버 주소
+    allow_origins=["*"],  # 프론트엔드 서버 주소
     allow_credentials=True,
     allow_methods=["*"],  # 모든 HTTP 메소드 허용
     allow_headers=["*"],  # 모든 헤더 허용
 )
 hub_module = hub.load('https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2')
-# class TransferData(BaseModel):
-#     result: str
+
 def remove_file(path: str):
     try:
         os.remove(path)
@@ -74,7 +69,7 @@ async def create_upload_file(background_tasks: BackgroundTasks,file: UploadFile 
     
     # 스타일 이미지 가져오기 (여러장)
     
-    style_images_path = glob.glob('./static/datasets/style/*.jpg') # 스타일 이미지 경로
+    style_images_path = glob.glob('./static/datasets/style/*.jpg')
     
     stylized_images = []
     for style_image_path in style_images_path:
@@ -97,7 +92,11 @@ async def create_upload_file(background_tasks: BackgroundTasks,file: UploadFile 
     background_tasks.add_task(remove_file, output_path)
     
     return response
+# app.mount("/static", StaticFiles(directory="../dist"), name="static")
 
+# @app.get("/")
+# def index():
+#     return FileResponse("../dist/index.html")
 # Uvicorn 서버 실행
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

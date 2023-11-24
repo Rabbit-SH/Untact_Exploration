@@ -192,10 +192,6 @@
 
           <v-icon size = "50">mdi-panorama-variant-outline</v-icon>
         </v-btn>
-
-        <!-- <div class="preview"  v-show="previewVisible">
-          <img :src="require('@/assets/preview.png')">
-        </div> -->
       </div>
         
       <l-tile-layer :url="url" />
@@ -299,8 +295,6 @@ export default {
 
       allResValue: false,
 
-      isFirstMissionOpened: false, //첫번째 미션의 열림 상태 추적
-
       isZoomIn: false, //줌인이 된 상태인지 아닌지 확인(팝업창 띄우기 위한 변수)
       isZoom : false, //내 위치 버튼을 위한 줌인 상태 확인 변수
       isGift: false, //마지막 모든 미션 수행 후 선물 버튼(한국화 변환 + 세그멘테이션)을 나타낼 변수
@@ -330,12 +324,12 @@ export default {
         {id:2, coordinates: [37.4047839823339, 128.047338724136], name:'황장금표'},
         {id:3, coordinates: [37.40485112, 128.04897584], name:'황장목숲길 안내판'},
         {id:4, coordinates: [37.403465098361, 128.048915863037], name:'데크길1: 가족사진'},
-        {id:5, coordinates: [37.40172059, 128.05039145], name:'데크길 2 : 꺾인 후 지점'},
+        {id:5, coordinates: [37.402270, 128.050203], name:'데크길 2 : 꺾인 후 지점'},
         {id:6, coordinates: [37.3992934, 128.0498706], name:'구룡사'},
         {id:7, coordinates: [37.39793653, 128.05143569], name:'돌탑 미션'},
         {id:8, coordinates: [37.3972176621091, 128.051402270794], name:'범람로 시작 전 표지판'},
         {id:9, coordinates: [37.3962118870025, 128.051946759224], name:'탄소중립 미션'},
-        {id:10, coordinates: [37.3943772,128.05353051], name:'솔비로길(야생화원)'},
+        {id:10, coordinates: [37.3943772, 128.05353051], name:'솔비로길(야생화원)'},
       ],
       //주요 위치 마커 위치정보와, 이름
       mainplacemarkers: [
@@ -482,20 +476,12 @@ export default {
       this.gallery_open = false;
       this.showtutorial = false;
       this.uploadIMG = false;
-      if (this.$refs.map && this.$refs.map.mapObject) {
-        this.$refs.map.mapObject.dragging.enable();
-        this.$refs.map.mapObject.scrollWheelZoom.enable();
-      }
     },
     showTutorialPopup(){
       this.showtutorial = true;
       this.uploadIMG = false;
       this.isCredit = false;
       this.gallery_open = false;
-      if (this.$refs.map && this.$refs.map.mapObject) {
-          this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
-          this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
-        }
 
     },
     shwoUImg(){
@@ -538,9 +524,6 @@ export default {
       if (this.$refs.map && this.$refs.map.mapObject) {
       this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
       this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
-    }
-    if(index === 0){ //첫번째 미션이 열리면 preview이미지 안보이게함
-      this.isFirstMissionOpened = true;
     }
 
     },
@@ -625,7 +608,7 @@ export default {
       fetch(gpxUrl)
       .then(response => response.text())
       .then(data => {
-        // GPX 트랙 파싱
+          // GPX 트랙 파싱
         const gpx = new DOMParser().parseFromString(data, 'text/xml');
         const trackCoords = [];
         
@@ -681,16 +664,13 @@ export default {
 
       this.isGift = true;
     },
+
     allRes(){
       if(this.result1 && this.result2 && this.result3 && this.result4 && this.result5 && this.result6 && this.result7 && this.result8 && this.result9 && this.result10){
         this.allResValue = true;
       }
       return this.allResValue
     },
-    goPage(pageN){
-      //여기에 세션스토리지 ㄱ
-      this.$router.push({name: pageN});
-    }
   },
   computed:{
     completedMissionsCount() {
@@ -698,11 +678,7 @@ export default {
     },
     totalMissions() {
       return 10; // 전체 미션의 수
-    },
-    previewVisible() {
-      // 첫 번째 미션이 한 번도 열리지 않았다면 true를 반환하여 이미지를 보여줍니다.
-      return !this.isFirstMissionOpened;
-  }
+    }
   },
   created(){
     const storedResults = getResultsFromSessionStorage();
@@ -716,6 +692,12 @@ export default {
 </script>
 
 <style scoped>
+
+  .animated-marker {
+    animation: bounce 1s infinite;
+    z-index: 1001;
+    position: absolute;
+  }
   .animated-marker img{
     width: 100%;
     height: 100%;
@@ -734,6 +716,7 @@ export default {
   .popup.show{
     opacity: 1; /*나타날 때 투명도를 1로 설정하여 부드럽게 나타나게 함*/
   } 
+  
   @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
       transform: translateY(0);
@@ -749,9 +732,8 @@ export default {
     animation: bounce 1s infinite;
     z-index: 1001;
     position: absolute;
-    bottom: 5%;
-    width: 60%;
-    left: 18%;
+    bottom: 35%; 
+    right: 25%;
   }
   .navi-bar {
   position: fixed; /* 고정 위치 */
@@ -832,19 +814,6 @@ export default {
     padding: 0px;
     border-radius: 3px;
     text-align: center;
-  }
-  .preview{
-    z-index: 1002;
-    position: absolute;
-    width: 100%;
-    height: auto;
-    bottom: 0px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .preview img{
-    width: 100%;
-    height: 100%;
   }
 
 </style>
