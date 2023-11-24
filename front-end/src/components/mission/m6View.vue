@@ -114,6 +114,7 @@ export default {
                 this.$emit('answerCorrect');
             }
             this.userResult = '';
+            this.$store.commit('setBGPhoto', this.uploadedPhoto);
             // this.closeP();
         },
 

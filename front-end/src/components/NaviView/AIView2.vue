@@ -1,6 +1,6 @@
 <template>
     <div class="background" justify="center" align="center">
-        <button @click="$router.push({name:'MainView'})" class="close ma-2 pa-2">
+        <button @click="closeAI" class="close ma-2 pa-2">
             <img src="@/assets/mission/close.png">
         </button>
         <h1 class="pt-10">AI 화가</h1>
@@ -107,10 +107,14 @@ export default {
         setInterval(() => {
             this.contentIndex = (this.contentIndex + 1) % this.contents.length;
         }, 3000);
+        this.check_m6();
     },
     computed: {
         currentContent(){
             return this.contents[this.contentIndex]
+        },
+        bg_photo(){
+            return this.$store.getters.getBGPhoto;
         }
     },
     methods:{
@@ -193,6 +197,19 @@ export default {
         },
         closeGallery(){
             this.gallery = false;
+        },
+        check_m6(){
+            if(this.bg_photo != null){
+                this.imageUrl = null;
+                this.preimage = this.bg_photo;
+                this.imageUrl = this.preimage;
+                this.istranslated = false;
+            }
+        },
+        closeAI(){
+            this.$store.commit('delBGPhoto');
+            this.imageUrl = null;
+            this.$router.push('./map');
         }
     }
 }
