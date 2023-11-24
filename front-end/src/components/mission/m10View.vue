@@ -52,8 +52,6 @@
 </template>
 
 <script >
-import {EventBus} from '@/EventBus.js';
-
 export default {
     props: {
         show: {
@@ -92,15 +90,7 @@ export default {
             fileReader.onload = () => {
                 const photoDataUrl = fileReader.result;
                 this.uploadedPhoto = photoDataUrl;
-                EventBus.$emit('add-photo', photoDataUrl);  
-
-                let photos = JSON.parse(sessionStorage.getItem('photos')) || [];
-  
-                // 새로운 사진을 배열에 추가합니다
-                photos.push(photoDataUrl);
-
-                // 변경된 배열을 다시 sessionStorage에 저장합니다
-                sessionStorage.setItem('photos', JSON.stringify(photos));
+                this.$store.commit('addPhoto', photoDataUrl);
             }
             this.dialog = true; //팝업창 열기
         },

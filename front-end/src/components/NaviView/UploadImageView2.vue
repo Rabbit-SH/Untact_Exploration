@@ -18,12 +18,12 @@
 </template>
 
 <script>
-import {EventBus} from '@/EventBus.js';
+// import {EventBus} from '@/EventBus.js';
 
 export default {
     name: 'AppGallery',
     mounted() {
-        EventBus.$on('add-photo',this.addPhoto)
+        // EventBus.$on('add-photo',this.addPhoto)
     },
     props: {
         show: {
@@ -63,7 +63,7 @@ export default {
         },
     },
     beforeDestroy() {
-    EventBus.$off('add-photo', this.photoUrl);
+    // EventBus.$off('add-photo', this.photoUrl);
     this.photos.forEach(URL.revokeObjectURL);
     },
 };

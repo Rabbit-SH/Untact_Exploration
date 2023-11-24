@@ -220,8 +220,6 @@ import { LMap, LTileLayer, LMarker, LCircle } from 'vue2-leaflet';
 import L from 'leaflet';
 import { Icon } from 'leaflet';
 
-import {EventBus} from '@/EventBus.js';
-
 import m1 from '../components/mission/m1View.vue';
 import m2 from '../components/mission/m2View.vue';
 import m3 from '../components/mission/m3View.vue';
@@ -667,7 +665,6 @@ export default {
         result9: this.result9,
         result10: this.result10,
       };
-      EventBus.$emit('send-results-to-durumari', results);
       saveResultsToLocalStorage(results);
     },
     InfoChiak(){

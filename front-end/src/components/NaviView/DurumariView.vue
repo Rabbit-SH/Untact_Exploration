@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import {EventBus} from '@/EventBus.js'
+// import {EventBus} from '@/EventBus.js'
 
 export default {
     props: {
@@ -78,14 +78,14 @@ export default {
       },
     },
     created(){
-      EventBus.$on('send-results-to-durumari', (res) => {
-        this.r1 = res.r1;
-        this.r2 = res.r2;
-        this.r3 = res.r3;
-        this.r4 = res.r4;
-        this.r5 = res.r5;
-        this.r6 = res.r6;
-      })
+      // EventBus.$on('send-results-to-durumari', (res) => {
+      //   this.r1 = res.r1;
+      //   this.r2 = res.r2;
+      //   this.r3 = res.r3;
+      //   this.r4 = res.r4;
+      //   this.r5 = res.r5;
+      //   this.r6 = res.r6;
+      // })
     },
     data(){
       return{

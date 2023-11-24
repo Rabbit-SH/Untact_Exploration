@@ -54,7 +54,6 @@
 </template>
 
 <script >
-import { EventBus } from '@/EventBus';
 
 export default {
     props: {
@@ -66,9 +65,6 @@ export default {
             type: Boolean,
         }
     },
-    components:{
-        // SvgIcon
-    },
     data(){
       return {
         userResult: '', //사용자 응답 저장하는 데이터
@@ -76,8 +72,6 @@ export default {
 
         userResponse:'',
         uploadedPhoto: null, // 업로드된 사진 데이터를 위한 변수
-
-        // path: mdiCameraOutline,
       }
     },
     methods: {
@@ -97,20 +91,9 @@ export default {
                 
                 const photoDataUrl = fileReader.result;
                 this.uploadedPhoto = photoDataUrl;
-                EventBus.$emit('add-photo', photoDataUrl);
 
-                let photos = JSON.parse(localStorage.getItem('photos')) || [];
-  
-                // 새로운 사진을 배열에 추가합니다
-                photos.push(photoDataUrl);
-
-                // 변경된 배열을 다시 sessionStorage에 저장합니다
-                localStorage.setItem('photos', JSON.stringify(photos));
-                //가족사진 변환을 위해 따로 저장.
-                //axios.post();
-                localStorage.setItem('displayphoto', photoDataUrl);
-                
-                // console.log(photoDataUrl)
+                // this.addPhoto(photoDataUrl);
+                this.$store.commit('addPhoto', photoDataUrl);
             }
             this.dialog = true;
         },

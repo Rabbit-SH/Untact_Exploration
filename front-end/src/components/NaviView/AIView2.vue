@@ -1,5 +1,8 @@
 <template>
     <div class="background" justify="center" align="center">
+        <button @click="$router.push({name:'MainView'})" class="close ma-2 pa-2">
+            <img src="@/assets/mission/close.png">
+        </button>
         <h1 class="pt-10">AI 화가</h1>
         <div class="uploadIMG mt-16" justify="center" align="center">
             <img v-if="imageUrl" :src="imageUrl" alt="preview Image" class="preview_img mt-7">
@@ -102,6 +105,7 @@ export default {
             fileReader.readAsDataURL(this.preimage)
             fileReader.onload = () => {
                     this.imageUrl = fileReader.result;
+                    this.$store.commit('addPhoto', this.imageUrl);
                     // EventBus.$emit('add-photo', this.photoDataUrl);
             }
             this.istranslated = false
@@ -217,4 +221,12 @@ export default {
     bottom: 0%;
     right: 0%;
 }
+.close img{
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    position: absolute;
+    top: 3%;
+    right: 5%;
+  }
 </style>

@@ -41,13 +41,14 @@
 </template>
 
 <script>
-import {EventBus} from '@/EventBus.js';
+// import {EventBus} from '@/EventBus.js';
+import { mapState } from 'vuex';
 
 export default {
   name: 'AppGallery',
   mounted() {
-      EventBus.$on('add-photo',this.addPhoto)
-      this.photos = JSON.parse(localStorage.getItem('photos')) || [];
+      // EventBus.$on('add-photo',this.addPhoto)
+      // this.photos = JSON.parse(localStorage.getItem('photos')) || [];
   },
   props: {
       show: {
@@ -57,28 +58,29 @@ export default {
   },
   data(){
       return {
-          photos: [],
+          // photos: [],
       };
   },
+  computed:{
+    ...mapState(["photos"]), // Users라는 변수명을 사용
+    ...mapState({ photos: "photos" }), // 키 Users는 해당 컴포넌트에서 사용할 변수명 값은 State 값
+  },
   methods: {
-      addPhoto(photoUrl) {
-          this.photos.push(photoUrl)
-      },
-      closeP(){
-          this.$emit('close');
-      },
-      downloadPhoto(photo, index) {
-          const a = document.createElement('a');
-          a.href = photo;
-          a.download = `photo_${index}`;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-      },
+    closeP(){
+      this.$emit('close');
+    },
+    downloadPhoto(photo, index) {
+      const a = document.createElement('a');
+      a.href = photo;
+      a.download = `photo_${index}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    },
   },
   beforeDestroy() {
-  EventBus.$off('add-photo', this.photoUrl);
-  this.photos.forEach(URL.revokeObjectURL);
+  // EventBus.$off('add-photo', this.photoUrl);
+  // this.photos.forEach(URL.revokeObjectURL);
   },
 };
 </script>
