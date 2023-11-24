@@ -1,4 +1,5 @@
 <template>
+  <!-- :maxBounds="maxBounds" -->
   <div class="main">    
     <l-map
       style="height: 100%; width: 100%"
@@ -6,7 +7,7 @@
       :zoom="zoom"
       :zoomAnimation=true
       :options="mapOptions"
-      :maxBounds="maxBounds"
+      
       class="map" 
       ref="map"
       @update:zoom="zoomUpdated"
@@ -70,9 +71,9 @@
       <LMarker
         :lat-lng="mainplacemarkers[5].coordinates"
         :icon="placeICON6" />
-      <LMarker
+      <!-- <LMarker
         :lat-lng="mainplacemarkers[6].coordinates"
-        :icon="placeICON7" />
+        :icon="placeICON7" /> -->
 
       <LMarker
         :key="markers[0].id"
@@ -143,7 +144,7 @@
         :icon="result10 ? customIcon: defaultIcon" 
         v-if="result9 === true" />
 
-      <l-circle :lat-lng="currentPos" :radius=circle.radius :color=circle.color />
+      <l-circle :lat-lng="currentPos" :radius=circle.radius :color=circle.color :fillColor=circle.fillColor :weight=5 :fillOpacity=1 />
 
       <div class="navi-bar">
         <v-btn
@@ -344,7 +345,7 @@ export default {
         {id:4, coordinates: [37.405188804745, 128.049248456955], name:"황장목숲길"},
         {id:5, coordinates: [37.3996361550487, 128.049114346504], name:"구룡사"},
         {id:6,coordinates: [37.3949972677172, 128.053389787674], name:"금강솔빛생태학습원"},
-        {id:7, coordinates: [37.3942173439044, 128.053000867367], name:"대곡안전센터"},
+        // {id:7, coordinates: [37.3942173439044, 128.053000867367], name:"대곡안전센터"},
         {id:8, coordinates: [37.3941725939312, 128.054344654083], name:"솔비로길(야생화원)"},
       ],
       placeICON1: new Icon({
@@ -377,11 +378,11 @@ export default {
         iconSize: [80, 80],
         iconAnchor: [16,32]
       }),
-      placeICON7: new Icon({
-        iconUrl: require('@/assets/mainplace/대곡안전센터.png'),
-        iconSize: [90, 80],
-        iconAnchor: [16,32]
-      }),
+      // placeICON7: new Icon({
+      //   iconUrl: require('@/assets/mainplace/대곡안전센터.png'),
+      //   iconSize: [90, 80],
+      //   iconAnchor: [16,32]
+      // }),
       placeICON8: new Icon({
         iconUrl: require('@/assets/mainplace/솔비로길(야생화원).png'),
         iconSize: [100, 90],
@@ -397,7 +398,7 @@ export default {
         iconSize: [60, 60],
         iconAnchor: [16,32]
       }),
-      circle: { radius: 5, color: 'blue'}
+      circle: { radius: 23, color: 'white', fillColor: 'red', weight: 3}
     };
   },
   components: {
