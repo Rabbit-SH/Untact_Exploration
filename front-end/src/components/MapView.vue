@@ -664,18 +664,7 @@ export default {
 
       this.isGift = true;
     },
-    Good(){
-      this.result1 = true;
-      this.result2 = true;
-      this.result3 = true;
-      this.result4 = true;
-      this.result5 = true;
-      this.result6 = true;
-      this.result7 = true;
-      this.result8 = true;
-      this.result9 = true;
-      this.result10 = true;
-    },
+
     allRes(){
       if(this.result1 && this.result2 && this.result3 && this.result4 && this.result5 && this.result6 && this.result7 && this.result8 && this.result9 && this.result10){
         this.allResValue = true;
