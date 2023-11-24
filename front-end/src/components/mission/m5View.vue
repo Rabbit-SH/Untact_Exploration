@@ -99,7 +99,7 @@ export default {
 
           sounds: [
                 { id: 1, src: "/꿩.wav", isActive: false, howl: null, value: '물두꺼비' },
-                { id: 2, src: "/99941F4C5CF91EAC0F.mp3", isActive: false, howl: null, value: '참새' },
+                { id: 2, src: "/참새.mp3", isActive: false, howl: null, value: '참새' },
                 { id: 3, src: "/비둘기.wav", isActive: false, howl: null, value: '비둘기' },
                 { id: 4, src: "/꿩.wav", isActive: false, howl: null, value: '물두꺼비' },
             ],
