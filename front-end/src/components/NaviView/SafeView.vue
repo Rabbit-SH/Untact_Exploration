@@ -29,9 +29,8 @@ export default {
             currentSlideIndex: 0,
 
             slides: [
-                {id:1, image : require('@/assets/ChiakInfo/111.jpg'), backgroundColor: 'white'},
-                {id:2, image : require('@/assets/ChiakInfo/112.jpg'), backgroundColor: 'white'},
-                {id:3, image : require('@/assets/ChiakInfo/113.jpg'), backgroundColor: 'white'},
+                {id:1, image : require('@/assets/safeView/safe1.jpg'), backgroundColor: 'white'},
+                {id:2, image : require('@/assets/safeView/safe2.jpg'), backgroundColor: 'white'},
             ],
 
             checkedExercise: false,
@@ -62,16 +61,6 @@ export default {
         justify-content: center;
     }
     .white-bg{
-        /* width: 80%;
-        position: fixed; 
-        overflow-y: auto;
-        background-size: contain;
-        background-position: center; 이미지를 중앙에 정렬합니다
-        z-index: 1600;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius:5px; */
         width: 80%;
         height: auto;
         max-height: 90%;
