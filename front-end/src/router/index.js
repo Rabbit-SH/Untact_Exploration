@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import StartView from '../views/StartView.vue';
 import MainView from '../views/MainView.vue';
 import TutorialPage from '../views/TutorialPage.vue';
-import AIView from '../components/NaviView/AIView2.vue';
+import AIView from '../components/NaviView/AIView3.vue';
 import FinalView from '../components/FinalView.vue';
 import CourseChoose from '../views/CourseChoose.vue';
 
