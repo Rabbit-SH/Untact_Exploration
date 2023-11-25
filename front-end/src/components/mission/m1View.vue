@@ -5,6 +5,9 @@
             <button class="close" @click="closeP">
                 <img src="@/assets/mission/close.png">
             </button>
+            <button class="info" @click="openinfo">
+                <v-icon size="25">mdi-information-variant-circle</v-icon>
+            </button>
             <div class="content-container" justify="center" align="center">
                 <v-row class="sound-item d-flex">
                     <v-col cols="4">
@@ -72,6 +75,15 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+
+        <v-dialog v-model="infodialog" class="infodialog">
+            <v-card-text class="title">
+                <h3>치악산체험학습관</h3>
+                <img @click="infodialog = false" src="@/assets/mission/close.png" class="closeinfo">
+            </v-card-text>
+                <img src="@/assets/info1.jpeg" class="pic">
+        </v-dialog>
+
     </div>
 </template>
 
@@ -93,6 +105,7 @@ export default {
             userResult: '', //사용자 응답 저장하는 데이터
             showPopup: false, //팝업 상태
             dialog: false,
+            infodialog: false,
 
             sounds: [
                 { id: 1, src: "/꿩.wav", isActive: false, howl: null, value: '꿩' },
@@ -104,6 +117,9 @@ export default {
     methods: {
         closeP(){
             this.$emit('close');
+        },
+        openinfo(){
+            this.infodialog = true;
         },
         submitResponse(){
           console.log(this.userResponse); //콘솔에 출력, 서버에 제출하거나 다른 제출을 추가해도됨
@@ -278,5 +294,46 @@ export default {
     div.v-input--selection-controls__input{
         margin-right: 16px;
         margin-left: 14px;
+    }
+    .info{
+        position:absolute;
+        top: 3%;
+        left: 5%;
+        width: 22px;
+        height: 22px;
+        cursor: pointer;
+        justify-content: center;
+        align-items: center;
+    }
+    .infodialog{
+        position: absolute;
+        box-shadow: none;
+        /* width: 30%;
+        height: auto; */
+    }
+    .closeinfo{
+        width: 22px;
+        height: 22px;
+        cursor: pointer;
+        justify-content: center;
+        align-items: center;
+        position:absolute;
+        top: 30%;
+        right: 5%;
+    }
+    .pic{
+        width: 100%;
+        height: auto;
+    }
+    .title{
+        background-color: white;
+        position: relative;
+    }
+    .v-application .info {
+        background-color: transparent !important;
+        border-color: transparent !important;
+    }
+        ::v-deep .v-dialog { /* 지우면 안됨 */
+        box-shadow: none !important;
     }
 </style>
