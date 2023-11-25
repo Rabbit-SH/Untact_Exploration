@@ -29,8 +29,8 @@ export default {
             currentSlideIndex: 0,
 
             slides: [
-                {id:1, image : require('@/assets/safeView/safe1.jpg'), backgroundColor: 'white'},
-                {id:2, image : require('@/assets/safeView/safe2.jpg'), backgroundColor: 'white'},
+                {id:1, image : require('@/assets/safeView/safe1.png'), backgroundColor: 'white'},
+                {id:2, image : require('@/assets/safeView/safe2.png'), backgroundColor: 'white'},
             ],
 
             checkedExercise: false,
@@ -40,7 +40,7 @@ export default {
     methods: {
         closetutorial(){
             this.currentSlideIndex = 0;
-            this.$emit('closeTutorial');
+            this.$emit('close');
         },
 
     },

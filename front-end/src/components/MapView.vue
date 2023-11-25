@@ -165,23 +165,23 @@
           elevation="2"
           icon
           color="teal"
-          @click="getGallery" 
-          class="gallery"
-          height = "50px"
-          width = "50px"
-          style="border-radius: 50%; background-color: white;">
-          <v-icon size = "28">mdi-image-multiple</v-icon>
-        </v-btn>
-        <v-btn
-          elevation="2"
-          icon
-          color="teal"
           @click="InfoChiak" 
           class="credit"
           height = "50px"
           width = "50px"
           style="border-radius: 50%; background-color: white;">
           <v-icon size = "28">mdi-text-box-check-outline</v-icon>
+        </v-btn>
+        <v-btn
+          elevation="2"
+          icon
+          color="teal"
+          @click="getSafe" 
+          class="safe"
+          height = "50px"
+          width = "50px"
+          style="border-radius: 50%; background-color: white;">
+          <v-icon size = "28">mdi-image-multiple</v-icon>
         </v-btn>
         <v-btn
           elevation="2"
@@ -203,7 +203,7 @@
             @closeTutorial="closeTutorial"
             @openTutorial="showTutorialPopup" />
         <Durumari :show="isCredit" @close="closeDurumari"/>
-        <GalleryView :show="gallery_open" @close="closeGallery" />
+        <SafeView :show="showSafe" @close="closeSafe" />
         <UploadImageView :show="uploadIMG" :class="{'show':uploadIMG}" @close="closeUImg"/>
 
       <div  class="animated-marker" v-show="isGift">
@@ -241,7 +241,7 @@ import markerShadowImg from 'leaflet/dist/images/marker-shadow.png';
 import markerRetinaImg from 'leaflet/dist/images/marker-icon-2x.png';
 
 import Durumari from './NaviView/DurumariView.vue';
-import GalleryView from './NaviView/GalleryView.vue';
+import SafeView from './NaviView/SafeView.vue';
 import TutorialView from './NaviView/TutorialView.vue';
 import UploadImageView from './NaviView/UploadImageView2.vue';
 import InfoChiakView from './NaviView/InfoChiakView.vue';
@@ -305,7 +305,7 @@ export default {
       showInfoChiak: false,
 
       isCredit: false,
-      gallery_open: false,
+      showSafe: false,
       showtutorial: false,
       uploadIMG: false,
 
@@ -347,7 +347,6 @@ export default {
         {id:4, coordinates: [37.405188804745, 128.049248456955], name:"황장목숲길"},
         {id:5, coordinates: [37.3996361550487, 128.049114346504], name:"구룡사"},
         {id:6,coordinates: [37.3949972677172, 128.053389787674], name:"금강솔빛생태학습원"},
-        // {id:7, coordinates: [37.3942173439044, 128.053000867367], name:"대곡안전센터"},
         {id:8, coordinates: [37.3941725939312, 128.054344654083], name:"솔비로길(야생화원)"},
       ],
       placeICON1: new Icon({
@@ -380,11 +379,6 @@ export default {
         iconSize: [80, 80],
         iconAnchor: [16,32]
       }),
-      // placeICON7: new Icon({
-      //   iconUrl: require('@/assets/mainplace/대곡안전센터.png'),
-      //   iconSize: [90, 80],
-      //   iconAnchor: [16,32]
-      // }),
       placeICON8: new Icon({
         iconUrl: require('@/assets/mainplace/솔비로길(야생화원).png'),
         iconSize: [100, 90],
@@ -421,7 +415,7 @@ export default {
     InfoChiakView,
     GiftView,
     Durumari,
-    GalleryView,
+    SafeView,
     TutorialView,
     UploadImageView,
   },
@@ -444,18 +438,18 @@ export default {
   methods: {
     getDurumari(){
       this.isCredit = true;
-      this.gallery_open = false;
+      this.showSafe = false;
       this.showtutorial = false;
       this.uploadIMG = false;
     },
     closeDurumari(){
       this.isCredit = false;
-      this.gallery_open = false;
+      this.showSafe = false;
       this.showtutorial = false;
       this.uploadIMG = false;
     },
-    getGallery(){
-      this.gallery_open = true;
+    getSafe(){
+      this.showSafe = true;
       this.showtutorial = false;
       this.uploadIMG = false;
       this.isCredit = false;
@@ -464,8 +458,8 @@ export default {
           this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
         }
     },
-    closeGallery(){
-      this.gallery_open = false;
+    closeSafe(){
+      this.showSafe = false;
       this.isCredit = false;
       this.showtutorial = false;
       this.uploadIMG = false;
@@ -476,7 +470,7 @@ export default {
     },
     closeTutorial(){
       this.isCredit = false;
-      this.gallery_open = false;
+      this.showSafe = false;
       this.showtutorial = false;
       this.uploadIMG = false;
     },
@@ -484,18 +478,18 @@ export default {
       this.showtutorial = true;
       this.uploadIMG = false;
       this.isCredit = false;
-      this.gallery_open = false;
+      this.showSafe = false;
 
     },
     shwoUImg(){
       this.uploadIMG = true;
       this.showtutorial = false;
       this.isCredit = false;
-      this.gallery_open = false;
+      this.showSafe = false;
     },
     closeUImg(){
       this.isCredit = false;
-      this.gallery_open = false;
+      this.showSafe = false;
       this.showtutorial = false;
       this.uploadIMG = false;
     },
@@ -778,7 +772,7 @@ export default {
     margin-left: 30px;
     margin-right: 30px;
   }
-  .navi-bar .gallery{
+  .navi-bar .safe{
     display: absolute; 
     align-items: center;
     z-index: 1001;
