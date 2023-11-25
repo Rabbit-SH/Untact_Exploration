@@ -80,14 +80,14 @@ feed_img = np.expand_dims(
 		cv2.resize(content, (feed_shape_x, feed_shape_y)),
 	axis=0)
 
-gpu_options = tf.GPUOptions(allow_growth=True)
+gpu_options = tf.compat.v1.GPUOptions(allow_growth=True)
 
-with tf.device(DEVICE), tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
-	input_r = tf.placeholder(tf.float32, shape=[BATCH_SIZE, feed_shape_y, feed_shape_x, 3], name='inpr')
+with tf.device(DEVICE), tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(gpu_options=gpu_options)) as sess:
+	input_r = tf.compat.v1.placeholder(tf.float32, shape=[BATCH_SIZE, feed_shape_y, feed_shape_x, 3], name='inpr')
 	g_state = build_generator(input_r, name='generator')
-	g_var_ls = tf.trainable_variables(scope='generator')
-	sess.run(tf.global_variables_initializer())
-	saver = tf.train.Saver(g_var_ls)
+	g_var_ls = tf.compat.v1.trainable_variables(scope='generator')
+	sess.run(tf.compat.v1.global_variables_initializer())
+	saver = tf.compat.v1.train.Saver(g_var_ls)
 	chkpt_fname = tf.train.latest_checkpoint(MODEL_SAVE_PATH)
 	saver.restore(sess, chkpt_fname)
 	# Warm up network and test...

@@ -22,12 +22,13 @@ app.add_middleware(
     allow_headers=["*"],  # 모든 헤더 허용
 )
 hub_module = hub.load('https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2')
-
+#파일 삭제
 def remove_file(path: str):
     try:
         os.remove(path)
     except Exception as e:
         print(f"Error while deleting file {path}: {e}")
+#이미지 전처리 함수
 def load_image_from_file(file_path, image_size=(512, 512), preserve_aspect_ratio=True):
     image = PIL.Image.open(file_path)
     image = np.array(image)
@@ -39,13 +40,14 @@ def load_image_from_file(file_path, image_size=(512, 512), preserve_aspect_ratio
     image = tf.image.resize(image, image_size, preserve_aspect_ratio=preserve_aspect_ratio)
     return image
 
+#이미지 변환 함수
 def transform_image(content_image, style_image):
     # 스타일 전이 적용
     outputs = hub_module(content_image, style_image)
     stylized_image = outputs[0]
     return stylized_image
-
-@app.post("/upload")
+#api 호출
+@app.post("/transform/sumuk")
 async def create_upload_file(background_tasks: BackgroundTasks,file: UploadFile = File(...)):
     
     #업로드한 사진 저장
