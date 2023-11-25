@@ -150,51 +150,33 @@
       <l-circle :lat-lng="currentPos" :radius=circle.radius :color=circle.color :fillColor=circle.fillColor :weight=5 :fillOpacity=1 />
 
       <div class="navi-bar">
-        <v-btn
-          elevation="2"
-          icon
-          color="teal"
-          @click="showTutorialPopup" 
+        <div class="navi">
+          <img 
+          :src="require('@/assets/navi1.png')" 
+          style="width: 28%;" 
+          @click="showTutorialPopup"
           class="story"
-          height = "50px"
-          width = "50px"
-          style="border-radius: 50%; background-color: white;">
-          <v-icon size = "28">mdi-book-open-page-variant-outline</v-icon>
-        </v-btn>
-        <v-btn
-          elevation="2"
-          icon
-          color="teal"
+        >
+        <img 
+          :src="require('@/assets/navi2.png')" 
+          style="width: 28%;" 
           @click="InfoChiak" 
-          class="credit"
-          height = "50px"
-          width = "50px"
-          style="border-radius: 50%; background-color: white;">
-          <v-icon size = "28">mdi-text-box-check-outline</v-icon>
-        </v-btn>
-        <v-btn
-          elevation="2"
-          icon
-          color="teal"
+          class="story"
+        >
+        <img 
+          :src="require('@/assets/navi3.png')" 
+          style="width: 28%;" 
           @click="getSafe" 
           class="safe"
-          height = "50px"
-          width = "50px"
-          style="border-radius: 50%; background-color: white;">
-          <v-icon size = "28">mdi-image-multiple</v-icon>
-        </v-btn>
-        <v-btn
-          elevation="2"
-          icon
-          color="teal"
+        >
+      </div>
+      <div class="ai" style="width: 40%;">
+        <img 
+          :src="require('@/assets/navi4.png')" 
           @click="$router.push({name: 'AIView'})" 
           class="uploadImg"
-          height = "80px"
-          width = "80px"
-          style="border-radius: 50%; background-color: white;">
-
-          <v-icon size = "50">mdi-panorama-variant-outline</v-icon>
-        </v-btn>
+        >
+      </div>      
       </div>
         
       <l-tile-layer :url="url" />
@@ -756,40 +738,33 @@ export default {
     right: 25%;
   }
   .navi-bar {
-  position: fixed; /* 고정 위치 */
-  bottom: 3%; /* 화면 하단 */
-  left: 50%; /* 화면 중앙 정렬을 위해 왼쪽에서 50% 위치 */
-  transform: translateX(-50%); /* 중앙 정렬을 위해 X축으로 -50% 이동 */
-  display: flex; /* 내부 요소를 가로로 정렬 */
-  justify-content: center; /* 내부 요소들을 중앙에 배치 */
-  align-items: center; /* 세로 방향으로 중앙 정렬 */
-  z-index: 1001; /* 다른 요소들 위에 표시 */
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  display: flex; /* flex 컨테이너 설정 */
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
 }
-  .navi-bar .story{
-    display: absolute;
-    align-items: center;
-    z-index: 1001;
-    margin-left: 30px;
-    margin-right: 30px;
-  }
-  .navi-bar .safe{
-    display: absolute; 
-    align-items: center;
-    z-index: 1001;
-    margin-right: 30px;
-  }
-  .navi-bar .credit{
-    display: absolute; 
-    align-items: center;
-    z-index: 1001;
-    margin-right: 30px;
-  }
-  .navi-bar .uploadImg{
-    display: absolute;
-    align-items: center;
-    z-index: 1001;
-    margin-right: 30px;
-  }
+.navi-bar .navi {
+
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 70%; /* flex-grow: 0, flex-shrink: 0, flex-basis: 70% */
+  align-self: flex-end; /* 하단 정렬 */
+  margin-bottom: 5%;
+}
+
+.navi-bar .ai {
+  flex: 0 0 30%; /* flex-grow: 0, flex-shrink: 0, flex-basis: 30% */
+}
+
+.navi-bar img {
+  width: 100%; /* 이미지가 부모 컨테이너의 너비에 맞게 조정 */
+  margin: 0 5px;
+}
   .logo {
     position: absolute; /* 절대 위치 */
     top: 1%; /* 상단에 위치 */
