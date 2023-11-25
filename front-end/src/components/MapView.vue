@@ -13,6 +13,9 @@
       @update:zoom="zoomUpdated"
       @update:center="centerUpdated"
       @update:bounds="boundsUpdated"
+      @mousedown="handleMouseDown"
+      @movestart="handlemovestart"
+      @mouseup ="handlemouseup"
     >
 
     <div class="logo">
@@ -298,7 +301,6 @@ export default {
       isZoomIn: false, //줌인이 된 상태인지 아닌지 확인(팝업창 띄우기 위한 변수)
       isZoom : false, //내 위치 버튼을 위한 줌인 상태 확인 변수
       isGift: false, //마지막 모든 미션 수행 후 선물 버튼(한국화 변환 + 세그멘테이션)을 나타낼 변수
-      current : [0,0], // ZoomInToCurrentPosition 메서드에서 버튼 누른 시점의 위치 저장을 위한 변수
       currentPos: [0,0], // 실시간 내 위치 변화 저장 변수
       showInfoChiak: false,
 
@@ -308,11 +310,17 @@ export default {
       uploadIMG: false,
 
       isPositionReady : false,
+      mousedown : false,
+      mouseup : false,
       positionObj: {
         latitude: 0,
         longitude: 0
       },
-
+      geooptions: {
+        enableHighAccuracy: true,
+        maximumAge: 0,
+        timeout: Infinity
+      },
       mapOptions: {
         minZoom: 13, //최소 줌 레벨 설정
         maxZoom: 18,  //최대 줌 레벨 설정
@@ -432,11 +440,6 @@ export default {
 
     // 현재 위치 불러오는 코드
     this.getCurrentPosition();
-    this.currentPosIcon = L.icon({
-      iconUrl: require('@/assets/logo.png'),
-      iconSize: [16,16],
-      iconAnchor: [16,32]
-    });
   },
   methods: {
     getDurumari(){
@@ -557,8 +560,7 @@ export default {
         this.$refs.map.mapObject.panTo(this.markers[idx].coordinates, { duration: 0.3 });
         this.$refs.map.mapObject.setView(this.markers[idx].coordinates, 15);
         this.isZoomIn = false;
-      }
-    }, 300);
+      }}, 300);
 
       if (idx === 10){
         this.allRes();
@@ -569,33 +571,57 @@ export default {
     getPositionValue(pos) {
       this.positionObj.latitude = pos.coords.latitude;
       this.positionObj.longitude = pos.coords.longitude;
+      //현재 위치 값을 currentPost에 저장함.
       this.currentPos = [this.positionObj.latitude, this.positionObj.longitude];
-      this.isPositionReady = true;
-       
+
+      // 이전 마커가 있다면 삭제 (안하면 위치 변동될때마다 계속 마커가 찍힘)
       if (this.$refs.map && this.$refs.map.mapObject) {
-        // 이컨 마커가 있다면 삭제 (안하면 위치 변동될때마다 계속 마커가 찍힘)
         if(this.marker){
           this.$refs.map.mapObject.removeLayer(this.marker)
         }
+      }
+      //현위치 마크가 클릭 되있다면, 중심을 계속 잡아줌.
+      if(this.isZoom){
+        this.Zoom =17;
+        this.$refs.map.mapObject.setView(this.currentPos, this.Zoom); 
       }
     },
     getCurrentPosition(){
       if(!navigator.geolocation){
         alert('위치 정보를 찾을 수 없습니다.')
       } else {
-        navigator.geolocation.watchPosition(this.getPositionValue, 
-        ()=>alert('위치 정보를 찾을 수 없습니다.2')) //위치 업데이트 시 호출되는 함수 getPositionValue, 오류 발생 시 경고메세지 표시
+        //위치 업데이트 시 호출되는 함수 getPositionValue, 오류 발생 시 경고메세지 표시, 추가 옵션 : 높은퀄리티의 위치정보 => 전력소모량 높음.
+        navigator.geolocation.watchPosition(this.getPositionValue,
+        ()=>alert('위치 정보를 찾을 수 없습니다.(watchpPsition)'),this.geooptions)
       }
     },
-
-    ZoomInToCurrentPosition(){
-      this.current = this.currentPos;
-      if (this.isZoom) {
-        this.$refs.map.mapObject.setView(this.current, this.Zoom);
+    handlemovestart() {
+      if(this.mousedown){
+        //마우스가 눌러져있고,맵이 움직이기 시작했을때, isZoom이 false(현위치 마커 파란색으로 변환)
         this.isZoom = false;
-      } else {
-        this.$refs.map.mapObject.setView(this.currentPos, 16);
+      }
+    },
+    handleMouseDown() {
+      //마우스를 누르고 있으면, 마우스업이 false.
+      this.mousedown = true;
+      this.mouseup = false;
+    },
+    handlemouseup(){
+      //마우스 클릭을 떼면, 마우스 누르는게 false
+      this.mousedown = false;
+      this.mouseup = true;
+
+    },
+    //현재 위치로 줌인 하는 기능.
+    ZoomInToCurrentPosition(){
+      //마우스에서 클릭이 떼졌을때, 작동.
+      if(!this.isZoom && this.mouseup){
+        this.Zoom = 17;
+        this.$refs.map.mapObject.setView(this.currentPos, this.Zoom);
+        //현위치로 이동후 true로 바꿔줌.
         this.isZoom = true;
+      }else{
+        this.isZoom = false;
       }
     },
 
@@ -669,8 +695,8 @@ export default {
       if(this.result1 && this.result2 && this.result3 && this.result4 && this.result5 && this.result6 && this.result7 && this.result8 && this.result9 && this.result10){
         this.allResValue = true;
       }
-      return this.allResValue
-    },
+      return this.allResValue;
+    }
   },
   computed:{
     completedMissionsCount() {
