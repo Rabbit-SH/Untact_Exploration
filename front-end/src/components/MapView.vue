@@ -13,9 +13,8 @@
       @update:zoom="zoomUpdated"
       @update:center="centerUpdated"
       @update:bounds="boundsUpdated"
-      @mousedown="handleMouseDown"
+      @moveend="handlemoveend"
       @movestart="handlemovestart"
-      @mouseup ="handlemouseup"
     >
 
     <div class="logo">
@@ -294,6 +293,8 @@ export default {
       isPositionReady : false,
       mousedown : false,
       mouseup : false,
+      ismoving: false,
+      ismoveend: false,
       positionObj: {
         latitude: 0,
         longitude: 0
@@ -571,31 +572,33 @@ export default {
         ()=>alert('위치 정보를 찾을 수 없습니다.(watchpPsition)'),this.geooptions)
       }
     },
+    //움직일때만 발생
     handlemovestart() {
-      if(this.mousedown){
-        //마우스가 눌러져있고,맵이 움직이기 시작했을때, isZoom이 false(현위치 마커 파란색으로 변환)
+      console.log("맵 움직이는중")
+      this.ismoving = true;
+      if(this.isZoom){
         this.isZoom = false;
       }
     },
-    handleMouseDown() {
-      //마우스를 누르고 있으면, 마우스업이 false.
-      this.mousedown = true;
-      this.mouseup = false;
-    },
-    handlemouseup(){
-      //마우스 클릭을 떼면, 마우스 누르는게 false
-      this.mousedown = false;
-      this.mouseup = true;
-
+    //맵이동이 끝나면 발생.
+    handlemoveend() {
+      this.ismoveend = true;
+      console.log("맵 이동 끝!")
+      if(this.ismoving){
+        this.ismoving = false;
+      }
     },
     //현재 위치로 줌인 하는 기능.
     ZoomInToCurrentPosition(){
       //마우스에서 클릭이 떼졌을때, 작동.
-      if(!this.isZoom && this.mouseup){
+      if(!this.isZoom){
         this.Zoom = 17;
         this.$refs.map.mapObject.setView(this.currentPos, this.Zoom);
-        //현위치로 이동후 true로 바꿔줌.
-        this.isZoom = true;
+        //현위치로 이동이 끝나면, true로 바꿔줌. moveend를 사용.
+        if(this.ismoveend){
+          this.isZoom = true;
+          this.ismoveend = false;
+        }
       }else{
         this.isZoom = false;
       }
