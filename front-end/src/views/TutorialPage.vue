@@ -39,10 +39,10 @@ export default {
   data() {
     return {
       items: [
-        { src: require('@/assets/tutorialView/캐릭터 소개 예시.png')},
+        { src: require('@/assets/tutorialView/캐릭터 소개 예시.jpg')},
         { src: require('@/assets/tutorialView/튜토리얼1.png'),audio: require('@/assets/test1.mp3') },
         { src: require('@/assets/tutorialView/튜토리얼2.jpg')},
-        { src: require('@/assets/tutorialView/튜토리얼3.png')},
+        { src: require('@/assets/tutorialView/튜토리얼3.jpg')},
       ],
       currentAudio: null, // 현재 재생 중인 오디오
       started: false,
