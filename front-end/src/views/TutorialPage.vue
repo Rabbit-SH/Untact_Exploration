@@ -12,10 +12,13 @@
     :color="buttonPressed ? 'blue' : 'defaultColor'"
     fab
     small
-    style="top: 1%; left: 1%;"
+    style="top: 2%; left: 2%;"
     >
-      <v-icon>mdi mdi-volume-high</v-icon>
+    <v-icon>{{ buttonPressed ? 'mdi-volume-high' : 'mdi-volume-off' }}</v-icon> 
     </v-btn>
+    <div v-show="i===1" class="source-credit">
+      " 본 음성은 KT AI 보이스 스튜디오에서 제작되었습니다."
+    </div>
       <v-btn x-small color="teal" dark 
       @click="goToMain" class="skipButton">Skip</v-btn>
       <v-btn x-small color="primary" dark
@@ -26,7 +29,9 @@
     <v-carousel-item v-if="!hasNext" :src="require('@/assets/tutorialView/게임시작 페이지 예시.png')">
       <div class="goToMainPage" @click="goToMain"></div>
     </v-carousel-item>
+
   </v-carousel>
+  
 </template>
 
 <script>
@@ -66,8 +71,16 @@ export default {
       this.$router.push({ name: 'MainView' });
     },
     startsound() {
-    this.playAudio(this.items[1].audio);
-    this.buttonPressed = true;
+      this.buttonPressed = !this.buttonPressed; // 버튼 상태 토글
+      if (this.buttonPressed) {
+        // 버튼이 활성화되면 오디오 재생
+        this.playAudio(this.items[1].audio);
+      } else {
+        // 버튼이 비활성화되면 오디오 정지
+        if (this.currentAudio) {
+          this.currentAudio.pause();
+        }
+      }
     },
     handleSliderChange(index){
       //인덱스가 유효한지 확인
@@ -96,5 +109,14 @@ bottom: 15%;
 left: 10%;
 width: 80%;
 height: 10%;
+}
+.source-credit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 10px; /* 작은 글씨 크기 */
+  color: #666; /* 글씨 색상 */
+  text-align: center;
+  padding: 5px;
 }
 </style>
