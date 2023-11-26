@@ -46,7 +46,7 @@
             <v-card class="text-center" justify="center" align-items="center">
                 <!-- <v-card-text class="pa-5 pt-10"> -->
                     <div class="choosePaint_container pa-3 pb-0">
-                        <p class="mt-8 mb-5" color="gray">원하는 그림 스타일을 선택해주세요!</p>
+                        <p class="mt-8 mb-5 paint-title">원하는 그림 스타일을 선택해주세요!</p>
                         <v-carousel cycle hide-delimiters>
                             <template v-slot:prev="{ on, attrs }">
                                 <v-icon v-bind="attrs" v-on="on" color="gray" size="30">mdi mdi-menu-left</v-icon>
@@ -57,32 +57,33 @@
                             <v-carousel-item justify="center" align="center" style="overflow:scroll">
                                 <h3> 한국화 </h3>
                                 <br>
-                                <p> 한국화는 한국의 전통 그림이에요!</p>
+                                <p> 한국화는 한국의 전통 그림이에요! </p>
                                 <p>붓과 먹을 사용해서 부드러운 선으로 그림을 그려요 ! </p>
+                                <p>치악산의 멋진 자연을 그림으로 바꿔보아요 ~</p>
                                 <br>
                                 <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5">
                                 <br>
                                 <v-btn @click="transformImg"> 한국화로 그리기 </v-btn>
                             </v-carousel-item>
                             <v-carousel-item justify="center" align="center" style="overflow:scroll">
-                                <h3> 서양화 </h3>
+                                <h3> 만화 </h3>
                                 <br>
-                                <p> 서양의 그림 </p>
+                                <p>  </p>
                                 <p>붓과 먹을 사용해서 부드러운 선으로 그림을 그려요 ! </p>
                                 <br>
                                 <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5">
                                 <br>
-                                <v-btn @click="transformImg"> 서양화로 그리기 </v-btn>
+                                <v-btn @click="transformImg"> 만화로 그리기 </v-btn>
                             </v-carousel-item>
                             <v-carousel-item justify="center" align="center" style="overflow:scroll">
-                                <h3> 애니메이션 </h3>
+                                <h3> 캐릭터 </h3>
                                 <br>
                                 <p>  만화  </p>
                                 <p>붓과 먹을 사용해서 부드러운 선으로 그림을 그려요 ! </p>
                                 <br>
                                 <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5">
                                 <br>
-                                <v-btn @click="transformImg"> 만화로 그리기 </v-btn>
+                                <v-btn @click="transformImg"> 캐릭터로 그리기 </v-btn>
                             </v-carousel-item>
                         </v-carousel>
                     </div>
@@ -339,5 +340,9 @@ export default {
     position: absolute;
     top: 3%;
     right: 5%;
+  }
+  .paint-title{
+    color:gray;
+    font-size: 14px;
   }
 </style>
