@@ -8,7 +8,7 @@
             <v-card-text>
 
             <template v-if="isImage(currentContent)">
-                <img :src='currentContent' />
+                <img :src='currentContent' class="tmiImage"/>
             </template>
 
             <template v-else>
@@ -44,9 +44,15 @@
         </div>
         <v-dialog v-model="paintC" justify="center" align-items="center">
             <v-card class="text-center" justify="center" align-items="center">
-                <!-- <v-card-text class="pa-5 pt-10"> -->
                     <div class="choosePaint_container pa-3 pb-0">
-                        <p class="mt-8 mb-5 paint-title">원하는 그림 스타일을 선택해주세요!</p>
+                        <v-row>
+                            <v-col cols="1">
+                                <button align="center" justify="center" @click="paintC = false">X</button>
+                            </v-col>
+                            <v-col cols="11" justify="center" align="center">
+                                <p class=" mt-1 paint-title">원하는 그림 스타일을 선택해주세요!       </p>
+                            </v-col>
+                        </v-row>
                         <v-carousel cycle hide-delimiters>
                             <template v-slot:prev="{ on, attrs }">
                                 <v-icon v-bind="attrs" v-on="on" color="gray" size="30">mdi mdi-menu-left</v-icon>
@@ -87,7 +93,6 @@
                             </v-carousel-item>
                         </v-carousel>
                     </div>
-                <!-- </v-card-text> -->
             </v-card>
         </v-dialog>
 
@@ -140,7 +145,7 @@ export default {
             preimage: null,
             istranslated: false,
             response: null,
-            paintC : false, // 화풍 선택 팝업창 열고 닫기 / false로 바꿔야
+            paintC : true, // 화풍 선택 팝업창 열고 닫기 / false로 바꿔야
             contentIndex: 0,
             // contents: ["구룡사는 아홉마리의 용이 살던 곳이 였다가,\n현재는 '거묵 구'자로 고쳐 써 지금의 구룡사가 되었다고 합니다.",
             // '/따봉꺼비.png',
@@ -156,7 +161,7 @@ export default {
         //3초마다 updateContent 메서드를 호출.
         setInterval(() => {
             this.contentIndex = (this.contentIndex + 1) % this.contents.length;
-        }, 3000);
+        }, 5000);
         this.check_m6();
     },
     computed: {
@@ -344,5 +349,8 @@ export default {
   .paint-title{
     color:gray;
     font-size: 14px;
+  }
+  .tmiImage{
+    width: 85%;
   }
 </style>
