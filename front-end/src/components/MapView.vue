@@ -19,14 +19,9 @@
 
     <div class="logo">
       <img :src="require('@/assets/logo.png')">
-    </div>
-
-    <div class="mission">
-      <img :src="require('@/assets/mission.png')" @click="getDurumari">
       <div class="mission-current">
         {{ completedMissionsCount }}/{{ totalMissions }}
       </div>
-      
     </div>
     <v-btn
       elevation="2"
@@ -152,7 +147,7 @@
         <div class="navi">
           <img 
           :src="require('@/assets/navi1.png')" 
-          style="width: 28%;" 
+          style="width: 28%; margin-left: 5%;" 
           @click="showTutorialPopup"
           class="story"
         >
@@ -169,7 +164,7 @@
           class="safe"
         >
       </div>
-      <div class="ai" style="width: 40%;">
+      <div class="ai">
         <img 
           :src="require('@/assets/navi4.png')" 
           @click="$router.push({name: 'AIView'})" 
@@ -278,6 +273,7 @@ export default {
       result10: false,
 
       allResValue: false,
+      value: null,
 
       isZoomIn: false, //줌인이 된 상태인지 아닌지 확인(팝업창 띄우기 위한 변수)
       isZoom : false, //내 위치 버튼을 위한 줌인 상태 확인 변수
@@ -745,27 +741,31 @@ export default {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
+  display: flex;
   width: 100%;
-  display: flex; /* flex 컨테이너 설정 */
   justify-content: center;
   align-items: center;
   z-index: 1001;
 }
-.navi-bar .navi {
+.navi {
 
   align-items: center;
   justify-content: center;
   flex: 0 0 70%; /* flex-grow: 0, flex-shrink: 0, flex-basis: 70% */
   align-self: flex-end; /* 하단 정렬 */
   margin-bottom: 5%;
+  margin-left: 2%;
 }
 
-.navi-bar .ai {
-  flex: 0 0 30%; /* flex-grow: 0, flex-shrink: 0, flex-basis: 30% */
+.ai {
+  flex: 0 0 30%;
+  margin-bottom: 4%;
+  margin-right: 2%;
+
 }
 
 .navi-bar img {
-  width: 100%; /* 이미지가 부모 컨테이너의 너비에 맞게 조정 */
+  width: 90%; /* 이미지가 부모 컨테이너의 너비에 맞게 조정 */
   margin: 0 5px;
 }
   .logo {
@@ -775,30 +775,17 @@ export default {
     transform: translateX(-50%); /* X축으로 -50% 이동하여 정확한 중앙 정렬 */
     z-index: 1000; /* 다른 요소들 위에 표시 */
     text-align: center; /* 텍스트 중앙 정렬 */
-    width: 70%;
+    width: 100%;
   }
   .logo img{
     width: 100%;
     height: auto;
   }
 
-  .mission {
-    top: 9%;
-    z-index: 1000;
-    width: 30%;
-    height: 30%;
-    position: relative; /* mission 요소 내에서 mission-current의 위치를 결정하기 위해 relative 설정 */
-  }
-
-  .mission img {
-    width: 100%;
-    height: auto;
-  }
-
   .mission-current {
     position: absolute; /* mission 요소 내에서 절대 위치 설정 */
-    top: 20%; 
-    left: 35%;
+    top: 49%; 
+    left: 16%;
     transform: translate(-50%, -50%); /* 정확한 중앙 정렬을 위해 */
     z-index: 1000; /* 이미지 위에 오도록 z-index 설정 */
     font-size: 20px; /* 폰트 크기 */
@@ -807,7 +794,7 @@ export default {
   .my-location-button {
     z-index: 1001;
     position: absolute;
-    top: 25%;
+    top: 10%;
     left: 5%;
     padding: 0px;
     border-radius: 3px;
