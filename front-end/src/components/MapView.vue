@@ -759,13 +759,13 @@ export default {
 
 .ai {
   flex: 0 0 30%;
-  margin-bottom: 4%;
+  margin-bottom: 5%;
   margin-right: 2%;
 
 }
 
 .navi-bar img {
-  width: 90%; /* 이미지가 부모 컨테이너의 너비에 맞게 조정 */
+  width: 75%; /* 이미지가 부모 컨테이너의 너비에 맞게 조정 */
   margin: 0 5px;
 }
   .logo {
