@@ -76,7 +76,6 @@ export default {
           userResult: '', //사용자 응답 저장하는 데이터
           showPopup: false, //팝업 상태
           dialog: false,
-        //   infodialog: false,
       }
     },
     methods: {
