@@ -100,11 +100,13 @@ export default {
 .white-bg{
   width: 90%; height: 90%;
   background-color: white;
-  /* position: relative; */
+  position: absolute;
   border-radius: 8px;
   position: fixed; 
   padding: 20px;
   overflow-y: auto;
+  left: 3.5%;
+  top: 3%;
     }
 .gallery-container {
   display: flex;
