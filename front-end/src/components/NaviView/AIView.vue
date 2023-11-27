@@ -82,7 +82,7 @@
                                     <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5">
                                     <br>
                                 </div>
-                                <v-btn @click="transformImg"> 한국화로 그리기 </v-btn>
+                                <v-btn @click="transformImg(1)"> 한국화로 그리기 </v-btn>
                             </v-carousel-item>
                             <v-carousel-item justify="center" align="center" style="overflow:scroll">
                                 <div class="font-kkomi">
@@ -95,7 +95,7 @@
                                     <img :src="require('@/assets/AIView/cartoon.jpg')" width="80%" class="mb-5">
                                     <br>
                                 </div>
-                                <v-btn @click="transformImg"> 만화로 그리기 </v-btn>
+                                <v-btn @click="transformImg(2)"> 만화로 그리기 </v-btn>
                             </v-carousel-item>
                             <v-carousel-item justify="center" align="center" style="overflow:scroll">
                                 <div class="font-kkomi">
@@ -108,7 +108,7 @@
                                     <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5">
                                     <br>
                                 </div>
-                                <v-btn @click="transformImg"> 캐릭터로 그리기 </v-btn>
+                                <v-btn @click="transformImg(3)"> 캐릭터로 그리기 </v-btn>
                             </v-carousel-item>
                         </v-carousel>
                     </div>
@@ -134,7 +134,7 @@ export default {
             response: null,
             paintC : false, // 화풍 선택 팝업창 열고 닫기 / false로 바꿔야
             contentIndex: 0,
-            contents: ['/030.png', '/031.png', '/032.png', '/따봉꺼비.png'],
+            contents: ['/watertoad/030.png', '/watertoad/031.png', '/watertoad/032.png', '/watertoad/따봉꺼비.png'],
             gallery: false,
 
         }
@@ -201,17 +201,13 @@ export default {
             event.preventDefault();
             event.returnValue = ''; // 대부분의 브라우저에서는 이 메시지가 표시되지 않습니다.
         },
-        async transformImg() {
-            // 이미지 변환 페이지로 이동하는 함수
-            if (!this.preimage) {
-                alert("사진을 선택해주세요!")
-                return;
-            }
+        async transformImg(convertOpt) {
             this.paintC = false;
 
             // 서버로 전송 하는 로직.
             const formData = new FormData();
             formData.append("file", this.preimage);
+            formData.append("convertoption", convertOpt);
 
             this.loading = true;
             this.error = false;
@@ -221,7 +217,7 @@ export default {
             this.paintC = false;
 
             try {
-                this.response = await axios.post('http://localhost:8000/water_toad/aipainter', formData,{responseType: 'blob'});
+                this.response = await axios.post('http://localhost:8000/watertoad/aipainter', formData,{responseType: 'blob'});
                 
                 this.imageUrl = URL.createObjectURL(this.response.data);
                 // console.log("변환된 이미지 URL:", this.imageUrl);

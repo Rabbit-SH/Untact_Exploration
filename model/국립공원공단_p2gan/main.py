@@ -17,6 +17,11 @@ from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 import shutil
 
+#모델 파일 import (수묵화, 애니메이션, 만화)
+
+
+
+
 app = FastAPI()
 #CORS 오류 해결
 app.add_middleware(
@@ -102,34 +107,8 @@ app.mount("/waterfrog/",StaticFiles(directory="C:/Users/herji/OneDrive/문서/Gi
 @app.get("/",response_class=HTMLResponse)
 async def root_root():
     return """
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>KKOMI'S ADVENTURE</title>
-        </head>
-        <body>
-            <nav>
-                <template>
-                    <div>
-                        <img :src="require('@/assets/tutorialView/표지 예시.png')"
-                        @click="$router.push({name:'CourseChoose'})"/>
-                        <div justify="center" align="center" class="text-container">
-                            <p class="text"> 화면을 클릭해주세요 ! </p>
-                        </div>
-                    </div>
-                </template>
-
-                <ul>
-                    <li><a href="/waterfrog/">물두꺼비를 따라가보자!</a></li>
-                </ul>
-            </nav>
-        </body>
-        <script>
         
-        </script>
-        </html>
-    """
-
+        """
 @app.post("/transform/sumuk")
 async def load_image(background_tasks: BackgroundTasks,file: UploadFile=File(...)):
     #업로드된 사진 경로 설정해서 저장.
@@ -168,15 +147,6 @@ async def load_image(background_tasks: BackgroundTasks,file: UploadFile=File(...
 
 
 # @app.post("/transform/cartoon") # 만화 로직
-
-
-
-
-
-
-
-
-
 
 
 
