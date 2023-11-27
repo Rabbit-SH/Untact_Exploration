@@ -181,7 +181,7 @@ export default {
     .content-container{
         width:100%;
         position: absolute;
-        bottom: 7%;
+        bottom: 4%;
     }
     .close{
         width: 22px;
