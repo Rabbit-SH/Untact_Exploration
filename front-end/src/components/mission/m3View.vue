@@ -230,8 +230,6 @@ export default {
     .infodialog{
         position: absolute;
         box-shadow: none;
-        /* width: 30%;
-        height: auto; */
     }
     .closeinfo{
         width: 22px;
