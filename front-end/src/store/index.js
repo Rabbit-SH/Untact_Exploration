@@ -8,6 +8,7 @@ export default new Vuex.Store({
     state: {
         photos: [],
         bg_photo: '',
+        family: '',
     },
     getters: {
         getBGPhoto: state => state.bg_photo,
@@ -21,6 +22,9 @@ export default new Vuex.Store({
         },
         delBGPhoto: (state) => {
             state.bg_photo = null;
+        },
+        setFamily: (state, photoUrl) => {
+            state.family = photoUrl;
         }
 
     },

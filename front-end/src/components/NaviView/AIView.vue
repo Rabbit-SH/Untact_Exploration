@@ -3,7 +3,11 @@
         <button @click="closeAI" class="close ma-2 pa-2">
             <img src="@/assets/mission/close.png">
         </button>
-        <h1 class="pt-8 mb-0">AI 화가</h1>
+        <!-- <h1 class="pt-8 mb-0">AI 화가</h1> -->
+        <div class="ai-info mt-0" justify="center" align="center">
+            <img src="@/assets/AIView/ai_info3.png" width="100%">
+        </div>
+        
         <v-overlay :value="loading">
             <v-card-text>
 
@@ -25,28 +29,28 @@
             ></v-progress-linear>
             </v-card-text>
         </v-overlay>
-        <div class="uploadIMG mt-8" justify="center" align-content="center">
+        <div class="uploadIMG mt-3" justify="center" align-content="center">
             <img v-if="imageUrl" :src="imageUrl" alt="preview Image" class="preview_img">
         </div>
   
-        <div v-if="!imageUrl && !istranslated" class="button_container my-16 mt-10">
+        <div v-if="!imageUrl && !istranslated" class="button_container my-16 mt-5">
             <input type = "file" @change="uploadImg" class='input' ref="fileInput" style="display: none;" />
             <v-btn class="chooseIMG py-6 text-h5 white--text" color="#EF8200" @click="triggeruploadImg"> 사진 선택 </v-btn>
         </div> 
-        <div v-if="imageUrl && !istranslated" class="button_container2 my-16 mt-10 d-flex">
+        <div v-if="imageUrl && !istranslated" class="button_container2 my-16 mt-5 d-flex">
             <input type = "file" @change="uploadImg" class='input' ref="fileInput" style="display: none;" />
             <v-btn class="againChooseImg py-6 white--text" color="#EF8200" @click="triggeruploadImg"><v-icon size="30">mdi mdi-camera-outline</v-icon></v-btn>
             <v-btn class="translateImg py-6 text-h6 white--text" color="#EF8200" @click="paintC = true">화풍 고르기</v-btn>
         </div>
-        <div v-if="istranslated" class="button_container my-16">
+        <div v-if="istranslated" class="button_container my-16 mt-5">
             <v-btn class="chooseIMG py-6 text-h5 white--text" color="#EF8200" @click="downloadImage"> 저장하기 </v-btn>
         </div> 
-        <div class="galley_container d-flex ma-3">
+        <div class="galley_container d-flex ma-2 mr-0 mb-3 pr-0">
             <v-row justify="center" align-content="center">
                 <v-col cols="12" class="mb-0 pb-0">
-                    <v-icon color="white" size="30" @click="openGallery">mdi mdi-image-album</v-icon>
+                    <v-icon color="white" size="25" @click="openGallery">mdi mdi-image-album</v-icon>
                 </v-col>
-                <v-col cols="12" class="white--text mt-0 pt-0">
+                <v-col cols="12" class="white--text ma-0 mb-2 pa-1 pt-0" style="font-size: 16px;">
                     갤러리
                 </v-col>
             </v-row>
@@ -97,7 +101,7 @@
                                 <br>
                                 <p>  얼굴 사진을 찍어서 그림을 그려봐요 !  </p>
                                 <p> AI 화가가 얼굴을 캐릭터처럼 그려줄거에요 ! </p>
-                                <p class="chracter-text"> 가까이 찍을수록 멋지게 그려줄거에요!</p>
+                                <p class="chracter-text"> 가까이 찍을수록 멋있게 그릴 수 있어요 </p>
                                 <br>
                                 <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5">
                                 <br>
@@ -109,37 +113,6 @@
         </v-dialog>
 
         <GalleryView :show="gallery" @close="closeGallery" />
-  
-
-        <!-- <v-dialog v-model="dialog" max-width="500">
-            <v-card class="text-center dialog_Card">
-                <v-card-text class="pa-5 pt-10">
-                    <div class="text_container">
-                        <strong>한국화</strong>는 한국의 전통 그림이에요!<br>
-                        붓과 먹을 사용해서<br>부드러운 선으로 그린답니다~<br><br>
-                        여기에 찍은 사진을 올려주면 <br>AI 화가가 사진을 한국화로 그려줄거에요!!
-                    </div>
-                    <br>
-                    <br>
-                    <br>
-                    <div class="example_container d-flex justify-center align-center">
-                    <img :src="require('@/assets/AIView/origin.jpg')">
-                    <v-icon>mdi mdi-arrow-right-thick</v-icon>
-                    <img :src="require('@/assets/AIView/koreaPaint.png')">
-                    </div>
-                </v-card-text>
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                color="orange"
-                text
-                @click="dialog = false"
-                >
-                확인
-                </v-btn>
-            </v-card-actions>
-            </v-card>
-        </v-dialog> -->
     </div>
 </template>
   
@@ -151,7 +124,6 @@ export default {
     components:{GalleryView},
     data(){
         return{
-            // dialog: false, //true로 바꿔야 함
             loading: false,
             imageUrl: null,
             preimage: null,
@@ -294,28 +266,20 @@ export default {
     width: 100%;
     height: 100%;
     background-size: cover;
+    /* background-color: ; */
 }
 .uploadIMG{
     width: 70%;
     height: 45%;
-    background-color: aliceblue;
+    /* background-color: aliceblue; */
+    /* background-color: white; */
+    background-color: rgba(255, 255, 255, 0.8);
     justify-content: center;
     align-items: center;
     display: flex;
-}
-.dialog_Card{
-    background-image: url('~');
-}
-.dialog_Card img{
-    width: 45%;
-    height: auto;
-    border-radius: 15px;
-}
-.example_container{
-    display: flex;
-}
-.choosePaint_container{
-    /* width: 80%; */
+    /* border-style: solid;
+    border-width: 10px;
+    border-color: rgba(0, 0, 0, 0.9); */
 }
 .text_container{
     background-image:url('~@/assets/AIView/bg.png');
@@ -337,9 +301,9 @@ export default {
 }
 
 .preview_img{
-    max-height: 90%;
-    max-width: 90%;
-    border-radius: 10px;
+    max-height: 95%;
+    max-width: 95%;
+    /* border-radius: 10px; */
 }
 .galley_container{
     position:absolute;
@@ -364,8 +328,6 @@ export default {
   .againChooseImg{
     width: 33%;
     height: 100%;
-    /* font-size: large !important;
-    font-family: "Roboto", sans-serif; */
 }
 .translateImg{
     width: 63%;
@@ -374,5 +336,8 @@ export default {
 .chracter-text{
     font-size: 15px;
     color: gray;
+}
+.ai-info{
+    width: 80%;
 }
 </style>
