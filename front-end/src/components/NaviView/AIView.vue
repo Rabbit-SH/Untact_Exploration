@@ -71,7 +71,7 @@
                             <template v-slot:next="{ on, attrs }">
                                 <v-icon v-bind="attrs" v-on="on" color="gray" size="30">mdi mdi-menu-right</v-icon>
                             </template>
-                            <v-carousel-item justify="center" align="center" style="overflow:scroll">
+                            <v-carousel-item justify="center" align="center">
                                 <div class="font-kkomi">
                                     <h3> 한국화 </h3>
                                     <br>
@@ -84,7 +84,7 @@
                                 </div>
                                 <v-btn @click="transformImg(1)"> 한국화로 그리기 </v-btn>
                             </v-carousel-item>
-                            <v-carousel-item justify="center" align="center" style="overflow:scroll">
+                            <v-carousel-item justify="center" align="center">
                                 <div class="font-kkomi">
                                     <h3> 만화 </h3>
                                     <br>
@@ -97,7 +97,7 @@
                                 </div>
                                 <v-btn @click="transformImg(2)"> 만화로 그리기 </v-btn>
                             </v-carousel-item>
-                            <v-carousel-item justify="center" align="center" style="overflow:scroll">
+                            <v-carousel-item justify="center" align="center">
                                 <div class="font-kkomi">
                                     <h3> 캐리커쳐 </h3>
                                     <br>
@@ -335,5 +335,10 @@ export default {
 }
 .font-kkomi{
     font-family: 'knps_kkomiregular' !important;
+}
+.v-responsive__content {
+    flex: 100px;
+    max-width: 100%;
+    overflow: scroll;
 }
 </style>
