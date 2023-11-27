@@ -654,6 +654,10 @@ export default {
     },
     InfoChiak(){
       this.showInfoChiak = true;
+      if (this.$refs.map && this.$refs.map.mapObject) {
+          this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
+          this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
+        }
     },
     
     closed(){
