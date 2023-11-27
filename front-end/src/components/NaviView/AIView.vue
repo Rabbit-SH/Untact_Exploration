@@ -3,30 +3,27 @@
         <button @click="closeAI" class="close ma-2 pa-2">
             <img src="@/assets/mission/close.png">
         </button>
-        <!-- <h1 class="pt-8 mb-0">AI 화가</h1> -->
         <div class="ai-info mt-0" justify="center" align="center">
             <img src="@/assets/AIView/ai_info3.png" width="100%">
         </div>
-        
         <v-overlay :value="loading">
             <v-card-text>
+                <template v-if="isImage(currentContent)">
+                    <img :src='currentContent' class="tmiImage"/>
+                </template>
 
-            <template v-if="isImage(currentContent)">
-                <img :src='currentContent' class="tmiImage"/>
-            </template>
-
-            <template v-else>
-                그거 알고 계셨나요?
+                <template v-else>
+                    그거 알고 계셨나요?
+                    <br>
+                    {{ currentContent }}
+                </template>
                 <br>
-                {{ currentContent }}
-            </template>
-            <br>
-            수묵화 변환중...
-            <v-progress-linear
-                indeterminate
-                color="white"
-                class="mb-0"
-            ></v-progress-linear>
+                수묵화 변환중...
+                <v-progress-linear
+                    indeterminate
+                    color="white"
+                    class="mb-0"
+                ></v-progress-linear>
             </v-card-text>
         </v-overlay>
         <div class="uploadIMG mt-3" justify="center" align-content="center">
@@ -45,12 +42,12 @@
         <div v-if="istranslated" class="button_container my-16 mt-5">
             <v-btn class="chooseIMG py-6 text-h5 white--text" color="#EF8200" @click="downloadImage"> 저장하기 </v-btn>
         </div> 
-        <div class="galley_container d-flex ma-2 mr-0 mb-3 pr-0">
-            <v-row justify="center" align-content="center">
+        <div class="galley_container d-flex">
+            <v-row justify="center" align-content="center" class="pa-0 ma-0">
                 <v-col cols="12" class="mb-0 pb-0">
                     <v-icon color="white" size="25" @click="openGallery">mdi mdi-image-album</v-icon>
                 </v-col>
-                <v-col cols="12" class="white--text ma-0 mb-2 pa-1 pt-0" style="font-size: 16px;">
+                <v-col cols="12" class="white--text mt-0 pt-0 font-kkomi" style="font-size: 16px;">
                     갤러리
                 </v-col>
             </v-row>
@@ -64,7 +61,7 @@
                                 <button align="center" justify="center" @click="paintC = false">X</button>
                             </v-col>
                             <v-col cols="11" justify="center" align="center">
-                                <p class=" mt-1 paint-title">원하는 그림 스타일을 선택해주세요!       </p>
+                                <p class=" mt-1 paint-title font-kkomi">원하는 그림 스타일을 선택해주세요!       </p>
                             </v-col>
                         </v-row>
                         <v-carousel cycle hide-delimiters>
@@ -75,36 +72,42 @@
                                 <v-icon v-bind="attrs" v-on="on" color="gray" size="30">mdi mdi-menu-right</v-icon>
                             </template>
                             <v-carousel-item justify="center" align="center" style="overflow:scroll">
-                                <h3> 한국화 </h3>
-                                <br>
-                                <p> 한국화는 한국의 전통 그림이에요! </p>
-                                <p>붓과 먹을 사용해서 부드러운 선으로 그림을 그려요 ! </p>
-                                <p>치악산의 멋진 자연을 그림으로 바꿔보아요 ~</p>
-                                <br>
-                                <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5">
-                                <br>
+                                <div class="font-kkomi">
+                                    <h3> 한국화 </h3>
+                                    <br>
+                                    <p> 한국화는 한국의 전통 그림이에요! </p>
+                                    <p>붓과 먹을 사용해서 부드러운 선으로 그림을 그려요 ! </p>
+                                    <p>치악산의 멋진 자연을 그림으로 바꿔보아요 ~</p>
+                                    <br>
+                                    <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5">
+                                    <br>
+                                </div>
                                 <v-btn @click="transformImg"> 한국화로 그리기 </v-btn>
                             </v-carousel-item>
                             <v-carousel-item justify="center" align="center" style="overflow:scroll">
-                                <h3> 만화 </h3>
-                                <br>
-                                <p> 치악산의 배경과 함께 </p>
-                                <p> 자유롭게 찍어서 그림을 그려봐요 !  </p>
-                                <p> 찍은 사진을 만화처럼 그려줄거에요 !! </p>
-                                <br>
-                                <img :src="require('@/assets/AIView/cartoon.jpg')" width="80%" class="mb-5">
-                                <br>
+                                <div class="font-kkomi">
+                                    <h3> 만화 </h3>
+                                    <br>
+                                    <p> 치악산의 배경과 함께 </p>
+                                    <p> 자유롭게 찍어서 그림을 그려봐요 !  </p>
+                                    <p> 찍은 사진을 만화처럼 그려줄거에요 !! </p>
+                                    <br>
+                                    <img :src="require('@/assets/AIView/cartoon.jpg')" width="80%" class="mb-5">
+                                    <br>
+                                </div>
                                 <v-btn @click="transformImg"> 만화로 그리기 </v-btn>
                             </v-carousel-item>
                             <v-carousel-item justify="center" align="center" style="overflow:scroll">
-                                <h3> 캐릭터 </h3>
-                                <br>
-                                <p>  얼굴 사진을 찍어서 그림을 그려봐요 !  </p>
-                                <p> AI 화가가 얼굴을 캐릭터처럼 그려줄거에요 ! </p>
-                                <p class="chracter-text"> 가까이 찍을수록 멋있게 그릴 수 있어요 </p>
-                                <br>
-                                <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5">
-                                <br>
+                                <div class="font-kkomi">
+                                    <h3> 캐리커쳐 </h3>
+                                    <br>
+                                    <p>  얼굴 사진을 찍어서 그림을 그려봐요 !  </p>
+                                    <p> AI 화가가 얼굴을 캐릭터처럼 그려줄거에요 ! </p>
+                                    <p class="chracter-text"> 가까이 찍을수록 멋있게 그릴 수 있어요 </p>
+                                    <br>
+                                    <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5">
+                                    <br>
+                                </div>
                                 <v-btn @click="transformImg"> 캐릭터로 그리기 </v-btn>
                             </v-carousel-item>
                         </v-carousel>
@@ -260,14 +263,13 @@ export default {
     background-image: url('~@/assets/background.png');
     width: 100%;
     height: 100%;
+    /* object-fit: cover; */
+    background-position: center;
     background-size: cover;
-    /* background-color: ; */
 }
 .uploadIMG{
     width: 70%;
-    height: 45%;
-    /* background-color: aliceblue; */
-    /* background-color: white; */
+    height: 40%;
     background-color: rgba(255, 255, 255, 0.8);
     justify-content: center;
     align-items: center;
@@ -334,5 +336,8 @@ export default {
 }
 .ai-info{
     width: 80%;
+}
+.font-kkomi{
+    font-family: 'knps_kkomiregular' !important;
 }
 </style>
