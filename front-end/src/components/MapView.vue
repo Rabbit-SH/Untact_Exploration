@@ -361,7 +361,7 @@ export default {
       }),
       customIcon: new Icon({  // 정답 시 바뀔 아이콘
         iconUrl: require('@/assets/marker.png'),
-        iconSize: [60, 60],
+        iconSize: [45, 45],
         iconAnchor: [16,32]
       }),
       duduIcon: new Icon({  // 정답 시 바뀔 아이콘
@@ -690,10 +690,12 @@ export default {
     animation: bounce 1s infinite;
     z-index: 1001;
     position: absolute;
+    left: 25%;
+    top: 35%;
   }
   .animated-marker img{
-    width: 100%;
-    height: 100%;
+    width: 70%;
+    height: 80%;
   }
   .map {
     position: absolute;
@@ -720,13 +722,6 @@ export default {
     60% {
       transform: translateY(-15px);
     }
-  }
-  .animated-marker {
-    animation: bounce 1s infinite;
-    z-index: 1001;
-    position: absolute;
-    bottom: 35%; 
-    right: 25%;
   }
   .navi-bar {
   position: fixed;
