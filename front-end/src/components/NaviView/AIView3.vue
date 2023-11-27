@@ -25,22 +25,32 @@
             ></v-progress-linear>
             </v-card-text>
         </v-overlay>
-        <div class="uploadIMG mt-10" justify="center" align="center">
-            <img v-if="imageUrl" :src="imageUrl" alt="preview Image" class="preview_img mt-7">
+        <div class="uploadIMG mt-8" justify="center" align-content="center">
+            <img v-if="imageUrl" :src="imageUrl" alt="preview Image" class="preview_img">
         </div>
   
-        <div v-if="!imageUrl" class="button_container my-16">
+        <div v-if="!imageUrl && !istranslated" class="button_container my-16 mt-10">
             <input type = "file" @change="uploadImg" class='input' ref="fileInput" style="display: none;" />
             <v-btn class="chooseIMG py-6 text-h5 white--text" color="#EF8200" @click="triggeruploadImg"> 사진 선택 </v-btn>
         </div> 
-        <div v-if="imageUrl" class="button_container2 my-16 d-flex">
+        <div v-if="imageUrl && !istranslated" class="button_container2 my-16 mt-10 d-flex">
             <input type = "file" @change="uploadImg" class='input' ref="fileInput" style="display: none;" />
-            <v-btn class="againChooseImg py-6 text-h6 white--text" color="#EF8200" @click="triggeruploadImg">다시 선택</v-btn>
+            <v-btn class="againChooseImg py-6 white--text" color="#EF8200" @click="triggeruploadImg"><v-icon size="30">mdi mdi-camera-outline</v-icon></v-btn>
             <v-btn class="translateImg py-6 text-h6 white--text" color="#EF8200" @click="paintC = true">화풍 고르기</v-btn>
         </div>
-        <div class="galley_container d-flex my-10 mr-13">
-            <v-icon color="white" class="mr-3" size="25" @click="downloadImage">mdi mdi-download</v-icon>
-            <v-icon color="white" size="25" @click="openGallery">mdi mdi-image-album</v-icon>
+        <div v-if="istranslated" class="button_container my-16">
+            <v-btn class="chooseIMG py-6 text-h5 white--text" color="#EF8200" @click="downloadImage"> 저장하기 </v-btn>
+        </div> 
+        <div class="galley_container d-flex ma-3">
+            <v-row justify="center" align-content="center">
+                <v-col cols="12" class="mb-0 pb-0">
+                    <v-icon color="white" size="30" @click="openGallery">mdi mdi-image-album</v-icon>
+                </v-col>
+                <v-col cols="12" class="white--text mt-0 pt-0">
+                    갤러리
+                </v-col>
+            </v-row>
+            
         </div>
         <v-dialog v-model="paintC" justify="center" align-items="center">
             <v-card class="text-center" justify="center" align-items="center">
@@ -99,7 +109,7 @@
         <GalleryView :show="gallery" @close="closeGallery" />
   
 
-        <v-dialog v-model="dialog" max-width="500">
+        <!-- <v-dialog v-model="dialog" max-width="500">
             <v-card class="text-center dialog_Card">
                 <v-card-text class="pa-5 pt-10">
                     <div class="text_container">
@@ -127,7 +137,7 @@
                 </v-btn>
             </v-card-actions>
             </v-card>
-        </v-dialog>
+        </v-dialog> -->
     </div>
 </template>
   
@@ -139,13 +149,13 @@ export default {
     components:{GalleryView},
     data(){
         return{
-            dialog: false, //true로 바꿔야 함
+            // dialog: false, //true로 바꿔야 함
             loading: false,
             imageUrl: null,
             preimage: null,
-            istranslated: false,
+            istranslated: false, // false로 바꿔야 함
             response: null,
-            paintC : true, // 화풍 선택 팝업창 열고 닫기 / false로 바꿔야
+            paintC : false, // 화풍 선택 팝업창 열고 닫기 / false로 바꿔야
             contentIndex: 0,
             // contents: ["구룡사는 아홉마리의 용이 살던 곳이 였다가,\n현재는 '거묵 구'자로 고쳐 써 지금의 구룡사가 되었다고 합니다.",
             // '/따봉꺼비.png',
@@ -158,7 +168,7 @@ export default {
         }
     },
     mounted() {
-        //3초마다 updateContent 메서드를 호출.
+        //5초마다 updateContent 메서드를 호출.
         setInterval(() => {
             this.contentIndex = (this.contentIndex + 1) % this.contents.length;
         }, 5000);
@@ -188,6 +198,9 @@ export default {
             } else {
                 alert('사진을 업로드 후 이용해주세요.')
             }
+
+            this.imageUrl = '';
+            this.istranslated = false;
             
         },
         async uploadImg(event) {
@@ -285,7 +298,7 @@ export default {
     height: 45%;
     background-color: aliceblue;
     justify-content: center;
-    align-content: center;
+    align-items: center;
     display: flex;
 }
 .dialog_Card{
@@ -320,14 +333,7 @@ export default {
     width: 100%;
     height: 100%;
 }
-.againChooseImg{
-    width: 35%;
-    height: 100%;
-}
-.translateImg{
-    width: 60%;
-    height: 100%;
-}
+
 .preview_img{
     max-height: 90%;
     max-width: 90%;
@@ -353,4 +359,14 @@ export default {
   .tmiImage{
     width: 85%;
   }
+  .againChooseImg{
+    width: 33%;
+    height: 100%;
+    /* font-size: large !important;
+    font-family: "Roboto", sans-serif; */
+}
+.translateImg{
+    width: 63%;
+    height: 100%;
+}
 </style>
