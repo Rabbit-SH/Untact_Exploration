@@ -57,15 +57,6 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-
-        <!-- <v-dialog v-model="infodialog" class="infodialog">
-            <v-card-text class="title">
-                <h3>탄소중립</h3>
-                <img @click="infodialog = false" src="@/assets/mission/close.png" class="closeinfo">
-            </v-card-text>
-                <img src="@/assets/info8.jpeg" class="pic">
-        </v-dialog> -->
-
     </div>
 </template>
 
