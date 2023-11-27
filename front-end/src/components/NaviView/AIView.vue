@@ -274,13 +274,6 @@ export default {
     border-width: 10px;
     border-color: rgba(0, 0, 0, 0.9); */
 }
-.text_container{
-    background-image:url('~@/assets/AIView/bg.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-
-}
 .button_container{
     width: 70%;
 }
@@ -292,7 +285,6 @@ export default {
     width: 100%;
     height: 100%;
 }
-
 .preview_img{
     max-height: 95%;
     max-width: 95%;
@@ -321,18 +313,18 @@ export default {
   .againChooseImg{
     width: 33%;
     height: 100%;
-}
-.translateImg{
-    width: 63%;
-    height: 100%;
-}
-.chracter-text{
-    font-size: 15px;
-    color: gray;
-}
-.ai-info{
-    width: 80%;
-}
+    }
+    .translateImg{
+        width: 63%;
+        height: 100%;
+    }
+    .chracter-text{
+        font-size: 15px;
+        color: gray;
+    }
+    .ai-info{
+        width: 80%;
+    }
 .font-kkomi{
     font-family: 'knps_kkomiregular' !important;
 }
