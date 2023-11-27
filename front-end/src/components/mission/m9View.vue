@@ -83,9 +83,6 @@ export default {
         closeP(){
             this.$emit('close');
         },
-        // openinfo(){
-        //     this.infodialog = true;
-        // },
         submitResponse(){
           console.log(this.userResponse); //콘솔에 출력, 서버에 제출하거나 다른 제출을 추가해도됨
           this.userResponse = ''; //답변이 제출되면 리셋하기
@@ -153,13 +150,11 @@ export default {
     .white-bg{
     width: 90%; height: 90%;
     position: fixed; 
-    /* background-color: white; */
     overflow:hidden;
     display:flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     }
     .background{
         width: 100%;
@@ -179,7 +174,6 @@ export default {
         position:absolute;
         top: 3%;
         right: 5%;
-    
     }
     .textarea{
         justify-content: center;
@@ -197,45 +191,7 @@ export default {
         font-weight: bold; 
         font-size: 18px;
     }
-    .info{
-        position:absolute;
-        top: 3%;
-        left: 5%;
-        width: 22px;
-        height: 22px;
-        cursor: pointer;
-        justify-content: center;
-        align-items: center;
-    }
-    .infodialog{
-        position: absolute;
-        box-shadow: none;
-        /* width: 30%;
-        height: auto; */
-    }
-    .closeinfo{
-        width: 22px;
-        height: 22px;
-        cursor: pointer;
-        justify-content: center;
-        align-items: center;
-        position:absolute;
-        top: 30%;
-        right: 5%;
-    }
-    .pic{
-        width: 100%;
-        height: auto;
-    }
-    .title{
-        background-color: white;
-        position: relative;
-    }
-    .v-application .info {
-        background-color: transparent !important;
-        border-color: transparent !important;
-    }
-        ::v-deep .v-dialog { /* 지우면 안됨 */
+    ::v-deep .v-dialog { /* 지우면 안됨 */
         box-shadow: none !important;
     }
 </style>
