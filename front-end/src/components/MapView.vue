@@ -233,8 +233,9 @@ export default {
       url: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
       attribution: '&copy; <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> '
                     + '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
-      center: [37.4148974953341, 128.050171136856],
-      zoom: 16, // 초기 확대 레벨
+      // center: [37.4148974953341, 128.050171136856],
+      center: [37.4098407388340, 128.048754930496],
+      zoom: 15, // 초기 확대 레벨
       previousZoom : null, //현재의 확대 레벨
       bounds: null, //지도 경계가 변경될 때 발생하는 이벤트(드래그되거나 확대/축소 시 발생)
       maxBounds:[
