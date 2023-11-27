@@ -12,8 +12,4 @@ new Vue({
     store,
     vuetify,
     render: h => h(App),
-    mounted() {
-        // 애플리케이션이 마운트될 때 라우터를 사용하여 리디렉션합니다.
-        this.$router.push('/waterfrog/tutorial');
-    },
 }).$mount('#app');

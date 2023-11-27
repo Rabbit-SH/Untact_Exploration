@@ -11,7 +11,7 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         { path: '/waterfrog/map', component: MainView, name: 'MainView' },
-        { path: '/waterfrog/tutorial', component: TutorialPage, name: 'TutorialPage' },
+        { path: '/waterfrog/', component: TutorialPage, name: 'TutorialPage' },
         { path: '/waterfrog/ai', component: AIView, name: 'AIView' },
         { path: '/waterfrog/final', component: FinalView, name: 'FinalView' },
     ]
