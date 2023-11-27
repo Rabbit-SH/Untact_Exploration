@@ -23,9 +23,6 @@
                 <div class="img-container text-center">
                     <img src="" id="photoimg">
                 </div>
-                <!-- <div class="button-container">
-                    <v-btn class="custom-submit-button mt-3 pl-10 pr-10" color="#EF8200" @click="submitResponse">제출하기</v-btn>
-                </div> -->
             </div>
         </div>
         <v-dialog v-model="dialog" max-width="500">
@@ -84,8 +81,8 @@ export default {
     data(){
       return {
         userResult: '', //사용자 응답 저장하는 데이터
-        dialog: false,
-        infodialog: false,
+        dialog: false,  //이미지 업로드 후 팝업창 여는 데이터
+        infodialog: false, 
 
         userResponse:'',
         uploadedPhoto: null, // 업로드된 사진 데이터를 위한 변수
@@ -110,7 +107,7 @@ export default {
             fileReader.onload = () => {
                 const photoDataUrl = fileReader.result;
                 this.uploadedPhoto = photoDataUrl;
-
+                // 갤러리를 위한 코드 (vuex에 정의된 리스트photos에 photoDataUrl 추가)
                 this.$store.commit('addPhoto', photoDataUrl);
             }
             this.dialog = true; //팝업창 열기
@@ -131,7 +128,6 @@ export default {
             }
             this.userResult = '';
             this.$store.commit('setBGPhoto', this.uploadedPhoto);
-            // this.closeP();
         },
 
         downloadImage(uploadedPhoto) {
@@ -171,7 +167,7 @@ export default {
         align-items: center;
         justify-content: center;
     }
-.black-bg{
+    .black-bg{
         width: 100%; height: 100%;
         background: rgba(0, 0, 0, 0.5);
         position: fixed; 
@@ -186,7 +182,6 @@ export default {
       .white-bg{
         width: 90%; height: 90%;
         position: fixed; 
-        /* background-color: white; */
         overflow:hidden;
         display:flex;
         flex-direction: column;
@@ -228,9 +223,7 @@ export default {
     }
     #photofile{
         display:None;
-        /* background: yellow; */
-        /* height: 50%; */
-        /* width: auto; */
+
     }
     #dialogPhoto {
         width: 80%; /* 이미지 크기 조절 */
