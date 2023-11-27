@@ -251,7 +251,7 @@ export default {
             this.paintC = false;
 
             try {
-                this.response = await axios.post('https://0e93-1-244-138-205.ngrok-free.app/upload', formData,{responseType: 'blob'});
+                this.response = await axios.post('http://localhost:8000/water_toad/aipainter', formData,{responseType: 'blob'});
                 
                 this.imageUrl = URL.createObjectURL(this.response.data);
                 // console.log("변환된 이미지 URL:", this.imageUrl);
