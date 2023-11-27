@@ -4,7 +4,7 @@
         <v-carousel hide-delimiters height="auto" class="tutorial-image" :cycle="false" :continuous="false">
           <v-carousel-item v-for="(item, i) in items" :key="i" class="tutorial-img-ca">
             <button @click="goToMain" class="skipButton">
-              <img src="@/assets/skip.png">
+              <img src="@/assets/tutorialView/skip.png">
             </button>
             <img :src="item.src" alt="tutorial image" width="100%" height="100%">
           </v-carousel-item>

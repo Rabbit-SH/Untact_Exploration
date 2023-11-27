@@ -51,7 +51,7 @@
                 <h3>돌탑</h3>
                 <img @click="infodialog = false" src="@/assets/mission/close.png" class="closeinfo">
             </v-card-text>
-                <img src="@/assets/missionInfo/info7.jpeg" class="pic">
+                <img src="@/assets/mission/missionInfo/info7.jpeg" class="pic">
         </v-dialog>
 
     </div>

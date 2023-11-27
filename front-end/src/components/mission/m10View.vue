@@ -56,7 +56,7 @@
                 <h3>금강솔빛생태학습원</h3>
                 <img @click="infodialog = false" src="@/assets/mission/close.png" class="closeinfo">
             </v-card-text>
-                <img src="@/assets/missionInfo/info8.jpeg" class="pic">
+                <img src="@/assets/mission/missionInfo/info8.jpeg" class="pic">
         </v-dialog>
 
     </div>

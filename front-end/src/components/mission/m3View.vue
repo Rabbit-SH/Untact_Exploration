@@ -77,7 +77,7 @@
                 <h3>치악산 깃대종 물두꺼비</h3>
                 <img @click="infodialog = false" src="@/assets/mission/close.png" class="closeinfo">
             </v-card-text>
-                <img src="@/assets/missionInfo/info4.jpeg" class="pic">
+                <img src="@/assets/mission/missionInfo/info4.jpeg" class="pic">
         </v-dialog>
 
     </div>

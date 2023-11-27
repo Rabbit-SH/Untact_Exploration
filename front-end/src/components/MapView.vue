@@ -13,12 +13,12 @@
       @update:zoom="zoomUpdated"
       @update:center="centerUpdated"
       @update:bounds="boundsUpdated"
-      @moveend="handlemoveend"
+      @moveend="handlemoveend" 
       @movestart="handlemovestart"
     >
 
     <div class="logo">
-      <img :src="require('@/assets/logo.png')">
+      <img :src="require('@/assets/Icons/logo.png')">
       <div class="mission-current">
         {{ completedMissionsCount }}/{{ totalMissions }}
       </div>
@@ -124,19 +124,19 @@
       <div class="navi-bar">
         <div class="navi">
           <img 
-          :src="require('@/assets/navi1.png')" 
+          :src="require('@/assets/Icons/navi1.png')" 
           style="width: 28%; margin-left: 5%;" 
           @click="showTutorialPopup"
           class="story"
         >
         <img 
-          :src="require('@/assets/navi2.png')" 
+          :src="require('@/assets/Icons/navi2.png')" 
           style="width: 28%;" 
           @click="InfoChiak" 
           class="story"
         >
         <img 
-          :src="require('@/assets/navi3.png')" 
+          :src="require('@/assets/Icons/navi3.png')" 
           style="width: 28%;" 
           @click="getSafe" 
           class="safe"
@@ -144,7 +144,7 @@
       </div>
       <div class="ai">
         <img 
-          :src="require('@/assets/navi4.png')" 
+          :src="require('@/assets/Icons/navi4.png')" 
           @click="$router.push({name: 'AIView'})" 
           class="uploadImg"
         >
@@ -335,17 +335,17 @@ export default {
         iconAnchor: [16,32]
       }),
       defaultIcon: new Icon({  // 지도의 마커 사용자 지정 아이콘(기본 디폴트 아이콘)
-        iconUrl: require('@/assets/qa.png'),
+        iconUrl: require('@/assets/Icons/qa.png'),
         iconSize: [50, 65],
         iconAnchor: [16,32]
       }),
       customIcon: new Icon({  // 정답 시 바뀔 아이콘
-        iconUrl: require('@/assets/marker.png'),
+        iconUrl: require('@/assets/Icons/marker.png'),
         iconSize: [45, 45],
         iconAnchor: [16,32]
       }),
       duduIcon: new Icon({  // 정답 시 바뀔 아이콘
-        iconUrl: require('@/assets/맛보기_꺼비.png'),
+        iconUrl: require('@/assets/Icons/맛보기_꺼비.png'),
         iconSize: [70, 60],
         iconAnchor: [16,32]
       }),
