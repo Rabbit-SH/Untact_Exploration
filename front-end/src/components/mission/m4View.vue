@@ -35,7 +35,8 @@
                     </div>
                     <br>
                     <div class="text-center">
-                        <p>이미지 다운로드를 원하면 아래의 <strong>다운로드</strong> 버튼을 눌러주세요.</p>
+                        <p>이미지 다운로드를 원하면</p>
+                        <p>아래의 <strong>다운로드</strong> 버튼을 눌러주세요.</p>
                     </div>
                     <div class="button-container">
                         <div class="btn">

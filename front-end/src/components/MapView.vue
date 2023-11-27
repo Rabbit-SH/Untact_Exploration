@@ -664,7 +664,7 @@ export default {
         this.allResValue = true;
       }
       return this.allResValue;
-    }
+    },
   },
   computed:{
     completedMissionsCount() {

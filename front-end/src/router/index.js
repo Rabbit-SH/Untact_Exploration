@@ -10,10 +10,10 @@ Vue.use(VueRouter)
 const router = new VueRouter({
     mode: 'history',
     routes: [
-        { path: '/waterfrog/map', component: MainView, name: 'MainView' },
-        { path: '/waterfrog/', component: TutorialPage, name: 'TutorialPage' },
-        { path: '/waterfrog/ai', component: AIView, name: 'AIView' },
-        { path: '/waterfrog/final', component: FinalView, name: 'FinalView' },
+        { path: '/watertoad/map', component: MainView, name: 'MainView' },
+        { path: '/watertoad/', component: TutorialPage, name: 'TutorialPage' },
+        { path: '/watertoad/ai', component: AIView, name: 'AIView' },
+        { path: '/watertoad/final', component: FinalView, name: 'FinalView' },
     ]
 })
 
