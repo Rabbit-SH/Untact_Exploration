@@ -659,7 +659,7 @@ export default {
     },
 
     allRes(){
-      if(this.result1 && this.result2 && this.result3 && this.result4 && this.result5 && this.result6 && this.result7 && this.result8 && this.result9 && this.result10){
+      if(this.result2 && this.result3 && this.result4 && this.result5 && this.result6 && this.result7 && this.result8 && this.result9 && this.result10){
         this.allResValue = true;
       }
       return this.allResValue;
@@ -667,10 +667,10 @@ export default {
   },
   computed:{
     completedMissionsCount() {
-      return [this.result1, this.result2, this.result3, this.result4, this.result5, this.result6, this.result7, this.result8, this.result9, this.result10].filter(Boolean).length;
+      return [this.result2, this.result3, this.result4, this.result5, this.result6, this.result7, this.result8, this.result9, this.result10].filter(Boolean).length;
     },
     totalMissions() {
-      return 10; // 전체 미션의 수
+      return 9; // 전체 미션의 수
     }
   },
   created(){
