@@ -105,8 +105,6 @@ export default {
   position: fixed; 
   padding: 20px;
   overflow-y: auto;
-  left: 3.5%;
-  top: 3%;
     }
 .gallery-container {
   display: flex;
