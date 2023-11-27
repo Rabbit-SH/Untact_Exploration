@@ -47,7 +47,6 @@
       <m9 :show="popVal9" @close="closeP(9)" @answerCorrect="updateResult(9)" class="popup" :class="{'show':popVal9}" />
       <m10 :show="popVal10" @close="closeP(10)" @answerCorrect="updateResult(10)" class="popup" :class="{'show':popVal10}" />
 
-      <InfoChiakView :show="showInfoChiak" class="infoChiak" :class="{'show': showInfoChiak}" @closeTutorial="closed"/>
       <GiftView :show="allResValue" :class="{'show': allRes}" @closeGift="closeLast" ref="GiftView"/>
       
       <LMarker
@@ -178,9 +177,8 @@
         <TutorialView :show="showtutorial" 
             @closeTutorial="closeTutorial"
             @openTutorial="showTutorialPopup" />
-        <Durumari :show="isCredit" @close="closeDurumari"/>
         <SafeView :show="showSafe" @close="closeSafe" />
-        <UploadImageView :show="uploadIMG" :class="{'show':uploadIMG}" @close="closeUImg"/>
+        <InfoChiakView :show="showInfoChiak" class="infoChiak" :class="{'show': showInfoChiak}" @closeTutorial="closedChiak"/>
 
       <div  class="animated-marker" v-show="isGift">
         <img :src="require('@/assets/present.png')" 
@@ -216,10 +214,8 @@ import markerImg from 'leaflet/dist/images/marker-icon.png';
 import markerShadowImg from 'leaflet/dist/images/marker-shadow.png';
 import markerRetinaImg from 'leaflet/dist/images/marker-icon-2x.png';
 
-import Durumari from './NaviView/DurumariView.vue';
 import SafeView from './NaviView/SafeView.vue';
 import TutorialView from './NaviView/TutorialView.vue';
-import UploadImageView from './NaviView/UploadImageView2.vue';
 import InfoChiakView from './NaviView/InfoChiakView.vue';
 
 
@@ -284,7 +280,6 @@ export default {
       isCredit: false,
       showSafe: false,
       showtutorial: false,
-      uploadIMG: false,
 
       isPositionReady : false,
       mousedown : false,
@@ -364,12 +359,12 @@ export default {
         iconAnchor: [16,32]
       }),
       defaultIcon: new Icon({  // 지도의 마커 사용자 지정 아이콘(기본 디폴트 아이콘)
-        iconUrl: require('@/assets/marker.png'),
-        iconSize: [50, 50],
+        iconUrl: require('@/assets/qa.png'),
+        iconSize: [50, 65],
         iconAnchor: [16,32]
       }),
       customIcon: new Icon({  // 정답 시 바뀔 아이콘
-        iconUrl: require('@/assets/꺼비위치아이콘.png'),
+        iconUrl: require('@/assets/marker.png'),
         iconSize: [60, 60],
         iconAnchor: [16,32]
       }),
@@ -393,10 +388,8 @@ export default {
     m10,
     InfoChiakView,
     GiftView,
-    Durumari,
     SafeView,
     TutorialView,
-    UploadImageView,
   },
   mounted(){
     delete Icon.Default.prototype._getIconUrl;
@@ -415,23 +408,54 @@ export default {
     this.getCurrentPosition();
   },
   methods: {
-    getDurumari(){
-      this.isCredit = true;
+
+    //튜토리얼 팝업창
+    showTutorialPopup(){
+      this.showtutorial = true;
+      this.showSafe = false;
+      this.showInfoChiak = false;
+      if (this.$refs.map && this.$refs.map.mapObject) {
+          this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
+          this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
+        }
+
+    },
+    closeTutorial(){
       this.showSafe = false;
       this.showtutorial = false;
-      this.uploadIMG = false;
+      this.showInfoChiak = false;
+      if (this.$refs.map && this.$refs.map.mapObject) {
+      this.$refs.map.mapObject.dragging.enable();
+      this.$refs.map.mapObject.scrollWheelZoom.enable();
+      }
     },
-    closeDurumari(){
-      this.isCredit = false;
+
+    //치악산 설명 팝업창
+    InfoChiak(){
+      this.showInfoChiak = true;
       this.showSafe = false;
       this.showtutorial = false;
-      this.uploadIMG = false;
+      if (this.$refs.map && this.$refs.map.mapObject) {
+          this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
+          this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
+        }
     },
+    
+    closedChiak(){
+      this.showInfoChiak = false;
+      this.showSafe = false;
+      this.showtutorial = false;
+      if (this.$refs.map && this.$refs.map.mapObject) {
+      this.$refs.map.mapObject.dragging.enable();
+      this.$refs.map.mapObject.scrollWheelZoom.enable();
+      }
+    },
+
+    //안전수칙 팝업창
     getSafe(){
       this.showSafe = true;
       this.showtutorial = false;
-      this.uploadIMG = false;
-      this.isCredit = false;
+      this.showInfoChiak = false;
       if (this.$refs.map && this.$refs.map.mapObject) {
           this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
           this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
@@ -439,39 +463,14 @@ export default {
     },
     closeSafe(){
       this.showSafe = false;
-      this.isCredit = false;
       this.showtutorial = false;
-      this.uploadIMG = false;
+      this.showInfoChiak = false;
       if (this.$refs.map && this.$refs.map.mapObject) {
         this.$refs.map.mapObject.dragging.enable();
         this.$refs.map.mapObject.scrollWheelZoom.enable();
       }
     },
-    closeTutorial(){
-      this.isCredit = false;
-      this.showSafe = false;
-      this.showtutorial = false;
-      this.uploadIMG = false;
-    },
-    showTutorialPopup(){
-      this.showtutorial = true;
-      this.uploadIMG = false;
-      this.isCredit = false;
-      this.showSafe = false;
-
-    },
-    shwoUImg(){
-      this.uploadIMG = true;
-      this.showtutorial = false;
-      this.isCredit = false;
-      this.showSafe = false;
-    },
-    closeUImg(){
-      this.isCredit = false;
-      this.showSafe = false;
-      this.showtutorial = false;
-      this.uploadIMG = false;
-    },
+    
     closeModal(){
       this.showModal = false;
     },
@@ -651,18 +650,6 @@ export default {
         result10: this.result10,
       };
       saveResultsToLocalStorage(results);
-    },
-    InfoChiak(){
-      this.showInfoChiak = true;
-      if (this.$refs.map && this.$refs.map.mapObject) {
-          this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
-          this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
-        }
-    },
-    
-    closed(){
-      this.showInfoChiak = false;
-      this.uploadIMG = false;
     },
     closeLast(){
       this.allResValue = false;

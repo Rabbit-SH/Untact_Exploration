@@ -31,9 +31,9 @@ export default {
     return {
       currentSlideIndex: 0,
       slides: [
-        { id: 1, image: require('@/assets/giftView/gift1.jpg'), backgroundColor: '#white' },
-        { id: 2, image: require('@/assets/giftView/gift2.jpg'), backgroundColor: '#white' },
-        { id: 3, image: require('@/assets/giftView/gift3.jpg'), backgroundColor: '#white' },
+        { id: 1, image: require('@/assets/giftView/gift1.png'), backgroundColor: '#white' },
+        { id: 2, image: require('@/assets/giftView/gift2.png'), backgroundColor: '#white' },
+        { id: 3, image: require('@/assets/giftView/gift3.png'), backgroundColor: '#white' },
       ],
     };
   },
