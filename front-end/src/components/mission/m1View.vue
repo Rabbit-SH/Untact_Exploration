@@ -262,39 +262,11 @@ export default {
         font-weight: bold; 
         font-size: 18px;
     }
-    .center-checkbox {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 
-.v-application .justify-center {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-}
-/* .v-input--selection-controls__ripple {
-    border-radius: 100%;
-    cursor: pointer;
-    height: 23px;
-    position: absolute;
-    transition: inherit;
-    width: 23px;
-    left: -7px;
-    top: calc(50% - 19px);
-    margin: 7px;
-} */
     div.row.sound-item{
         justify-content: space-evenly;
     }
-    div.col {
-        flex-basis: 0;
-    }
-    div.v-input--selection-controls__input{
-        margin-right: 16px;
-        margin-left: 14px;
-    }
+
     .info{
         position:absolute;
         top: 3%;
