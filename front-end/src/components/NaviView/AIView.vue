@@ -88,7 +88,7 @@
                                 <p> 자유롭게 찍어서 그림을 그려봐요 !  </p>
                                 <p> 찍은 사진을 만화처럼 그려줄거에요 !! </p>
                                 <br>
-                                <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5">
+                                <img :src="require('@/assets/AIView/cartoon.jpg')" width="80%" class="mb-5">
                                 <br>
                                 <v-btn @click="transformImg"> 만화로 그리기 </v-btn>
                             </v-carousel-item>
