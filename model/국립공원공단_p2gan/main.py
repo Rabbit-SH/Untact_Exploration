@@ -1,4 +1,5 @@
 from PIL import Image
+from fastapi.staticfiles import StaticFiles
 import numpy as np
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
@@ -12,7 +13,7 @@ import subprocess
 import os
 import uvicorn
 from fastapi import BackgroundTasks, FastAPI, File, UploadFile
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 import shutil
 
@@ -97,19 +98,46 @@ def load_and_preprocess(image_path):
   dynamic_img = adjust_brightness_dynamic(clahe_image)
 
   return dynamic_img
+app.mount("/waterfrog/",StaticFiles(directory="C:/Users/herji/OneDrive/문서/GitHub/Untact_Exploration/front-end/dist",html=True),name="waterfrog")
+@app.get("/",response_class=HTMLResponse)
+async def root_root():
+    return """
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>KKOMI'S ADVENTURE</title>
+        </head>
+        <body>
+            <nav>
+                <template>
+                    <div>
+                        <img :src="require('@/assets/tutorialView/표지 예시.png')"
+                        @click="$router.push({name:'CourseChoose'})"/>
+                        <div justify="center" align="center" class="text-container">
+                            <p class="text"> 화면을 클릭해주세요 ! </p>
+                        </div>
+                    </div>
+                </template>
+
+                <ul>
+                    <li><a href="/waterfrog/">물두꺼비를 따라가보자!</a></li>
+                </ul>
+            </nav>
+        </body>
+        <script>
+        
+        </script>
+        </html>
+    """
 
 @app.post("/transform/sumuk")
 async def load_image(background_tasks: BackgroundTasks,file: UploadFile=File(...)):
-    
+    #업로드된 사진 경로 설정해서 저장.
     input_image_path = f'./{file.filename}'
     with open(input_image_path,"wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     preprocessed_image = load_and_preprocess(input_image_path)
     
-    #전처리된 이미지 확인(출력)
-    # plt.figure(figsize = (12, 8))
-    # plt.imshow(preprocessed_image, cmap = 'gray')
-    # plt.show()
     #전처리된 이미지 저장.
     cv2.imwrite("./input/preprocessed_image.jpg", preprocessed_image)
     
@@ -126,9 +154,6 @@ async def load_image(background_tasks: BackgroundTasks,file: UploadFile=File(...
     # 이미지를 열어서 저장
     result_image = Image.open('output/stylized.jpg')
     result_image.save('output/style_transfer_image.jpg')
-    # plt.figure(figsize = (12, 8))
-    # plt.imshow(result_image, cmap = 'gray')
-    # plt.show()
     
     response = FileResponse('output/style_transfer_image.jpg',media_type='image/jpeg')
     
@@ -136,9 +161,25 @@ async def load_image(background_tasks: BackgroundTasks,file: UploadFile=File(...
     background_tasks.add_task(remove_file, input_image_path)
     background_tasks.add_task(remove_file, "./input/preprocessed_image.jpg")
     background_tasks.add_task(remove_file, 'output/style_transfer_image.jpg')
-    
+
     return response
+# @app.post("/transform/animation") # 애니메이션 로직
+
+
+
+# @app.post("/transform/cartoon") # 만화 로직
+
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
-    
