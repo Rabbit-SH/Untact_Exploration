@@ -23,7 +23,7 @@
       @click="goToMain" class="skipButton">Skip</v-btn>
       <v-btn x-small color="primary" dark
       class="beforeButton"
-      v-if="i==0" @click="$router.push({name:'CourseChoose'})">이전으로</v-btn>
+      v-if="i==0" @click="$router.push({name:'CourseChoose'})">이전으로</v-btn><!--코스 선택으로 되돌아가는 버튼-->
     </v-carousel-item>
     <!-- 마지막 페이지에만 컨트롤 버튼을 표시X -->
     <v-carousel-item v-if="!hasNext" :src="require('@/assets/tutorialView/게임시작 페이지 예시.png')">

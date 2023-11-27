@@ -4,6 +4,7 @@
       <img src="@/assets/mission/close.png">
     </button>
     <div class="photo">
+      <img :src="require('@/assets/final-temp.png')">
       <img id="displayImage" alt="photo">
     </div>
     <div class="present">
@@ -115,7 +116,7 @@ methods: {
 
 .photo {
   position: absolute;
-  width: 70%;
+  width: 75%;
   max-width: 80%;
   max-height: auto;
   height: auto;
@@ -134,8 +135,8 @@ methods: {
 }
 .present{
   position: absolute;
-  bottom: 10%;
-  width: 65%;
+  bottom: 8%;
+  width: 50%;
   height: auto;
 }
 .present img{
@@ -167,8 +168,10 @@ methods: {
   width: 90%;
 }
 .final-img {
-  width: 70%;
+  width: 45%;
   height: auto;
+  bottom: 5%;
+
 }
 .final-img img{
   width: 100%;
