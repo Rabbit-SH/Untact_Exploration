@@ -79,10 +79,10 @@
                                     <p>붓과 먹을 사용해서 부드러운 선으로 그림을 그려요 ! </p>
                                     <p>치악산의 멋진 자연을 그림으로 바꿔보아요 ~</p>
                                     <br>
-                                    <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5">
+                                    <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5"><!--예시 사진-->
                                     <br>
                                 </div>
-                                <v-btn @click="transformImg(1)"> 한국화로 그리기 </v-btn>
+                                <v-btn @click="transformImg(1)" color="#EF8200"> 한국화로 그리기 </v-btn>
                             </v-carousel-item>
                             <v-carousel-item justify="center" align="center">
                                 <div class="font-kkomi">
@@ -92,10 +92,10 @@
                                     <p> 자유롭게 찍어서 그림을 그려봐요 !  </p>
                                     <p> 찍은 사진을 만화처럼 그려줄거에요 !! </p>
                                     <br>
-                                    <img :src="require('@/assets/AIView/cartoon.jpg')" width="80%" class="mb-5">
+                                    <img :src="require('@/assets/AIView/cartoon.jpg')" width="80%" class="mb-5"><!--예시 사진-->
                                     <br>
                                 </div>
-                                <v-btn @click="transformImg(2)"> 만화로 그리기 </v-btn>
+                                <v-btn @click="transformImg(2)" color="#EF8200"> 만화로 그리기 </v-btn>
                             </v-carousel-item>
                             <v-carousel-item justify="center" align="center">
                                 <div class="font-kkomi">
@@ -105,10 +105,10 @@
                                     <p> AI 화가가 얼굴을 캐릭터처럼 그려줄거에요 ! </p>
                                     <p class="chracter-text"> 가까이 찍을수록 멋있게 그릴 수 있어요 </p>
                                     <br>
-                                    <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5">
+                                    <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5"> <!--예시 사진-->
                                     <br>
                                 </div>
-                                <v-btn @click="transformImg(3)"> 캐릭터로 그리기 </v-btn>
+                                <v-btn @click="transformImg(3)" color="#EF8200"> 캐릭터로 그리기 </v-btn>
                             </v-carousel-item>
                         </v-carousel>
                     </div>
