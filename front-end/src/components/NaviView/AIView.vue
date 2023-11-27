@@ -84,8 +84,9 @@
                             <v-carousel-item justify="center" align="center" style="overflow:scroll">
                                 <h3> 만화 </h3>
                                 <br>
-                                <p>  </p>
-                                <p>붓과 먹을 사용해서 부드러운 선으로 그림을 그려요 ! </p>
+                                <p> 치악산의 배경과 함께 </p>
+                                <p> 자유롭게 찍어서 그림을 그려봐요 !  </p>
+                                <p> 찍은 사진을 만화처럼 그려줄거에요 !! </p>
                                 <br>
                                 <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5">
                                 <br>
@@ -94,8 +95,9 @@
                             <v-carousel-item justify="center" align="center" style="overflow:scroll">
                                 <h3> 캐릭터 </h3>
                                 <br>
-                                <p>  만화  </p>
-                                <p>붓과 먹을 사용해서 부드러운 선으로 그림을 그려요 ! </p>
+                                <p>  얼굴 사진을 찍어서 그림을 그려봐요 !  </p>
+                                <p> AI 화가가 얼굴을 캐릭터처럼 그려줄거에요 ! </p>
+                                <p class="chracter-text"> 가까이 찍을수록 멋지게 그려줄거에요!</p>
                                 <br>
                                 <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5">
                                 <br>
@@ -368,5 +370,9 @@ export default {
 .translateImg{
     width: 63%;
     height: 100%;
+}
+.chracter-text{
+    font-size: 15px;
+    color: gray;
 }
 </style>

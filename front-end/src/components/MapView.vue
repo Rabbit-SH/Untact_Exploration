@@ -67,22 +67,18 @@
       <LMarker
         :lat-lng="mainplacemarkers[5].coordinates"
         :icon="placeICON6" />
-      <!-- <LMarker
-        :lat-lng="mainplacemarkers[6].coordinates"
-        :icon="placeICON7" /> -->
 
       <LMarker
         :key="markers[0].id"
         :lat-lng="markers[0].coordinates"
         @click="openP(0)"
-        :icon="result1 ? customIcon: defaultIcon" />
+        :icon="duduIcon" />
 
       <LMarker
         :key="markers[1].id"
         :lat-lng="markers[1].coordinates"
         @click="openP(1)"
-        :icon="result2 ? customIcon: defaultIcon" 
-        v-if="result1 === true" />
+        :icon="result2 ? customIcon: defaultIcon" />
 
       <LMarker
         :key="markers[2].id"
@@ -368,6 +364,11 @@ export default {
         iconSize: [60, 60],
         iconAnchor: [16,32]
       }),
+      duduIcon: new Icon({  // 정답 시 바뀔 아이콘
+        iconUrl: require('@/assets/맛보기_꺼비.png'),
+        iconSize: [70, 60],
+        iconAnchor: [16,32]
+      }),
       circle: { radius: 23, color: 'white', fillColor: 'red', weight: 3}
     };
   },
@@ -569,7 +570,7 @@ export default {
     },
     //움직일때만 발생
     handlemovestart() {
-      console.log("맵 움직이는중")
+      // console.log("맵 움직이는중")
       this.ismoving = true;
       if(this.isZoom){
         this.isZoom = false;
@@ -578,7 +579,7 @@ export default {
     //맵이동이 끝나면 발생.
     handlemoveend() {
       this.ismoveend = true;
-      console.log("맵 이동 끝!")
+      // console.log("맵 이동 끝!")
       if(this.ismoving){
         this.ismoving = false;
       }
