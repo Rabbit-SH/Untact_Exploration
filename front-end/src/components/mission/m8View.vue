@@ -57,7 +57,7 @@
                 <h3>고쳐야댐</h3>
                 <img @click="infodialog = false" src="@/assets/mission/close.png" class="closeinfo">
             </v-card-text>
-                <img src="@/assets/info3.jpeg" class="pic">
+                <img src="@/assets/missionInfo/info3.jpeg" class="pic">
         </v-dialog>
 
     </div>

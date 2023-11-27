@@ -58,7 +58,7 @@
                 <h3>구룡사</h3>
                 <img @click="infodialog = false" src="@/assets/mission/close.png" class="closeinfo">
             </v-card-text>
-                <img src="@/assets/info6.jpeg" class="pic-info">
+                <img src="@/assets/missionInfo/info6.jpeg" class="pic-info">
         </v-dialog>
 
     </div>

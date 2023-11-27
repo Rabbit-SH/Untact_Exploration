@@ -57,7 +57,7 @@
                 <h3>가족사진 데크길</h3>
                 <img @click="infodialog = false" src="@/assets/mission/close.png" class="closeinfo">
             </v-card-text>
-                <img src="@/assets/info9.jpeg" class="pic-info">
+                <img src="@/assets/missionInfo/info9.jpeg" class="pic-info">
         </v-dialog>
 
     </div>

@@ -84,7 +84,7 @@
                 <h3>황장목숲길</h3>
                 <img @click="infodialog = false" src="@/assets/mission/close.png" class="closeinfo">
             </v-card-text>
-                <img src="@/assets/info5.jpeg" class="pic">
+                <img src="@/assets/missionInfo/info5.jpeg" class="pic">
         </v-dialog>
 
     </div>
