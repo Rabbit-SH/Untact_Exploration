@@ -259,7 +259,6 @@ export default {
     background-image: url('~@/assets/background.png');
     width: 100%;
     height: 100%;
-    /* object-fit: cover; */
     background-position: center;
     background-size: cover;
 }
@@ -270,9 +269,6 @@ export default {
     justify-content: center;
     align-items: center;
     display: flex;
-    /* border-style: solid;
-    border-width: 10px;
-    border-color: rgba(0, 0, 0, 0.9); */
 }
 .button_container{
     width: 70%;
@@ -288,7 +284,6 @@ export default {
 .preview_img{
     max-height: 95%;
     max-width: 95%;
-    /* border-radius: 10px; */
 }
 .galley_container{
     position:absolute;
