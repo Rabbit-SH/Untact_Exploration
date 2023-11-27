@@ -56,10 +56,10 @@
 
         <v-dialog v-model="infodialog" class="infodialog">
             <v-card-text class="title">
-                <h3>고쳐야함</h3>
+                <h3>가족사진 데크길</h3>
                 <img @click="infodialog = false" src="@/assets/mission/close.png" class="closeinfo">
             </v-card-text>
-                <img src="@/assets/info8.jpeg" class="pic-info">
+                <img src="@/assets/info9.jpeg" class="pic-info">
         </v-dialog>
 
     </div>
