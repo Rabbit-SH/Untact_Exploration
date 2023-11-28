@@ -103,7 +103,7 @@ def load_and_preprocess(image_path):
   dynamic_img = adjust_brightness_dynamic(clahe_image)
 
   return dynamic_img
-app.mount("/waterfrog/",StaticFiles(directory="C:/Users/herji/OneDrive/문서/GitHub/Untact_Exploration/front-end/dist",html=True),name="waterfrog")
+app.mount("/watertoad/",StaticFiles(directory="C:/Users/herji/OneDrive/문서/GitHub/Untact_Exploration/front-end/dist",html=True),name="waterfrog")
 @app.get("/",response_class=HTMLResponse)
 async def root_root():
     return """
