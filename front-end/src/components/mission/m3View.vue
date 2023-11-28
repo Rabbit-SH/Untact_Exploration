@@ -60,6 +60,8 @@
                                 <h3>다시 한번 풀어볼까요?</h3>
                                 <br>
                                 <p>표지판의 QR을 한번 확인해보세요!</p>
+                                <br>
+                                <p>초성힌트 : ㅇ ㅅ ㄹ</p>
                             </div>
                         </v-col>
                     </v-row>
@@ -75,7 +77,7 @@
                 <h3>치악산 깃대종 물두꺼비</h3>
                 <img @click="infodialog = false" src="@/assets/mission/close.png" class="closeinfo">
             </v-card-text>
-                <img src="@/assets/info4.jpeg" class="pic">
+                <img src="@/assets/mission/missionInfo/info4.jpeg" class="pic">
         </v-dialog>
 
     </div>
@@ -228,8 +230,6 @@ export default {
     .infodialog{
         position: absolute;
         box-shadow: none;
-        /* width: 30%;
-        height: auto; */
     }
     .closeinfo{
         width: 22px;

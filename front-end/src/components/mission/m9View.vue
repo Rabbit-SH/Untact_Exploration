@@ -43,7 +43,11 @@
                             <div v-else class="text-center">
                                 <h3>다시 한번 풀어볼까요?</h3>
                                 <br>
-                                <p> 초성힌트 : ㅌ ㅅ ㅈ ㄹ </p>
+                                <p> 탄소 배출량을 0으로 만드는 것을 </p>
+                                <p><strong>탄소중립</strong>이라고 해요</p>
+                                <br>
+                                <p>탄소 배출량을 어떻게 하면 줄일 수 있을지</p>
+                                <p>같이 생각해봐요 ~ </p>
                             </div>
                         </v-col>
                     </v-row>
@@ -53,15 +57,6 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-
-        <!-- <v-dialog v-model="infodialog" class="infodialog">
-            <v-card-text class="title">
-                <h3>탄소중립</h3>
-                <img @click="infodialog = false" src="@/assets/mission/close.png" class="closeinfo">
-            </v-card-text>
-                <img src="@/assets/info8.jpeg" class="pic">
-        </v-dialog> -->
-
     </div>
 </template>
 
@@ -81,16 +76,12 @@ export default {
           userResult: '', //사용자 응답 저장하는 데이터
           showPopup: false, //팝업 상태
           dialog: false,
-        //   infodialog: false,
       }
     },
     methods: {
         closeP(){
             this.$emit('close');
         },
-        // openinfo(){
-        //     this.infodialog = true;
-        // },
         submitResponse(){
           console.log(this.userResponse); //콘솔에 출력, 서버에 제출하거나 다른 제출을 추가해도됨
           this.userResponse = ''; //답변이 제출되면 리셋하기
@@ -158,13 +149,11 @@ export default {
     .white-bg{
     width: 90%; height: 90%;
     position: fixed; 
-    /* background-color: white; */
     overflow:hidden;
     display:flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     }
     .background{
         width: 100%;
@@ -184,7 +173,6 @@ export default {
         position:absolute;
         top: 3%;
         right: 5%;
-    
     }
     .textarea{
         justify-content: center;
@@ -202,45 +190,7 @@ export default {
         font-weight: bold; 
         font-size: 18px;
     }
-    .info{
-        position:absolute;
-        top: 3%;
-        left: 5%;
-        width: 22px;
-        height: 22px;
-        cursor: pointer;
-        justify-content: center;
-        align-items: center;
-    }
-    .infodialog{
-        position: absolute;
-        box-shadow: none;
-        /* width: 30%;
-        height: auto; */
-    }
-    .closeinfo{
-        width: 22px;
-        height: 22px;
-        cursor: pointer;
-        justify-content: center;
-        align-items: center;
-        position:absolute;
-        top: 30%;
-        right: 5%;
-    }
-    .pic{
-        width: 100%;
-        height: auto;
-    }
-    .title{
-        background-color: white;
-        position: relative;
-    }
-    .v-application .info {
-        background-color: transparent !important;
-        border-color: transparent !important;
-    }
-        ::v-deep .v-dialog { /* 지우면 안됨 */
+    ::v-deep .v-dialog { /* 지우면 안됨 */
         box-shadow: none !important;
     }
 </style>

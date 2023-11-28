@@ -13,12 +13,12 @@
       @update:zoom="zoomUpdated"
       @update:center="centerUpdated"
       @update:bounds="boundsUpdated"
-      @moveend="handlemoveend"
+      @moveend="handlemoveend" 
       @movestart="handlemovestart"
     >
 
     <div class="logo">
-      <img :src="require('@/assets/logo.png')">
+      <img :src="require('@/assets/Icons/logo.png')">
       <div class="mission-current">
         {{ completedMissionsCount }}/{{ totalMissions }}
       </div>
@@ -49,24 +49,7 @@
 
       <GiftView :show="allResValue" :class="{'show': allRes}" @closeGift="closeLast" ref="GiftView"/>
       
-      <LMarker
-        :lat-lng="mainplacemarkers[0].coordinates"
-        :icon="placeICON1" />
-      <LMarker
-        :lat-lng="mainplacemarkers[1].coordinates"
-        :icon="placeICON2" />
-      <LMarker
-        :lat-lng="mainplacemarkers[2].coordinates"
-        :icon="placeICON3" />
-      <LMarker
-        :lat-lng="mainplacemarkers[3].coordinates"
-        :icon="placeICON4" />
-      <LMarker
-        :lat-lng="mainplacemarkers[4].coordinates"
-        :icon="placeICON5" />
-      <LMarker
-        :lat-lng="mainplacemarkers[5].coordinates"
-        :icon="placeICON6" />
+      <LMarker v-for="m in mainplacemarkers" :key="m.id+10" :lat-lng="m.coordinates" :icon="getplaceIcon(m.id)" />
 
       <LMarker
         :key="markers[0].id"
@@ -141,19 +124,19 @@
       <div class="navi-bar">
         <div class="navi">
           <img 
-          :src="require('@/assets/navi1.png')" 
+          :src="require('@/assets/Icons/navi1.png')" 
           style="width: 28%; margin-left: 5%;" 
           @click="showTutorialPopup"
           class="story"
         >
         <img 
-          :src="require('@/assets/navi2.png')" 
+          :src="require('@/assets/Icons/navi2.png')" 
           style="width: 28%;" 
           @click="InfoChiak" 
           class="story"
         >
         <img 
-          :src="require('@/assets/navi3.png')" 
+          :src="require('@/assets/Icons/navi3.png')" 
           style="width: 28%;" 
           @click="getSafe" 
           class="safe"
@@ -161,7 +144,7 @@
       </div>
       <div class="ai">
         <img 
-          :src="require('@/assets/navi4.png')" 
+          :src="require('@/assets/Icons/navi4.png')" 
           @click="$router.push({name: 'AIView'})" 
           class="uploadImg"
         >
@@ -266,7 +249,6 @@ export default {
       result10: false,
 
       allResValue: false,
-      value: null,
 
       isZoomIn: false, //줌인이 된 상태인지 아닌지 확인(팝업창 띄우기 위한 변수)
       isZoom : false, //내 위치 버튼을 위한 줌인 상태 확인 변수
@@ -278,9 +260,6 @@ export default {
       showSafe: false,
       showtutorial: false,
 
-      isPositionReady : false,
-      mousedown : false,
-      mouseup : false,
       ismoving: false,
       ismoveend: false,
       positionObj: {
@@ -318,7 +297,7 @@ export default {
         {id:4, coordinates: [37.405188804745, 128.049248456955], name:"황장목숲길"},
         {id:5, coordinates: [37.3996361550487, 128.049114346504], name:"구룡사"},
         {id:6,coordinates: [37.3949972677172, 128.053389787674], name:"금강솔빛생태학습원"},
-        {id:8, coordinates: [37.3941725939312, 128.054344654083], name:"솔비로길(야생화원)"},
+        {id:7, coordinates: [37.3941725939312, 128.054344654083], name:"솔비로길(야생화원)"},
       ],
       placeICON1: new Icon({
         iconUrl: require('@/assets/mainplace/치악산체험학습관.png'),
@@ -350,23 +329,23 @@ export default {
         iconSize: [80, 80],
         iconAnchor: [16,32]
       }),
-      placeICON8: new Icon({
+      placeICON7: new Icon({
         iconUrl: require('@/assets/mainplace/솔비로길(야생화원).png'),
         iconSize: [100, 90],
         iconAnchor: [16,32]
       }),
       defaultIcon: new Icon({  // 지도의 마커 사용자 지정 아이콘(기본 디폴트 아이콘)
-        iconUrl: require('@/assets/qa.png'),
+        iconUrl: require('@/assets/Icons/qa.png'),
         iconSize: [50, 65],
         iconAnchor: [16,32]
       }),
       customIcon: new Icon({  // 정답 시 바뀔 아이콘
-        iconUrl: require('@/assets/marker.png'),
+        iconUrl: require('@/assets/Icons/marker.png'),
         iconSize: [45, 45],
         iconAnchor: [16,32]
       }),
       duduIcon: new Icon({  // 정답 시 바뀔 아이콘
-        iconUrl: require('@/assets/맛보기_꺼비.png'),
+        iconUrl: require('@/assets/Icons/맛보기_꺼비.png'),
         iconSize: [70, 60],
         iconAnchor: [16,32]
       }),
@@ -410,7 +389,6 @@ export default {
     this.getCurrentPosition();
   },
   methods: {
-
     //튜토리얼 팝업창
     showTutorialPopup(){
       this.showtutorial = true;
@@ -420,7 +398,6 @@ export default {
           this.$refs.map.mapObject.dragging.disable(); //사용자가 마우스나 터치로 지도를 드래그하는 것을 방지
           this.$refs.map.mapObject.scrollWheelZoom.disable(); //사용자가 마우스 휠로 지도를 확대/축소하는 것을 방지
         }
-
     },
     closeTutorial(){
       this.showSafe = false;
@@ -431,7 +408,6 @@ export default {
       this.$refs.map.mapObject.scrollWheelZoom.enable();
       }
     },
-
     //치악산 설명 팝업창
     InfoChiak(){
       this.showInfoChiak = true;
@@ -571,7 +547,6 @@ export default {
     },
     //움직일때만 발생
     handlemovestart() {
-      // console.log("맵 움직이는중")
       this.ismoving = true;
       if(this.isZoom){
         this.isZoom = false;
@@ -580,7 +555,6 @@ export default {
     //맵이동이 끝나면 발생.
     handlemoveend() {
       this.ismoveend = true;
-      // console.log("맵 이동 끝!")
       if(this.ismoving){
         this.ismoving = false;
       }
@@ -665,6 +639,9 @@ export default {
       }
       return this.allResValue;
     },
+    getplaceIcon(id){
+      return this['placeICON' + (id)]  // 안내아이콘을 반환하는 함수
+    }
   },
   computed:{
     completedMissionsCount() {
@@ -744,14 +721,12 @@ export default {
   margin-bottom: 5%;
   margin-left: 2%;
 }
-
 .ai {
   flex: 0 0 30%;
   margin-bottom: 5%;
   margin-right: 2%;
 
 }
-
 .navi-bar img {
   width: 75%; /* 이미지가 부모 컨테이너의 너비에 맞게 조정 */
   margin: 0 5px;
@@ -769,7 +744,6 @@ export default {
     width: 100%;
     height: auto;
   }
-
   .mission-current {
     position: absolute; /* mission 요소 내에서 절대 위치 설정 */
     top: 49%; 

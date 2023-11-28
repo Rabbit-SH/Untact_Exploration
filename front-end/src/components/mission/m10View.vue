@@ -40,7 +40,6 @@
                     <div>
                         <div class="btn_container">
                             <v-btn @click="downloadImage(uploadedPhoto)" class="ok-btn mt-3 pl-10 pr-10" color="#EF8200">다운로드</v-btn>
-                            <!-- <v-btn @click="goToAiPainter" class="ml-3">AI 화가</v-btn> -->
                         </div>
                         <div class="card">
                             <v-btn @click="handleDialogConfirmation" class="ok-btn mt-3 pl-10 pr-10" color="#EF8200">닫기</v-btn>
@@ -57,7 +56,7 @@
                 <h3>금강솔빛생태학습원</h3>
                 <img @click="infodialog = false" src="@/assets/mission/close.png" class="closeinfo">
             </v-card-text>
-                <img src="@/assets/info8.jpeg" class="pic">
+                <img src="@/assets/mission/missionInfo/info8.jpeg" class="pic">
         </v-dialog>
 
     </div>
