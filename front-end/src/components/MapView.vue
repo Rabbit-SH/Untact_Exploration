@@ -332,7 +332,7 @@ export default {
       placeICON7: new Icon({
         iconUrl: require('@/assets/mainplace/솔비로길(야생화원).png'),
         iconSize: [80, 70],
-        iconAnchor: [40,35]
+        iconAnchor: [0,35]
       }),
       defaultIcon: new Icon({  // 지도의 마커 사용자 지정 아이콘(기본 디폴트 아이콘)
         iconUrl: require('@/assets/Icons/qa.png'),
