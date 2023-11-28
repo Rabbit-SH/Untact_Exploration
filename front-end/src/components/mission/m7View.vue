@@ -149,6 +149,11 @@ export default {
     justify-content: center;
 
     }
+    .custom-submit-button {
+        color: white !important; /* 텍스트 색상을 흰색으로 */
+        font-weight: bold; /* 글씨 두께를 굵게 */
+        font-size: 18px; /* 글씨 크기를 18px로 설정 */
+    }
     .background{
         width: 100%;
         height: 100%;
