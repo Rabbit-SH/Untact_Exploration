@@ -9,17 +9,33 @@
                 <v-icon size="25">mdi-information-variant-circle</v-icon>
             </button>
             <div class="content-container" justify="center" align="center">
-
-                <v-text-field
-                    label="000은 무엇일까요?"
-                    outlined
-                    class="textarea"
-                    v-model="userResult"
-                    justify="center"
-                    style="width: 80%;"
-                    align-items="center"
-                ></v-text-field>
-                
+                <div>
+                    <v-checkbox
+                        v-model="userResult"
+                        label="반달가슴곰"
+                        color="primary"
+                        value="반달가슴곰"
+                        hide-details
+                        style="color: black; transform: scale(1.5); padding-left: 30%;"
+                    ></v-checkbox>
+                    <v-checkbox
+                        v-model="userResult"
+                        label="비둘기"
+                        color="primary"
+                        value="비둘기"
+                        hide-details
+                        style="color: black; transform: scale(1.5); padding-left: 30%;"
+                    ></v-checkbox>
+                    <v-checkbox
+                        v-model="userResult"
+                        label="꿩"
+                        color="success"
+                        value="꿩"
+                        hide-details
+                        style="color: black; transform: scale(1.5); padding-left: 30%;"
+                    ></v-checkbox>
+                </div>
+                <br>
                 <br>
                 <v-btn class="custom-submit-button mt-3 pl-10 pr-10" color="#EF8200" @click="submitSoundRes">제출하기</v-btn>
             </div>
@@ -29,35 +45,35 @@
                 <v-card-text>
                     <v-row align="center" justify="center">
                         <v-col align="center">
-                            <div style="height:70%; width:70%; display: flex; align-items: center; justify-items: center;">
-                                <v-img v-if="userResult === '깃대종'" src="@/assets/O.png" style="max-height:100%; max-width:100%;"></v-img>
-                                <v-img v-else src="@/assets/X.png" style="max-height:100%; max-width:100%;"></v-img>
+                            <div style="height:100%; width:100%; display: flex; align-items: center; justify-items: center;">
+                                <v-img v-if="userResult === '꿩'" src="@/assets/O.png"></v-img>
+                                <v-img v-else src="@/assets/X.png"></v-img>
                             </div>
                             <br>
-                            <div v-if="userResult === '깃대종'" class="text-center">
+                            <div v-if="userResult === '꿩'" class="text-center">
                                 <h3>정답입니다!</h3> 
                                 <h4>확인 버튼을 눌러주세요.</h4>
                             </div>
                             <div v-else class="text-center">
                                 <h3>다시 한번 풀어볼까요?</h3>
                                 <br>
-                                <p> 초성힌트 : ㄱ ㄷ ㅈ </p>
+                                <p> 은혜갚은 <strong>꿩</strong>의 이야기를 알고있나요? </p>
                             </div>
                         </v-col>
                     </v-row>
                 </v-card-text>
                 <v-card-actions class="card">
-                <v-btn @click="handleDialogConfirmation(userResult === '깃대종')" class="ok-btn mt-3 pl-10 pr-10" color="#EF8200">확인</v-btn>
+                <v-btn @click="handleDialogConfirmation(userResult === '꿩')" class="ok-btn mt-3 pl-10 pr-10" color="#EF8200">확인</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
 
         <v-dialog v-model="infodialog" class="infodialog">
             <v-card-text class="title">
-                <h3>고쳐야댐</h3>
+                <h3>치악산</h3>
                 <img @click="infodialog = false" src="@/assets/mission/close.png" class="closeinfo">
             </v-card-text>
-                <img src="@/assets/mission/missionInfo/info3.jpeg" class="pic">
+                <img src="@/assets/mission/missionInfo/info3.jpg" class="pic">
         </v-dialog>
 
     </div>
@@ -105,7 +121,7 @@ export default {
             if(this.userResult.trim() == ''){
                 alert("답변을 입력해주세요!")
             } else {
-                if(this.userResult === '깃대종'){
+                if(this.userResult === '꿩'){
                     // 정답 다이얼로그 표시
                     this.dialog = true;
                 } else {
@@ -117,8 +133,8 @@ export default {
         handleDialogConfirmation(correct){
             this.dialog = false;
             if(correct){
-                if (this.result8 === false){
-                    //result8가 false인 경우만 'answerCorrect' 이벤트를 트리거(마커를 정답 이미지로 바꾸기 위하여)
+                if (this.result2 === false){
+                    //result2가 false인 경우만 'answerCorrect' 이벤트를 트리거(마커를 정답 이미지로 바꾸기 위하여)
                     this.$emit('answerCorrect');
                 }
                 this.userResult = ''; // 사용자 응답 리셋
@@ -147,17 +163,17 @@ export default {
         align-items: center;
         justify-content: center;
       }
-    .white-bg{
-    width: 90%; height: 90%;
-    position: fixed; 
-    /* background-color: white; */
-    overflow:hidden;
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+      .white-bg{
+        width: 90%; height: 90%;
+        position: fixed; 
+        /* background-color: white; */
+        overflow:hidden;
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
 
-    }
+      }
     .background{
         width: 100%;
         height: 100%;
@@ -165,7 +181,7 @@ export default {
     .content-container{
         width:100%;
         position: absolute;
-        bottom: 7%;
+        bottom: 12%;
     }
     .close{
         width: 22px;
@@ -176,18 +192,18 @@ export default {
         position:absolute;
         top: 3%;
         right: 5%;
-    
+
     }
     .textarea{
         justify-content: center;
-    }
-    .card {
-    justify-content: center; /* 내부 요소를 중앙 정렬 */
     }
     .custom-submit-button {
         color: white !important; /* 텍스트 색상을 흰색으로 */
         font-weight: bold; /* 글씨 두께를 굵게 */
         font-size: 18px; /* 글씨 크기를 18px로 설정 */
+    }
+    .card {
+    justify-content: center; /* 내부 요소를 중앙 정렬 */
     }
     .ok-btn{
         color: white !important; 
@@ -235,5 +251,4 @@ export default {
         ::v-deep .v-dialog { /* 지우면 안됨 */
         box-shadow: none !important;
     }
-
 </style>
