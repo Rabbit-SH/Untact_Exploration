@@ -108,7 +108,7 @@ export default {
             infodialog: false,
 
             sounds: [
-                { id: 1, src: "/watertoad/꿩.wav", isActive: false, howl: null, value: '꿩' },
+                { id: 1, src: "/watertoad/꿩.mp3", isActive: false, howl: null, value: '꿩' },
                 { id: 2, src: "/watertoad/참새.mp3", isActive: false, howl: null, value: '참새' },
                 { id: 3, src: "/watertoad/비둘기.wav", isActive: false, howl: null, value: '비둘기' },
             ],
