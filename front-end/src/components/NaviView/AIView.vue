@@ -105,7 +105,7 @@
                                     <p> AI 화가가 얼굴을 캐릭터처럼 그려줄거에요 ! </p>
                                     <p class="chracter-text"> 가까이 찍을수록 멋있게 그릴 수 있어요 </p>
                                     <br>
-                                    <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5"> <!--예시 사진-->
+                                    <img :src="require('@/assets/AIView/character.png')" width="60%" class="mb-5"> <!--예시 사진-->
                                     <br>
                                 </div>
                                 <v-btn @click="transformImg(3)" color="#EF8200" class="white--text"> 캐릭터로 그리기 </v-btn>
