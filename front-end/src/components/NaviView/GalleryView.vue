@@ -26,9 +26,7 @@
                     <v-btn size="small" color="surface-variant" variant="text" @click="downloadPhoto(photo, index)">
                       <v-icon>mdi-download</v-icon>
                     </v-btn>
-                    <v-btn size="small" color="surface-variant" variant="text">
-                      <v-icon>mdi-share-variant</v-icon>
-                    </v-btn>
+                    
                   </v-card-actions>
                 </v-card>
               </v-col>
