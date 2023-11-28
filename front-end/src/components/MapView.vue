@@ -297,12 +297,12 @@ export default {
         {id:4, coordinates: [37.405188804745, 128.049248456955], name:"황장목숲길"},
         {id:5, coordinates: [37.3996361550487, 128.049114346504], name:"구룡사"},
         {id:6,coordinates: [37.3949972677172, 128.053389787674], name:"금강솔빛생태학습원"},
-        {id:7, coordinates: [37.3941725939312, 128.054344654083], name:"솔비로길(야생화원)"},
+        {id:7, coordinates: [37.3943686412347,128.053818941116], name:"솔비로길(야생화원)"},
       ],
       placeICON1: new Icon({
         iconUrl: require('@/assets/mainplace/치악산체험학습관.png'),
         iconSize: [80, 80],
-        iconAnchor: [16,32]
+        iconAnchor: [70,40]
       }),
       placeICON2: new Icon({
         iconUrl: require('@/assets/mainplace/구룡자동차야영장.png'),
@@ -311,28 +311,28 @@ export default {
       }),
       placeICON3: new Icon({
         iconUrl: require('@/assets/mainplace/황장금표.png'),
-        iconSize: [90, 80],
-        iconAnchor: [16,32]
+        iconSize: [80, 80],
+        iconAnchor: [40,70]
       }),
       placeICON4: new Icon({
         iconUrl: require('@/assets/mainplace/황장목숲길.png'),
         iconSize: [80, 80],
-        iconAnchor: [16,32]
+        iconAnchor: [0,20]
       }),
       placeICON5: new Icon({
         iconUrl: require('@/assets/mainplace/구룡사.png'),
         iconSize: [80, 80],
-        iconAnchor: [16,32]
+        iconAnchor: [40,40]
       }),
       placeICON6: new Icon({
         iconUrl: require('@/assets/mainplace/금강솔빛생태학습원.png'),
         iconSize: [80, 80],
-        iconAnchor: [16,32]
+        iconAnchor: [40,80]
       }),
       placeICON7: new Icon({
         iconUrl: require('@/assets/mainplace/솔비로길(야생화원).png'),
-        iconSize: [100, 90],
-        iconAnchor: [16,32]
+        iconSize: [80, 70],
+        iconAnchor: [40,35]
       }),
       defaultIcon: new Icon({  // 지도의 마커 사용자 지정 아이콘(기본 디폴트 아이콘)
         iconUrl: require('@/assets/Icons/qa.png'),

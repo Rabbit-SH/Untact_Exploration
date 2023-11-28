@@ -72,22 +72,24 @@ methods: {
 
       // 두 번째 이미지 로드
     img2.onload = () => {
+      // Canvas 크기 설정
       canvas.width = img2.width;
       canvas.height = img2.height;
 
+      //첫번째 이미지 로드
       const img1 = new Image();
       img1.src = this.familyphoto;
 
       img1.onload = () => {
-        // 첫 번째 이미지 그리기
+        // 첫 번째 이미지 그리기 (액자 틀에 맞추기)
         ctx.drawImage(img1, 40, 40, img2.width-83, img2.height-230);
-        // 두 번째 이미지 그리기 (위치 및 크기 조정 가능)
+        // 두 번째 이미지 그리기 (최대크기)
         ctx.drawImage(img2, 0, 0, img2.width, img2.height); 
 
         // Canvas의 내용을 이미지로 추출
         this.mergedImage = canvas.toDataURL('image/png');
       };
-      // Canvas 크기 설정
+
     }
   },
   downloadImage() {

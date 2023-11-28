@@ -119,14 +119,14 @@ export default {
 
               // 가족사진을 수묵화로 변환하기 위한 요청
                 const formData = new FormData();
-                formData.append("file",this.uploadimg );
+                formData.append("file",this.uploadimg);
                 formData.append("convertoption",4);
 
                 this.error = false;
                 this.errorMessage = '';
 
                 try {
-                    this.response = await axios.post('http://localhost:8000/watertoad/aipainter', formData,{responseType: 'blob'});
+                    this.response = await axios.post('http://localhost:8000/aipainter', formData,{responseType: 'blob'});
                     this.imageUrl = URL.createObjectURL(this.response.data);
                 } catch (error) {
                     console.error("Error during image processing:", error);
@@ -134,7 +134,6 @@ export default {
                     this.errorMessage = 'Error processing image. Please try again.';
                 }
                 this.$store.commit('setFamily', this.imageUrl);
-                console.log(this.imageUrl);
         },
 
         handleDialogConfirmation(){
