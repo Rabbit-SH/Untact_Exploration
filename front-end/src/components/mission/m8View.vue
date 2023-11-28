@@ -133,7 +133,7 @@ export default {
         handleDialogConfirmation(correct){
             this.dialog = false;
             if(correct){
-                if (this.result2 === false){
+                if (this.result8 === false){
                     //result2가 false인 경우만 'answerCorrect' 이벤트를 트리거(마커를 정답 이미지로 바꾸기 위하여)
                     this.$emit('answerCorrect');
                 }
