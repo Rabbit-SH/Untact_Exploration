@@ -38,6 +38,7 @@
           { src: require('@/assets/tutorialView/튜토리얼1.png') },
           { src: require('@/assets/tutorialView/튜토리얼2.jpg') },
           { src: require('@/assets/tutorialView/튜토리얼3.jpg') },
+          { src: require('@/assets/tutorialView/튜토리얼4.png') },
         ],
       };
     },
