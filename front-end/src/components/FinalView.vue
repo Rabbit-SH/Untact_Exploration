@@ -3,9 +3,12 @@
     <button @click="$router.push({name:'MainView'})" class="close ma-2 pa-2">
       <img src="@/assets/mission/close.png">
     </button>
-    <div class="photo">
-      <img :src="require('@/assets/final-temp.png')">
-      <img id="displayImage" alt="photo">
+
+    <div  class="photo">
+        <canvas id="canvas" style="display:none;"></canvas>
+         <img v-if="mergedImage" :src="mergedImage"/>
+       <!-- <img :src="familyphoto" alt="familyphoto"/> 이건 잘됨. -->
+
     </div>
     <div class="present">
       <img :src="require('@/assets/open.png')">
@@ -42,34 +45,55 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
 name: 'FinalView',
 data(){
   return {
-    familyphoto:null,
     dialog: false,
+    mergedImage: null,
   };
 },
-mounted() {
-  let familyphotos = localStorage.getItem('displayphoto')
-    // 예: 이미지 태그의 src 속성으로 설정
-  document.getElementById('displayImage').src = familyphotos;
+mounted() { 
+  this.combineImage();
+ },
+computed: {
+  ...mapState({familyphoto:"family"})
 },
 methods: {
-  addphotoDataUrl(photoDataUrl) {
-    this.familyphoto = photoDataUrl;
-    console.log("familyphoto updated: ", this.familyphoto);
+  combineImage() {
+    const canvas = document.querySelector("#canvas");
+
+    const ctx = canvas.getContext('2d')
+
+    const img2 = new Image();
+    img2.src = require('@/assets/final-temp.png');
+
+      // 두 번째 이미지 로드
+    img2.onload = () => {
+      canvas.width = img2.width;
+      canvas.height = img2.height;
+
+      const img1 = new Image();
+      img1.src = this.familyphoto;
+
+      img1.onload = () => {
+        // 첫 번째 이미지 그리기
+        ctx.drawImage(img1, 40, 40, img2.width-83, img2.height-230);
+        // 두 번째 이미지 그리기 (위치 및 크기 조정 가능)
+        ctx.drawImage(img2, 0, 0, img2.width, img2.height); 
+
+        // Canvas의 내용을 이미지로 추출
+        this.mergedImage = canvas.toDataURL('image/png');
+      };
+      // Canvas 크기 설정
+    }
   },
   downloadImage() {
-    // 이미지 요소를 가져옵니다.
-    const image = document.getElementById('displayImage');
-
-    // 이미지의 URL을 가져옵니다.
-    const imageUrl = image.src;
-
     // 다운로드를 위한 임시 링크 요소를 생성합니다.
     const link = document.createElement('a');
-    link.href = imageUrl;
+    link.href = this.mergedImage;
 
     // 다운로드될 파일의 이름을 설정합니다.
     link.download = 'familyphoto';
@@ -127,12 +151,15 @@ methods: {
   justify-content: center;
   align-items: center;
 }
-
-.photo img{
+#canvas{
   max-width: 100%;
-  max-height: auto;
+  max-height: 100%;
+}
+.photo img{
+  width: 100%;
 
 }
+
 .present{
   position: absolute;
   bottom: 8%;
@@ -177,5 +204,8 @@ methods: {
   width: 100%;
   height: 100%;
 }
-
+.original_img {
+    max-height: 95%;
+    max-width: 95%;
+}
 </style>
