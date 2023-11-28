@@ -64,7 +64,7 @@
 </template>
 
 <script >
-
+import axios from 'axios';
 export default {
     props: {
         show: {
@@ -80,9 +80,12 @@ export default {
         userResult: '', //사용자 응답 저장하는 데이터
         dialog: false,
         infodialog: false,
-
+        error: false,
+        errorMessage: '',
         userResponse:'',
         uploadedPhoto: null, // 업로드된 사진 데이터를 위한 변수
+        response: null,
+        uploadimg: null //업로드 사진
       }
     },
     methods: {
@@ -97,7 +100,7 @@ export default {
             photoFileInput.click();
         },
         onPhotoFileChange(event){
-
+            this.uploadimg = event.target.files[0]
             // 파일데이터를 갤러리 리스트에 추가합니다.
             const fileReader = new FileReader();
             fileReader.readAsDataURL(event.target.files[0]);
@@ -106,11 +109,32 @@ export default {
                 const photoDataUrl = fileReader.result;
                 this.uploadedPhoto = photoDataUrl;
 
-                // this.addPhoto(photoDataUrl);
+                // 갤러리에 사진 추가
                 this.$store.commit('addPhoto', photoDataUrl);
-                this.$store.commit('setFamily', photoDataUrl);
+                this.convert_img();
             }
             this.dialog = true;
+        },
+        async convert_img(){
+
+              // 가족사진을 수묵화로 변환하기 위한 요청
+                const formData = new FormData();
+                formData.append("file",this.uploadimg );
+                formData.append("convertoption",4);
+
+                this.error = false;
+                this.errorMessage = '';
+
+                try {
+                    this.response = await axios.post('http://localhost:8000/watertoad/aipainter', formData,{responseType: 'blob'});
+                    this.imageUrl = URL.createObjectURL(this.response.data);
+                } catch (error) {
+                    console.error("Error during image processing:", error);
+                    this.error = true;
+                    this.errorMessage = 'Error processing image. Please try again.';
+                }
+                this.$store.commit('setFamily', this.imageUrl);
+                console.log(this.imageUrl);
         },
 
         handleDialogConfirmation(){
