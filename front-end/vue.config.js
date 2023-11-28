@@ -3,5 +3,6 @@ module.exports = defineConfig({
     transpileDependencies: [
         'vuetify'
     ],
-    publicPath: '/watertoad'
+    publicPath: '/watertoad',
+    outputDir: 'docs',
 })

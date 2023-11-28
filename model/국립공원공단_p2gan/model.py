@@ -5,15 +5,18 @@ def leaky_relu(x, lk = 0.2):
 	return tf.maximum(x, x * lk)
 
 def _fixed_padding(inputs, kernel_size, rate=1):
-	kernel_size_effective = [kernel_size[0] + (kernel_size[0] - 1) * (rate - 1),
-							kernel_size[0] + (kernel_size[0] - 1) * (rate - 1)]
+	kernel_size_effective = [
+    	kernel_size[0] + (kernel_size[0] - 1) * (rate - 1),
+		kernel_size[0] + (kernel_size[0] - 1) * (rate - 1)
+	]
 	pad_total = [kernel_size_effective[0] - 1, kernel_size_effective[1] - 1]
 	pad_beg = [pad_total[0] // 2, pad_total[1] // 2]
 	pad_end = [pad_total[0] - pad_beg[0], pad_total[1] - pad_beg[1]]
-	padded_inputs = tf.pad(inputs, [[0, 0], [pad_beg[0], pad_end[0]],
-						[pad_beg[1], pad_end[1]], [0, 0]], mode='SYMMETRIC')
+	padded_inputs = tf.pad(
+     inputs,
+     [[0, 0], [pad_beg[0], pad_end[0]],	[pad_beg[1], pad_end[1]], [0, 0]], mode='SYMMETRIC')
+	
 	return padded_inputs
-
 
 DL1C = 256
 DL2C = 512
