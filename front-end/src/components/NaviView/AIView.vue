@@ -82,7 +82,7 @@
                                     <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5"><!--예시 사진-->
                                     <br>
                                 </div>
-                                <v-btn @click="transformImg(1)" color="#EF8200"> 한국화로 그리기 </v-btn>
+                                <v-btn @click="transformImg(1)" color="#EF8200" class="white--text"> 한국화로 그리기 </v-btn>
                             </v-carousel-item>
                             <v-carousel-item justify="center" align="center">
                                 <div class="font-kkomi">
@@ -95,7 +95,7 @@
                                     <img :src="require('@/assets/AIView/cartoon.jpg')" width="80%" class="mb-5"><!--예시 사진-->
                                     <br>
                                 </div>
-                                <v-btn @click="transformImg(2)" color="#EF8200"> 만화로 그리기 </v-btn>
+                                <v-btn @click="transformImg(2)" color="#EF8200" class="white--text"> 만화로 그리기 </v-btn>
                             </v-carousel-item>
                             <v-carousel-item justify="center" align="center">
                                 <div class="font-kkomi">
@@ -108,7 +108,7 @@
                                     <img :src="require('@/assets/AIView/koreaPaint.png')" width="60%" class="mb-5"> <!--예시 사진-->
                                     <br>
                                 </div>
-                                <v-btn @click="transformImg(3)" color="#EF8200"> 캐릭터로 그리기 </v-btn>
+                                <v-btn @click="transformImg(3)" color="#EF8200" class="white--text"> 캐릭터로 그리기 </v-btn>
                             </v-carousel-item>
                         </v-carousel>
                     </div>
@@ -132,7 +132,7 @@ export default {
             preimage: null,
             istranslated: false, // false로 바꿔야 함
             response: null,
-            paintC : false, // 화풍 선택 팝업창 열고 닫기 / false로 바꿔야
+            paintC : true, // 화풍 선택 팝업창 열고 닫기 / false로 바꿔야
             contentIndex: 0,
             contents: ['/watertoad/030.png', '/watertoad/031.png', '/watertoad/032.png', '/watertoad/따봉꺼비.png'],
             gallery: false,
