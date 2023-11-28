@@ -132,7 +132,7 @@ export default {
             preimage: null,
             istranslated: false, // false로 바꿔야 함
             response: null,
-            paintC : true, // 화풍 선택 팝업창 열고 닫기 / false로 바꿔야
+            paintC : false, // 화풍 선택 팝업창 열고 닫기 / false로 바꿔야
             contentIndex: 0,
             contents: ['/watertoad/030.png', '/watertoad/031.png', '/watertoad/032.png', '/watertoad/따봉꺼비.png'],
             gallery: false,
@@ -217,7 +217,8 @@ export default {
             this.paintC = false;
 
             try {
-                this.response = await axios.post('https://6984-1-244-138-205.ngrok-free.app/aipainter', formData,{responseType: 'blob'});
+                // this.response = await axios.post('https://6984-1-244-138-205.ngrok-free.app/aipainter', formData,{responseType: 'blob'});
+                this.response = await axios.post('https://loacalhost:8000/aipainter', formData,{responseType: 'blob'});
                 
                 this.imageUrl = URL.createObjectURL(this.response.data);
                 // console.log("변환된 이미지 URL:", this.imageUrl);
