@@ -1,5 +1,8 @@
 # Kkomi's Adventure : follow watertoad kkubi ...
 
+![KakaoTalk_20231129_104858886_01](https://github.com/Rabbit-SH/Untact_Exploration/assets/112822303/0cc84440-41d3-46f7-bcd7-cfa56cecbe78)
+![KakaoTalk_20231129_104858886](https://github.com/Rabbit-SH/Untact_Exploration/assets/112822303/e4af474f-22b9-496b-9b82-e779ebc4725e)
+
 ### **국립공원공단 최초의 생성형 AI를 도입한 GPS 기반 비대면 치악산 국립공원 탐방기**
 #### 생성형 AI를 활용한 Untact 탐방 서비스 개발
 <br>
