@@ -17,6 +17,7 @@ leaflet 기반의 vue.js
 - tensorflow
 - pytorch
 - openCV
+<br>
 
 ### dependencies
 - axios : 1.6.2
