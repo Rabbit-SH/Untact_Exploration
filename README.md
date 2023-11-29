@@ -9,7 +9,7 @@
 
 ## 개발 기간
 23.10.20 - 23.11.29 (약 6주)
-
+<br>
 
 ### 개발 환경
 leaflet 기반의 vue.js
@@ -29,6 +29,7 @@ leaflet 기반의 vue.js
 - vuex : 3.6.2
 - vue-router : 3.5.1
 - vue/cli : 5.0.8
+<br>
 
 ### Front-End setup (실행 방법)
 
