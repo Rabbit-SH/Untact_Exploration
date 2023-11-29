@@ -8,7 +8,7 @@
 ## 개발 기간
 23.10.20 - 23.11.29 (약 6주)
 
-
+<br>
 ### 개발 환경
 leaflet 기반의 vue.js
 - **Front-End** : vue.js
@@ -17,5 +17,9 @@ leaflet 기반의 vue.js
 - pytorch
 - openCV
 
+<br>
+<br>
 ## 주요 기능
-- 
+- GPS : 
+- 다양한 미션 : 
+- 생성형 AI : 
