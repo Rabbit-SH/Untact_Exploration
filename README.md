@@ -31,7 +31,7 @@ leaflet 기반의 vue.js
 
 ### Front-End setup
 
-    git clone ""
+    git clone "https://github.com/Rabbit-SH/Untact_Exploration.git"
     cd front-end
     npm install
     npm run serve
