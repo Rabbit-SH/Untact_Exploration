@@ -50,4 +50,7 @@ leaflet 기반의 vue.js
 
 
 ## License
-- miricanvas
+- [miricanvas](https://www.miricanvas.com/)
+- [mdi](https://pictogrammers.com/)
+- [Leaflet](https://github.com/Leaflet/Leaflet/tree/main)
+- [OpenstreetMap](https://www.openstreetmap.org/)
