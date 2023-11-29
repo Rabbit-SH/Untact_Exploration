@@ -18,7 +18,7 @@
                     {{ currentContent }}
                 </template>
                 <br>
-                수묵화 변환중...
+                그림 그리는 중 .. 
                 <v-progress-linear
                     indeterminate
                     color="white"
@@ -218,7 +218,7 @@ export default {
 
             try {
                 this.response = await axios.post('https://6ddd-1-244-138-205.ngrok-free.app/aipainter', formData,{responseType: 'blob'});
-                //this.response = await axios.post('http://localhost:8000/aipainter', formData,{responseType: 'blob'});
+                // this.response = await axios.post('http://localhost:8000/aipainter', formData,{responseType: 'blob'});
                 
                 this.imageUrl = URL.createObjectURL(this.response.data);
                 // console.log("변환된 이미지 URL:", this.imageUrl);
