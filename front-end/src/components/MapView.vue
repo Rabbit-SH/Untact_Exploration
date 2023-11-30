@@ -331,7 +331,7 @@ export default {
       }),
       placeICON7: new Icon({
         iconUrl: require('@/assets/mainplace/솔비로길(야생화원).png'),
-        iconSize: [80, 70],
+        iconSize: [75, 70],
         iconAnchor: [0,35]
       }),
       defaultIcon: new Icon({  // 지도의 마커 사용자 지정 아이콘(기본 디폴트 아이콘)
@@ -532,8 +532,11 @@ export default {
       }
       //현위치 마크가 클릭 되있다면, 중심을 계속 잡아줌.
       if(this.isZoom){
+
         this.Zoom =17;
-        this.$refs.map.mapObject.setView(this.currentPos, this.Zoom); 
+        this.$refs.map.mapObject.setView(this.currentPos, this.Zoom);
+        //여기서는 지도가 이동 되어도 중심을 계속 잡아줘야함.
+        this.isZoom = true;
       }
     },
     getCurrentPosition(){
@@ -561,11 +564,15 @@ export default {
     },
     //현재 위치로 줌인 하는 기능.
     ZoomInToCurrentPosition(){
-      //마우스에서 클릭이 떼졌을때, 작동.
+
       if(!this.isZoom){
         this.Zoom = 17;
         this.$refs.map.mapObject.setView(this.currentPos, this.Zoom);
         //현위치로 이동이 끝나면, true로 바꿔줌. moveend를 사용.
+        // 문제점 발견 : 현위치를 계속 추척할 때, 지도가 움직이기 때문에, 맵이동 이벤트가 발생하여
+        // 파란 버튼으로 바뀌고 이로인해 계속 추적 불가능.
+        // 그렇기 때문에 맵이동 이벤트 제거 후 다른 이벤트로 대체해야함. 대안으로 마우스 드래그 이벤트가 있음.
+        // 하지만 l-map에서 적용될 지 의문.
         if(this.ismoveend){
           this.isZoom = true;
           this.ismoveend = false;
