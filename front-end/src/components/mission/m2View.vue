@@ -16,7 +16,7 @@
                             color="success"
                             value="황장금표"
                             hide-details
-                            style="color: black; transform: scale(1.5); padding-left: 30%;"
+                            style="color: black; transform: scale(1.3); padding-left: 30%;"
                         ></v-checkbox>
                         <v-checkbox
                             v-model="userResult"
@@ -24,7 +24,7 @@
                             color="primary"
                             value="황금장표"
                             hide-details
-                            style="color: black; transform: scale(1.5); padding-left: 30%;"
+                            style="color: black; transform: scale(1.3); padding-left: 30%;"
                         ></v-checkbox>
                         <v-checkbox
                             v-model="userResult"
@@ -32,7 +32,7 @@
                             color="primary"
                             value="황금장이"
                             hide-details
-                            style="color: black; transform: scale(1.5); padding-left: 30%;"
+                            style="color: black; transform: scale(1.3); padding-left: 30%;"
                         ></v-checkbox>
                     </div>
                 <br>
@@ -57,7 +57,9 @@
                             <div v-else class="text-center">
                                 <h3>다시 한번 풀어볼까요?</h3>
                                 <br>
-                                <p> 초성힌트 : ㅎ ㅈ ㄱ ㅍ </p>
+                                <p> 황장금표는 황장목을 보호하기 위해</p>
+                                <p>일반인들의 벌채를 금지한다는 표시로</p>
+                                <p>설치한 것으로 조선시대때 만들어졌다고 해요!</p>
                             </div>
                         </v-col>
                     </v-row>

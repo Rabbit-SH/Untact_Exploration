@@ -42,7 +42,7 @@
                             <v-checkbox hide-details class="shrink ml-4 mr-1" style="transform: scale(1.5);" v-model="userResult" :value="sounds[0].value"></v-checkbox>
                         </v-col>
                         <v-col cols="auto">
-                            <v-checkbox hide-details class="shrink ml-4 mr-1" style="transform: scale(1.5);" v-model="userResult" :value="sounds[1].value"></v-checkbox>
+                            <v-checkbox hide-details class="shrink ml-4 mr-1" style="transform: scale(1.5);" v-model="userResult" :value="sounds[1].value" color="success"></v-checkbox>
                         </v-col>
                         <v-col cols="auto">
                             <v-checkbox hide-details class="shrink ml-4 mr-1" style="transform: scale(1.5);" v-model="userResult" :value="sounds[2].value"></v-checkbox>
@@ -69,6 +69,10 @@
                             </div>
                             <div v-else class="text-center">
                                 <h3>다시 한번 풀어볼까요?</h3>
+                                <br>
+                                <p>물두꺼비의 소리를 듣고 똑같은 소리를</p>
+                                <p>찾으면 된답니다!</p>
+                                <p>두번째 소리를 유심히 들어보세요</p>
                             </div>
                         </v-col>
                     </v-row>

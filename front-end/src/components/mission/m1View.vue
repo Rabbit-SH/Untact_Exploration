@@ -28,13 +28,13 @@
                 </v-row>
                 <v-row class="sound-item">
                     <v-col cols="auto" >
-                        <v-checkbox hide-details class="shrink ml-4 mr-2" style="transform: scale(1.5);" v-model="userResult" :value="sounds[0].value"></v-checkbox>
+                        <v-checkbox hide-details class="shrink ml-4 mr-2" style="transform: scale(1.5);" v-model="userResult" :value="sounds[0].value" color="success"></v-checkbox>
                     </v-col>
                     <v-col cols="auto" >
-                        <v-checkbox hide-details class="shrink ml-4 mr-2" style="transform: scale(1.5);" v-model="userResult" :value="sounds[1].value"></v-checkbox>
+                        <v-checkbox hide-details class="shrink ml-4 mr-2" style="transform: scale(1.5);" v-model="userResult" :value="sounds[1].value" color="primary"></v-checkbox>
                     </v-col>
                     <v-col cols="auto" >
-                        <v-checkbox hide-details class="shrink ml-4 mr-2" style="transform: scale(1.5);" v-model="userResult" :value="sounds[2].value"></v-checkbox>
+                        <v-checkbox hide-details class="shrink ml-4 mr-2" style="transform: scale(1.5);" v-model="userResult" :value="sounds[2].value" color="primary"></v-checkbox>
                     </v-col>
                 </v-row>
                 <br>
@@ -66,6 +66,9 @@
                             </div>
                             <div v-else class="text-center">
                                 <h3>다시 한번 풀어볼까요?</h3>
+                                <br>
+                                <p> 꿩은 <strong>"꿩~꿩~"</strong> 소리를 내며</p>
+                                <p>울어서 꿩이라고 해요!</p>
                             </div>
                         </v-col>
                     </v-row>
