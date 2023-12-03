@@ -13,8 +13,6 @@
       @update:zoom="zoomUpdated"
       @update:center="centerUpdated"
       @update:bounds="boundsUpdated"
-      @moveend="handlemoveend" 
-      @movestart="handlemovestart"
     >
 
     <div class="logo">
@@ -260,8 +258,8 @@ export default {
       showSafe: false,
       showtutorial: false,
 
-      ismoving: false,
-      ismoveend: false,
+      // ismoving: false,
+      // ismoveend: false,
       positionObj: {
         latitude: 0,
         longitude: 0
@@ -381,7 +379,10 @@ export default {
     });
 
     this.$refs.map.mapObject.attributionControl.setPrefix(''); // attribution을 제거하는 코드
-
+    //드래그 시작이벤트
+    this.$refs.map.mapObject.on('dragstart', () => {
+        this.isZoom = false;
+    });
     // gpx 파일을 위한 코드
     this.loadGPX();
 
@@ -532,11 +533,9 @@ export default {
       }
       //현위치 마크가 클릭 되있다면, 중심을 계속 잡아줌.
       if(this.isZoom){
-
         this.Zoom =17;
         this.$refs.map.mapObject.setView(this.currentPos, this.Zoom);
         //여기서는 지도가 이동 되어도 중심을 계속 잡아줘야함.
-        this.isZoom = true;
       }
     },
     getCurrentPosition(){
@@ -548,36 +547,15 @@ export default {
         ()=>alert('위치 정보를 찾을 수 없습니다.(watchpPsition)'),this.geooptions)
       }
     },
-    //움직일때만 발생
-    handlemovestart() {
-      this.ismoving = true;
-      if(this.isZoom){
-        this.isZoom = false;
-      }
-    },
-    //맵이동이 끝나면 발생.
-    handlemoveend() {
-      this.ismoveend = true;
-      if(this.ismoving){
-        this.ismoving = false;
-      }
-    },
     //현재 위치로 줌인 하는 기능.
     ZoomInToCurrentPosition(){
 
       if(!this.isZoom){
-        this.Zoom = 17;
-        this.$refs.map.mapObject.setView(this.currentPos, this.Zoom);
-        //현위치로 이동이 끝나면, true로 바꿔줌. moveend를 사용.
-        // 문제점 발견 : 현위치를 계속 추척할 때, 지도가 움직이기 때문에, 맵이동 이벤트가 발생하여
-        // 파란 버튼으로 바뀌고 이로인해 계속 추적 불가능.
-        // 그렇기 때문에 맵이동 이벤트 제거 후 다른 이벤트로 대체해야함. 대안으로 마우스 드래그 이벤트가 있음.
-        // 하지만 l-map에서 적용될 지 의문.
-        if(this.ismoveend){
-          this.isZoom = true;
-          this.ismoveend = false;
-        }
+      this.Zoom = 17;
+      this.$refs.map.mapObject.setView(this.currentPos, this.Zoom);
+      this.isZoom = true;
       }else{
+        //이미 현위치 고정이 되있는 상태라면, 줌고정 해제
         this.isZoom = false;
       }
     },
@@ -763,7 +741,7 @@ export default {
   .my-location-button {
     z-index: 1001;
     position: absolute;
-    top: 10%;
+    top: 11%;
     left: 5%;
     padding: 0px;
     border-radius: 3px;
