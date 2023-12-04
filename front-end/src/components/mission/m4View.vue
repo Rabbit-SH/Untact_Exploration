@@ -12,6 +12,7 @@
                 <img src="@/assets/photo-bandal.png">
             </div>
             <div class="content">
+                <p class="notion">※ 전신이 다보이게 찍어주세요!</p>
                 <div class="cam-container">
                     <div @click="triggerCamera" class="cam-button mb-3">
                         <v-btn class="custom-submit-button mt-3 pl-10 pr-10" color="#EF8200">사진 촬영하기</v-btn>
@@ -208,7 +209,7 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 20px; /* 상단 여백 추가 */
+        /* margin-top: 10px;  */
     }
     .button-container {
         width: 100%; /* 너비를 전체로 설정 */
@@ -236,9 +237,10 @@ export default {
     .content{
         width:100%;
         position: absolute;
-        bottom: 7%;
+        bottom: 0%;
         max-height: 45%;
         overflow-y: auto;
+
     }
 
     .close img{
@@ -323,5 +325,10 @@ export default {
     }
         ::v-deep .v-dialog { /* 지우면 안됨 */
         box-shadow: none !important;
+    }
+    .notion{
+        text-align: center;
+        font-family: 'knps_bandaliregular' !important;
+        font-size: 20px;
     }
 </style>
