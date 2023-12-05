@@ -332,11 +332,4 @@ export default {
     flex: 100px;
     max-width: 100%;
 }
-.v-responsive {
-    position: relative;
-    overflow: scroll !important;
-    flex: 1 0 auto;
-    max-width: 100%;
-    display: flex;
-}
 </style>
