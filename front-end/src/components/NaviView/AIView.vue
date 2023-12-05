@@ -54,7 +54,7 @@
             
         </div>
         <v-dialog v-model="paintC" justify="center" align-items="center">
-            <v-card class="text-center" justify="center" align-items="center">
+            <v-card class="text-center" justify="center" align-items="center" style="overflow: scroll;">
                     <div class="choosePaint_container pa-3 pb-0">
                         <v-row>
                             <v-col cols="1">
@@ -217,7 +217,7 @@ export default {
             this.paintC = false;
 
             try {
-                this.response = await axios.post('https://6ddd-1-244-138-205.ngrok-free.app/aipainter', formData,{responseType: 'blob'});
+                this.response = await axios.post('https://5ccc-119-194-128-7.ngrok-free.app/aipainter', formData,{responseType: 'blob'});
                 // this.response = await axios.post('http://localhost:8000/aipainter', formData,{responseType: 'blob'});
                 
                 this.imageUrl = URL.createObjectURL(this.response.data);
@@ -328,5 +328,12 @@ export default {
     flex: 100px;
     max-width: 100%;
     overflow: scroll;
+}
+.v-responsive {
+    position: relative;
+    overflow: scroll;
+    flex: 1 0 auto;
+    max-width: 100%;
+    display: flex;
 }
 </style>
