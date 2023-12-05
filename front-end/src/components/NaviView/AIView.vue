@@ -54,7 +54,8 @@
             
         </div>
         <v-dialog v-model="paintC" justify="center" align-items="center">
-            <v-card class="text-center" justify="center" align-items="center" style="overflow: scroll;">
+            <v-card class="text-center" justify="center" align-items="center">
+                
                     <div class="choosePaint_container pa-3 pb-0">
                         <v-row>
                             <v-col cols="1">
@@ -64,7 +65,7 @@
                                 <p class=" mt-1 paint-title font-kkomi">원하는 그림 스타일을 선택해주세요!       </p>
                             </v-col>
                         </v-row>
-                        <v-carousel cycle hide-delimiters>
+                        <v-carousel cycle hide-delimiters height="auto">
                             <template v-slot:prev="{ on, attrs }">
                                 <v-icon v-bind="attrs" v-on="on" color="gray" size="30">mdi mdi-menu-left</v-icon>
                             </template>
@@ -112,6 +113,7 @@
                             </v-carousel-item>
                         </v-carousel>
                     </div>
+                
             </v-card>
         </v-dialog>
 
@@ -217,7 +219,7 @@ export default {
             this.paintC = false;
 
             try {
-                this.response = await axios.post('https://1090-119-194-128-7.ngrok-free.app/aipainter', formData,{responseType: 'blob'});
+                this.response = await axios.post('https://5ccc-119-194-128-7.ngrok-free.app/aipainter', formData,{responseType: 'blob'});
                 // this.response = await axios.post('http://localhost:8000/aipainter', formData,{responseType: 'blob'});
                 
                 this.imageUrl = URL.createObjectURL(this.response.data);
@@ -256,6 +258,7 @@ export default {
 </script>
   
 <style scoped>
+
 .background{
     background-image: url('~@/assets/background.png');
     width: 100%;
@@ -324,14 +327,14 @@ export default {
 .font-kkomi{
     font-family: 'knps_kkomiregular' !important;
 }
+
 .v-responsive__content {
     flex: 100px;
     max-width: 100%;
-    overflow: scroll;
 }
 .v-responsive {
     position: relative;
-    overflow: scroll;
+    overflow: scroll !important;
     flex: 1 0 auto;
     max-width: 100%;
     display: flex;
