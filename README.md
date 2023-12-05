@@ -18,6 +18,7 @@ leaflet 기반의 vue.js
 - tensorflow
 - pytorch
 - openCV
+- python : 3.7.*
 <br>
 
 ### dependencies
@@ -37,6 +38,31 @@ leaflet 기반의 vue.js
     cd front-end
     npm install
     npm run serve
+
+### Ngrok 다운로드 (local)
+[Ngrok download](https://ngrok.com/)
+
+Sign-up 이후 token 발급 
+
+Ngrok 실행 후 
+    ```
+    ngrok config add-authtoken <토큰 번호>
+    ngrok http 8000
+    ```
+
+### ip 주소 변경 
+
+.front-end/src/components/mission/m4View.vue (130번째 줄) 과 </br>
+.front-end/src/components/NaviView/AIView.vue (222번째 줄) 에서 </br>
+this.response = await axios.post('ngrok 주소', formData,{responseType: 'blob'}); 부분을 찾아 변경 
+
+    npm run serve(local 개발용)
+    
+    npm run build(배포용)
+
+### github.io
+    docs파일 안에 있는 파일을 io에 올려서 서비스 
+    
 
 [탐방 서비스 "물두꺼비를 따라가보자"](https://hyeoong.github.io/watertoad) 하러 가기
 
