@@ -127,8 +127,8 @@ export default {
                 this.errorMessage = '';
 
                 try {
-                    this.response = await axios.post('https://1090-119-194-128-7.ngrok-free.app/aipainter', formData,{responseType: 'blob'});
-                    //this.response = await axios.post('http://localhost:8000/aipainter', formData,{responseType: 'blob'});
+                    // this.response = await axios.post('https://1090-119-194-128-7.ngrok-free.app/aipainter', formData,{responseType: 'blob'});
+                    this.response = await axios.post('http://localhost:8000/aipainter', formData,{responseType: 'blob'});
                     this.imageUrl = URL.createObjectURL(this.response.data);
                 } catch (error) {
                     console.error("Error during image processing:", error);
